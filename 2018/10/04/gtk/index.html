@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>GTK大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>GTK大杂烩</h1>
+    <h2>安装GTK</h2>
+<ul>
+<li><code>brew install gtk3</code></li>
+</ul>
+<p>测试环境: msys32</p>
+<p>前提：gtk3已装好</p>
+<p>注意：CMakeLists写好并reload成功后，IDE才能根据<code>include_directories</code>指令找着GTK3的头文件，进行代码提示</p>
+<p><strong>CMakeLists.txt</strong></p>
+<div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">3.8</span><span class="p">)</span>
+
+<span class="nb">project</span><span class="p">(</span><span class="s">untitled</span><span class="p">)</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_STANDARD</span> <span class="s">99</span><span class="p">)</span>
+
+<span class="nb">find_package</span><span class="p">(</span><span class="s">PkgConfig</span> <span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">pkg_check_modules</span><span class="p">(</span><span class="s">GTK3</span> <span class="s">REQUIRED</span> <span class="s">gtk+-3.0</span><span class="p">)</span>
+<span class="nb">include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">GTK3_INCLUDE_DIRS</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">link_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">GTK3_LIBRARY_DIRS</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">add_definitions</span><span class="p">(</span><span class="o">${</span><span class="nv">GTK3_CFLAGS_OTHER</span><span class="o">}</span><span class="p">)</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="s">SOURCE_FILES</span> <span class="s">main.c</span><span class="p">)</span>
+
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">untitled</span> <span class="o">${</span><span class="nv">SOURCE_FILES</span><span class="o">}</span><span class="p">)</span>
+
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">untitled</span> <span class="o">${</span><span class="nv">GTK3_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+<p><strong>main.c</strong></p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;gtk/gtk.h&gt;</span><span class="cp"></span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">activate</span><span class="p">(</span><span class="n">GtkApplication</span><span class="w"> </span><span class="o">*</span><span class="n">app</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="n">gpointer</span><span class="w"> </span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">window</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">window</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_application_window_new</span><span class="p">(</span><span class="n">app</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_window_set_title</span><span class="p">(</span><span class="n">GTK_WINDOW</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Hello world&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_widget_show_all</span><span class="p">(</span><span class="n">window</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkApplication</span><span class="w"> </span><span class="o">*</span><span class="n">app</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_application_new</span><span class="p">(</span><span class="s">&quot;hello.world&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">G_APPLICATION_FLAGS_NONE</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">g_signal_connect</span><span class="p">(</span><span class="n">app</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;activate&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">G_CALLBACK</span><span class="p">(</span><span class="n">activate</span><span class="p">),</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g_application_run</span><span class="p">(</span><span class="n">G_APPLICATION</span><span class="p">(</span><span class="n">app</span><span class="p">),</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">g_object_unref</span><span class="p">(</span><span class="n">app</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<h2>信号与槽</h2>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;gtk/gtk.h&gt;</span><span class="cp"></span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">say_hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">g_print</span><span class="p">(</span><span class="s">&quot;Hello World</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">window</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_window_new</span><span class="p">(</span><span class="n">GTK_WINDOW_TOPLEVEL</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_window_set_title</span><span class="p">(</span><span class="n">GTK_WINDOW</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Hello World&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_window_set_default_size</span><span class="p">(</span><span class="n">GTK_WINDOW</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w"> </span><span class="mi">400</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">button_box</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_button_box_new</span><span class="p">(</span><span class="n">GTK_ORIENTATION_HORIZONTAL</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="n">button_box</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_button_new_with_label</span><span class="p">(</span><span class="s">&quot;Click Me&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">button_box</span><span class="p">),</span><span class="w"> </span><span class="n">button</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">g_signal_connect</span><span class="p">(</span><span class="n">button</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;clicked&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">G_CALLBACK</span><span class="p">(</span><span class="n">say_hello</span><span class="p">),</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">gtk_widget_show_all</span><span class="p">(</span><span class="n">window</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_main</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<h2>GTK布局</h2>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;gtk/gtk.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">window</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_window_new</span><span class="p">(</span><span class="n">GTK_WINDOW_TOPLEVEL</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_window_set_title</span><span class="p">(</span><span class="n">GTK_WINDOW</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Hello World&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_window_set_default_size</span><span class="p">(</span><span class="n">GTK_WINDOW</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="mi">900</span><span class="p">,</span><span class="w"> </span><span class="mi">400</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_window_set_position</span><span class="p">(</span><span class="n">GTK_WINDOW</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="n">GTK_WIN_POS_CENTER_ALWAYS</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">box1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_box_new</span><span class="p">(</span><span class="n">GTK_ORIENTATION_HORIZONTAL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">button1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_button_new_with_label</span><span class="p">(</span><span class="s">&quot;Button One&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">button2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_button_new_with_label</span><span class="p">(</span><span class="s">&quot;Button Two&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">button3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_button_new_with_label</span><span class="p">(</span><span class="s">&quot;Button Three&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_widget_set_hexpand</span><span class="p">(</span><span class="n">button1</span><span class="p">,</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_widget_set_hexpand</span><span class="p">(</span><span class="n">button2</span><span class="p">,</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_widget_set_hexpand</span><span class="p">(</span><span class="n">button3</span><span class="p">,</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">box1</span><span class="p">),</span><span class="w"> </span><span class="n">button1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">box1</span><span class="p">),</span><span class="w"> </span><span class="n">button2</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">box1</span><span class="p">),</span><span class="w"> </span><span class="n">button3</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">box2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_box_new</span><span class="p">(</span><span class="n">GTK_ORIENTATION_HORIZONTAL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">button4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_button_new_with_label</span><span class="p">(</span><span class="s">&quot;Button Four&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">button5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_button_new_with_label</span><span class="p">(</span><span class="s">&quot;Button Five&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_widget_set_hexpand</span><span class="p">(</span><span class="n">button4</span><span class="p">,</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_widget_set_hexpand</span><span class="p">(</span><span class="n">button5</span><span class="p">,</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">box2</span><span class="p">),</span><span class="w"> </span><span class="n">button4</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">box2</span><span class="p">),</span><span class="w"> </span><span class="n">button5</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">box</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_box_new</span><span class="p">(</span><span class="n">GTK_ORIENTATION_VERTICAL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">g_signal_connect</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;destroy&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">gtk_main_quit</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">gtk_widget_set_vexpand</span><span class="p">(</span><span class="n">box1</span><span class="p">,</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_widget_set_vexpand</span><span class="p">(</span><span class="n">box2</span><span class="p">,</span><span class="w"> </span><span class="n">TRUE</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">box</span><span class="p">),</span><span class="w"> </span><span class="n">box1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">box</span><span class="p">),</span><span class="w"> </span><span class="n">box2</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="n">box</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">gtk_widget_show_all</span><span class="p">(</span><span class="n">window</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_main</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<h2>TreeView示例</h2>
+<p>GTK的ListBox是布局容器，不是用来组件复用的。得用TreeView</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;gtk/gtk.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">window</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_window_new</span><span class="p">(</span><span class="n">GTK_WINDOW_TOPLEVEL</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_window_set_title</span><span class="p">(</span><span class="n">GTK_WINDOW</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Hello World&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_window_set_default_size</span><span class="p">(</span><span class="n">GTK_WINDOW</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="mi">900</span><span class="p">,</span><span class="w"> </span><span class="mi">400</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_window_set_position</span><span class="p">(</span><span class="n">GTK_WINDOW</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="n">GTK_WIN_POS_CENTER</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">GtkWidget</span><span class="w"> </span><span class="o">*</span><span class="n">treeView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_tree_view_new</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkCellRenderer</span><span class="w"> </span><span class="o">*</span><span class="n">renderer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_cell_renderer_text_new</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_tree_view_insert_column_with_attributes</span><span class="p">(</span><span class="n">GTK_TREE_VIEW</span><span class="p">(</span><span class="n">treeView</span><span class="p">),</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ID&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">renderer</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_tree_view_insert_column_with_attributes</span><span class="p">(</span><span class="n">GTK_TREE_VIEW</span><span class="p">(</span><span class="n">treeView</span><span class="p">),</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Name&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">renderer</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">GtkListStore</span><span class="w"> </span><span class="o">*</span><span class="n">listStore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gtk_list_store_new</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">G_TYPE_STRING</span><span class="p">,</span><span class="w"> </span><span class="n">G_TYPE_STRING</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_tree_view_set_model</span><span class="p">(</span><span class="n">GTK_TREE_VIEW</span><span class="p">(</span><span class="n">treeView</span><span class="p">),</span><span class="w"> </span><span class="n">GTK_TREE_MODEL</span><span class="p">(</span><span class="n">listStore</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_container_add</span><span class="p">(</span><span class="n">GTK_CONTAINER</span><span class="p">(</span><span class="n">window</span><span class="p">),</span><span class="w"> </span><span class="n">treeView</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">GtkTreeIter</span><span class="w"> </span><span class="n">iter</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_list_store_append</span><span class="p">(</span><span class="n">listStore</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">iter</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_list_store_set</span><span class="p">(</span><span class="n">listStore</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">iter</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;one&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_list_store_append</span><span class="p">(</span><span class="n">listStore</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">iter</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_list_store_set</span><span class="p">(</span><span class="n">listStore</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">iter</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;two&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;World&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_widget_show_all</span><span class="p">(</span><span class="n">window</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">g_signal_connect</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;destroy&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">gtk_main_quit</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">gtk_main</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/10/04/gtk/index.html";
+        this.page.identifier = "/2018/10/04/gtk/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

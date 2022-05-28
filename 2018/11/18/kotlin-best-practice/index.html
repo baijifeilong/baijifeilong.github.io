@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>Kotlin 最佳实践 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>Kotlin 最佳实践</h1>
+    <h2>为什么写此文</h2>
+<p>Kotlin很烦，Gralde很烦，还都是升级狂，加一块更烦。几个月不接触Kotlin，再次上手时便一片迷茫。所以记录此文，以便再次上手时查阅。</p>
+<h2>使用Gradle创建Kotlin项目</h2>
+<ol>
+<li><code>mkdir hellokt</code> 创建项目文件夹</li>
+<li><code>cd hellokt</code> 切换到项目根目录</li>
+<li><code>gradle init --type java-application</code> 使用Gradle初始化Java项目</li>
+<li><code>rm -rf src/main/java src/test/java gradle gradlew gradlew.bat</code> 删除Java目录和GradleWrapper配置</li>
+<li><code>vim build.gradle</code> 编辑Gradle项目配置</li>
+<li><code>mkdir -p src/main/kotlin src/test/kotlin</code> 创建Kotlin目录</li>
+<li><code>vim src/main/kotlin/App.kt</code> 编写Kotlin版HelloWorld</li>
+<li><code>gradle clean build run</code> 使用Gradle清理、构建、运行，直接运行也可</li>
+<li><code>idea .</code> 用IntelliJ IDEA 打开项目，所有选项均选择默认，开始用IDE进行开发</li>
+</ol>
+<h3>为什么要用命令行创建项目?</h3>
+<p>用图形化界面创建项目变量太多，人品不好容易掉坑里。用命令行创建项目，可以明确每个文件、每行代码的用途，整个过程可重现、可控制，还可以避免在IDE里某个步骤卡死半天没反应又结束不掉的尴尬。</p>
+<h3>为什么要删除GradleWrapper</h3>
+<ul>
+<li>很烦、很烦、很烦 我想安静一会儿</li>
+<li>很大、很大、很大 我硬盘不够你折腾</li>
+<li>很慢、很慢、很慢 我知道有堵墙，不用你三天两头提醒</li>
+</ul>
+<p>我不Care你的Gradle版本。编译不过我自然会升级Gradle构建脚本</p>
+<p><strong>build.gradle</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 注意，这个文件是Gradle构建脚本，是脚本，里面的代码是先后执行的。至少`buildscript`要放在`apply plugin`的前面。</span>
+<span class="c1">// 构建脚本</span>
+<span class="n">buildscript</span> <span class="o">{</span>
+    <span class="c1">// 插件依赖</span>
+    <span class="n">dependencies</span> <span class="o">{</span>
+        <span class="c1">// Kotlin插件对应的包</span>
+        <span class="n">classpath</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.10&quot;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 插件仓库。墙外人可直接用`mavencentral`、`jcenter`</span>
+    <span class="n">repositories</span> <span class="o">{</span>
+        <span class="c1">// 阿里的Maven中心仓库镜像</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/central&quot;</span>  <span class="o">}</span>
+        <span class="c1">// 阿里的jCenter镜像</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span>  <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// 此插件添加了 `gradle run` 命令，通过Gradle运行项目</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;application&#39;</span>
+<span class="c1">// 此插件对Kotlin语言提供了支持，可以编译Kotlin文件</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;kotlin&#39;</span>
+
+<span class="c1">// application插件run的入口class</span>
+<span class="n">mainClassName</span> <span class="o">=</span> <span class="s1">&#39;App&#39;</span>
+
+<span class="c1">// 项目依赖</span>
+<span class="n">dependencies</span> <span class="o">{</span>
+    <span class="c1">// Kotlin分为两部分，语言部分和库部分。kotlin插件对语言部分提供支持，`kotlin-stdlib`对库部分提供支持。哪怕HelloWorld中使用的`println`也在库中。所以是Kotlin项目的必选依赖</span>
+    <span class="n">compile</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-stdlib-jdk8&quot;</span>
+<span class="o">}</span>
+
+<span class="c1">// 项目仓库 </span>
+<span class="n">repositories</span> <span class="o">{</span>
+    <span class="c1">// Maven中心仓库墙内版</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/central&quot;</span>  <span class="o">}</span>
+    <span class="c1">// jCenter中心仓库墙内版</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span>  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p><strong>App.kt</strong></p>
+<div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">App</span> <span class="p">{</span>
+    <span class="kd">companion</span> <span class="kd">object</span> <span class="err">{</span>
+        <span class="nd">@JvmStatic</span>
+            <span class="kd">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">println</span><span class="p">(</span><span class="s">&quot;hello kt&quot;</span><span class="p">)</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>之所以将代码放到类里头，是为了支持application插件，他需要指定一个含有JVM入口静态main方法的入口类。</p>
+<p>也可以用带main函数的app.kt，此时mainClassName应配置为&quot;AppKt&quot;</p>
+<h2>用Gradle构建Kotlin版的SpringBoot应用</h2>
+<p><strong>build.gradle</strong></p>
+<div class="highlight"><pre><span></span><span class="n">buildscript</span> <span class="o">{</span>
+    <span class="n">repositories</span> <span class="o">{</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/central&quot;</span>  <span class="o">}</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span>  <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">dependencies</span> <span class="o">{</span>
+        <span class="n">classpath</span> <span class="s1">&#39;org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.10&#39;</span>
+        <span class="n">classpath</span> <span class="s1">&#39;org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE&#39;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;application&#39;</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;kotlin&#39;</span>
+
+<span class="c1">// SpringBoot插件。Kotlin默认一切final，Spring又需要各种代理，所以需要特殊处理。同时提供`spring:bootRun`命令</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;org.springframework.boot&#39;</span>
+<span class="c1">// Spring依赖管理。自动选择依赖版本。Gradle中没有Maven那样内建的依赖管理(通过Parent POM 实现)，需要插件处理。</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;io.spring.dependency-management&#39;</span>
+
+<span class="n">mainClassName</span> <span class="o">=</span> <span class="s1">&#39;bj.App&#39;</span>
+
+<span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">compile</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-stdlib&quot;</span> <span class="c1">// Kotlin是要在JVM里跑的。那么多语言特性，没有依赖库怎么跑</span>
+    <span class="n">compile</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-reflect&quot;</span> <span class="c1">// 无反射不Spring。反射不在Kotlin标准库，需单独添加</span>
+    <span class="n">compile</span> <span class="s1">&#39;org.springframework.boot:spring-boot-starter&#39;</span> <span class="c1">// 创建单机应用所需要的最基本的Starter</span>
+<span class="o">}</span>
+<span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/central&quot;</span>  <span class="o">}</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span>  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p><strong>bj/App.kt</strong></p>
+<div class="highlight"><pre><span></span><span class="k">package</span> <span class="nn">bj</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.SpringApplication</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.context.event.ApplicationReadyEvent</span>
+<span class="k">import</span> <span class="nn">org.springframework.context.ApplicationListener</span>
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 18-6-27 下午10:08</span>
+<span class="cm"> */</span>
+<span class="nd">@SpringBootApplication</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="nc">App</span> <span class="p">:</span> <span class="n">ApplicationListener</span><span class="o">&lt;</span><span class="n">ApplicationReadyEvent</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">onApplicationEvent</span><span class="p">(</span><span class="n">event</span><span class="p">:</span> <span class="n">ApplicationReadyEvent?)</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Ready.&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="kd">companion</span> <span class="kd">object</span> <span class="err">{</span>
+        <span class="nd">@JvmStatic</span>
+        <span class="kd">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>注意:</p>
+<p>主类一定要放在包里头(不能用root或者说default)，否则报java.lang.ClassNotFoundException: org.springframework.dao.DataAccessException</p>
+<h2>创建Ktor应用</h2>
+<p><strong>build.gradle</strong></p>
+<div class="highlight"><pre><span></span><span class="n">buildscript</span> <span class="o">{</span>
+    <span class="n">dependencies</span> <span class="o">{</span>
+        <span class="n">classpath</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.10&quot;</span>
+    <span class="o">}</span>
+    <span class="n">repositories</span> <span class="o">{</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/central&quot;</span>  <span class="o">}</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span>  <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;application&#39;</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;kotlin&#39;</span>
+
+<span class="n">mainClassName</span> <span class="o">=</span> <span class="s1">&#39;App&#39;</span>
+
+<span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">compile</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-stdlib-jdk8&quot;</span>
+    <span class="c1">// 2. 添加Ktor依赖</span>
+    <span class="n">compile</span> <span class="s2">&quot;io.ktor:ktor-server-netty:1.0.0-beta-3&quot;</span>
+    <span class="c1">// 3.  添加Logback依赖。Ktor只依赖了Slf4J，没有Slf4J的具体实现。如果不导入一个Slf4J的实现，将打印不出日志来</span>
+    <span class="n">compile</span> <span class="s2">&quot;ch.qos.logback:logback-classic:1.2.3&quot;</span>
+<span class="o">}</span>
+
+<span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/central&quot;</span>  <span class="o">}</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span>  <span class="o">}</span>
+    <span class="c1">// 1. 添加Ktor仓库。没出正式版，所以Maven中心仓没有最新版本</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://dl.bintray.com/kotlin/ktor&quot;</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p><strong>bj/App.kt</strong></p>
+<div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">io.ktor.application.call</span>
+<span class="k">import</span> <span class="nn">io.ktor.http.ContentType</span>
+<span class="k">import</span> <span class="nn">io.ktor.response.respondText</span>
+<span class="k">import</span> <span class="nn">io.ktor.routing.get</span>
+<span class="k">import</span> <span class="nn">io.ktor.routing.routing</span>
+<span class="k">import</span> <span class="nn">io.ktor.server.engine.embeddedServer</span>
+<span class="k">import</span> <span class="nn">io.ktor.server.netty.Netty</span>
+
+<span class="kd">class</span> <span class="nc">App</span> <span class="p">{</span>
+    <span class="kd">companion</span> <span class="kd">object</span> <span class="err">{</span>
+        <span class="nd">@JvmStatic</span>
+        <span class="kd">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">val</span> <span class="nv">server</span> <span class="o">=</span> <span class="n">embeddedServer</span><span class="p">(</span><span class="n">Netty</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="m">8080</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">routing</span> <span class="p">{</span>
+                    <span class="k">get</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">call</span><span class="p">.</span><span class="na">respondText</span><span class="p">(</span><span class="s">&quot;xx&quot;</span><span class="p">,</span> <span class="n">ContentType</span><span class="p">.</span><span class="na">Text</span><span class="p">.</span><span class="na">Plain</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">server</span><span class="p">.</span><span class="na">start</span><span class="p">(</span><span class="n">wait</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h2>Ktor应用打包</h2>
+<p><strong>build.gradle</strong></p>
+<p><code>gradle build</code> 默认打包的jar不带Manifest，也不是FatJar，不能直接运行。添加<code>shadow</code>插件后，将多打包出一个可以直接运行的FatJar</p>
+<div class="highlight"><pre><span></span><span class="n">buildscript</span> <span class="o">{</span>
+    <span class="n">dependencies</span> <span class="o">{</span>
+        <span class="n">classpath</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.10&quot;</span>
+        <span class="c1">// 1. 添加shadow插件的依赖</span>
+        <span class="n">classpath</span> <span class="s2">&quot;com.github.jengelman.gradle.plugins:shadow:4.0.2&quot;</span>
+    <span class="o">}</span>
+    <span class="n">repositories</span> <span class="o">{</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/central&quot;</span>  <span class="o">}</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span>  <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;application&#39;</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;kotlin&#39;</span>
+
+<span class="c1">// 2. 应用shadow插件</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;com.github.johnrengelman.shadow&#39;</span>
+
+<span class="c1">// 需要带main函数的kotlin文件main.kt或Main.kt</span>
+<span class="n">mainClassName</span> <span class="o">=</span> <span class="s1">&#39;MainKt&#39;</span>
+
+<span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">compile</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-stdlib-jdk8&quot;</span>
+    <span class="n">compile</span> <span class="s2">&quot;io.ktor:ktor-server-netty:1.0.0-beta-3&quot;</span>
+    <span class="c1">// 用于组装HTML。非必选依赖</span>
+    <span class="n">compile</span> <span class="s2">&quot;io.ktor:ktor-html-builder:1.0.0-beta-3&quot;</span>
+    <span class="n">compile</span> <span class="s2">&quot;ch.qos.logback:logback-classic:1.2.3&quot;</span>
+<span class="o">}</span>
+
+<span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/central&quot;</span>  <span class="o">}</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span>  <span class="o">}</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://dl.bintray.com/kotlin/ktor&quot;</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<h2>Ktor应用安装到Docker</h2>
+<ol>
+<li><code>gradle build</code></li>
+<li><code>vim Dockerfile</code></li>
+<li><code>docker build --tag=hellokt .</code></li>
+<li><code>docker run -it --rm -p 8080:8080 hellokt</code></li>
+</ol>
+<p><strong>Dockerfile</strong></p>
+<div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">openjdk:8-jre-alpine</span>
+<span class="k">RUN</span> mkdir /app
+<span class="k">COPY</span> ./build/libs/hellokt-all.jar /app
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">CMD</span> <span class="p">[</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;-jar&quot;</span><span class="p">,</span> <span class="s2">&quot;hellokt-all.jar&quot;</span> <span class="p">]</span>
+</pre></div>
+<h2>Ktor使用配置文件(application.conf)</h2>
+<p>Ktor使用配置文件，需要更改Application入口类，并在配置文件中指明模块，最后通过<code>gradle run</code>命令运行</p>
+<p><strong>main.kt</strong></p>
+<div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">io.ktor.application.Application</span>
+<span class="k">import</span> <span class="nn">io.ktor.application.call</span>
+<span class="k">import</span> <span class="nn">io.ktor.application.install</span>
+<span class="k">import</span> <span class="nn">io.ktor.features.CallLogging</span>
+<span class="k">import</span> <span class="nn">io.ktor.features.DefaultHeaders</span>
+<span class="k">import</span> <span class="nn">io.ktor.response.respondText</span>
+<span class="k">import</span> <span class="nn">io.ktor.routing.Routing</span>
+<span class="k">import</span> <span class="nn">io.ktor.routing.get</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 18-11-18 下午12:10</span>
+<span class="cm"> */</span>
+
+<span class="kd">fun</span> <span class="n">Application</span><span class="p">.</span><span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">install</span><span class="p">(</span><span class="n">DefaultHeaders</span><span class="p">)</span>
+    <span class="n">install</span><span class="p">(</span><span class="n">CallLogging</span><span class="p">)</span>
+    <span class="n">install</span><span class="p">(</span><span class="n">Routing</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">get</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">call</span><span class="p">.</span><span class="na">respondText</span><span class="p">(</span><span class="s">&quot;Hello &quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><strong>application.conf</strong></p>
+<p>放到Resources根目录</p>
+<div class="highlight"><pre><span></span><span class="k">ktor</span> <span class="p">{</span>
+  <span class="kn">deployment</span> <span class="p">{</span>
+    <span class="kn">port</span> <span class="p">=</span> <span class="mi">8088</span>
+  <span class="err">}</span>
+
+  <span class="s">application</span> <span class="p">{</span>
+    <span class="kn">modules</span> <span class="p">=</span> <span class="s">[MainKt.main]</span>
+  <span class="err">}</span>
+<span class="err">}</span>
+</pre></div>
+<p>在gradle构建脚本中更改mainClassName</p>
+<div class="highlight"><pre><span></span><span class="n">mainClassName</span> <span class="o">=</span> <span class="s1">&#39;io.ktor.server.netty.EngineMain&#39;</span>
+</pre></div>
+<h2>在Ktor项目中使用JWT</h2>
+<p><strong>build.gradle</strong></p>
+<div class="highlight"><pre><span></span><span class="n">buildscript</span> <span class="o">{</span>
+    <span class="n">dependencies</span> <span class="o">{</span>
+        <span class="n">classpath</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.10&quot;</span>
+        <span class="n">classpath</span> <span class="s2">&quot;com.github.jengelman.gradle.plugins:shadow:4.0.2&quot;</span>
+    <span class="o">}</span>
+    <span class="n">repositories</span> <span class="o">{</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/central&quot;</span> <span class="o">}</span>
+        <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span> <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;application&#39;</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;kotlin&#39;</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;com.github.johnrengelman.shadow&#39;</span>
+
+<span class="n">mainClassName</span> <span class="o">=</span> <span class="s1">&#39;io.ktor.server.netty.EngineMain&#39;</span>
+
+<span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">compile</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-stdlib-jdk8&quot;</span>
+    <span class="n">compile</span> <span class="s2">&quot;io.ktor:ktor-server-netty:1.0.0-beta-3&quot;</span>
+    <span class="n">compile</span> <span class="s2">&quot;io.ktor:ktor-html-builder:1.0.0-beta-3&quot;</span>
+    <span class="n">compile</span> <span class="s2">&quot;io.ktor:ktor-jackson:1.0.0-beta-3&quot;</span>
+    <span class="n">compile</span> <span class="s2">&quot;io.ktor:ktor-auth:1.0.0-beta-3&quot;</span>
+    <span class="n">compile</span> <span class="s2">&quot;io.ktor:ktor-auth-jwt:1.0.0-beta-3&quot;</span>
+    <span class="n">compile</span> <span class="s2">&quot;ch.qos.logback:logback-classic:1.2.3&quot;</span>
+<span class="o">}</span>
+
+<span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/central&quot;</span> <span class="o">}</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span> <span class="o">}</span>
+    <span class="n">maven</span> <span class="o">{</span> <span class="n">url</span> <span class="s2">&quot;https://dl.bintray.com/kotlin/ktor&quot;</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p><strong>main.kt</strong></p>
+<div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">com.auth0.jwt.JWT</span>
+<span class="k">import</span> <span class="nn">com.auth0.jwt.algorithms.Algorithm</span>
+<span class="k">import</span> <span class="nn">com.fasterxml.jackson.databind.SerializationFeature</span>
+<span class="k">import</span> <span class="nn">io.ktor.application.Application</span>
+<span class="k">import</span> <span class="nn">io.ktor.application.call</span>
+<span class="k">import</span> <span class="nn">io.ktor.application.install</span>
+<span class="k">import</span> <span class="nn">io.ktor.auth.Authentication</span>
+<span class="k">import</span> <span class="nn">io.ktor.auth.UserIdPrincipal</span>
+<span class="k">import</span> <span class="nn">io.ktor.auth.authenticate</span>
+<span class="k">import</span> <span class="nn">io.ktor.auth.jwt.jwt</span>
+<span class="k">import</span> <span class="nn">io.ktor.auth.principal</span>
+<span class="k">import</span> <span class="nn">io.ktor.features.CORS</span>
+<span class="k">import</span> <span class="nn">io.ktor.features.ContentNegotiation</span>
+<span class="k">import</span> <span class="nn">io.ktor.features.StatusPages</span>
+<span class="k">import</span> <span class="nn">io.ktor.http.HttpHeaders</span>
+<span class="k">import</span> <span class="nn">io.ktor.http.HttpMethod</span>
+<span class="k">import</span> <span class="nn">io.ktor.http.HttpStatusCode</span>
+<span class="k">import</span> <span class="nn">io.ktor.jackson.jackson</span>
+<span class="k">import</span> <span class="nn">io.ktor.request.receive</span>
+<span class="k">import</span> <span class="nn">io.ktor.response.respond</span>
+<span class="k">import</span> <span class="nn">io.ktor.routing.get</span>
+<span class="k">import</span> <span class="nn">io.ktor.routing.post</span>
+<span class="k">import</span> <span class="nn">io.ktor.routing.route</span>
+<span class="k">import</span> <span class="nn">io.ktor.routing.routing</span>
+<span class="k">import</span> <span class="nn">java.util.*</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 18-11-18 下午12:10</span>
+<span class="cm"> */</span>
+
+<span class="kd">class</span> <span class="nc">InvalidCredentialsException</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">RuntimeException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="kd">data</span> <span class="kd">class</span> <span class="nc">Snippet</span><span class="p">(</span><span class="kd">val</span> <span class="nv">user</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kd">val</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+
+<span class="kd">data</span> <span class="kd">class</span> <span class="nc">PostSnippet</span><span class="p">(</span><span class="kd">val</span> <span class="nv">snippet</span><span class="p">:</span> <span class="n">Text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">data</span> <span class="kd">class</span> <span class="nc">Text</span><span class="p">(</span><span class="kd">val</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">open</span> <span class="kd">class</span> <span class="nc">SimpleJwt</span><span class="p">(</span><span class="kd">val</span> <span class="nv">secret</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">algorithm</span> <span class="o">=</span> <span class="n">Algorithm</span><span class="p">.</span><span class="na">HMAC256</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+    <span class="kd">val</span> <span class="nv">verifier</span> <span class="o">=</span> <span class="n">JWT</span><span class="p">.</span><span class="na">require</span><span class="p">(</span><span class="n">algorithm</span><span class="p">).</span><span class="na">build</span><span class="p">()</span>
+    <span class="kd">fun</span> <span class="nf">sign</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">):</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">JWT</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">withClaim</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">).</span><span class="na">sign</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">User</span><span class="p">(</span><span class="kd">val</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kd">val</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+
+<span class="kd">val</span> <span class="nv">users</span> <span class="o">=</span> <span class="n">Collections</span><span class="p">.</span><span class="na">synchronizedMap</span><span class="p">(</span>
+        <span class="n">listOf</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span><span class="p">)).</span><span class="na">associateBy</span> <span class="p">{</span> <span class="nb">it</span><span class="p">.</span><span class="na">name</span> <span class="p">}.</span><span class="na">toMutableMap</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="kd">class</span> <span class="nc">LoginRegister</span><span class="p">(</span><span class="kd">val</span> <span class="nv">user</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kd">val</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+
+<span class="kd">val</span> <span class="nv">snippets</span> <span class="o">=</span> <span class="n">Collections</span><span class="p">.</span><span class="na">synchronizedList</span><span class="p">(</span><span class="n">mutableListOf</span><span class="p">(</span>
+        <span class="n">Snippet</span><span class="p">(</span><span class="s">&quot;demo&quot;</span><span class="p">,</span> <span class="s">&quot;hello&quot;</span><span class="p">),</span>
+        <span class="n">Snippet</span><span class="p">(</span><span class="s">&quot;demo&quot;</span><span class="p">,</span> <span class="s">&quot;world&quot;</span><span class="p">)</span>
+<span class="p">))</span>
+
+<span class="kd">fun</span> <span class="n">Application</span><span class="p">.</span><span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">//    install(DefaultHeaders)</span>
+<span class="c1">//    install(CallLogging)</span>
+    <span class="kd">val</span> <span class="nv">simpleJwt</span> <span class="o">=</span> <span class="n">SimpleJwt</span><span class="p">(</span><span class="s">&quot;my-super-secret-for-jwt&quot;</span><span class="p">)</span>
+
+    <span class="n">install</span><span class="p">(</span><span class="n">ContentNegotiation</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">jackson</span> <span class="p">{</span>
+            <span class="n">enable</span><span class="p">(</span><span class="n">SerializationFeature</span><span class="p">.</span><span class="na">INDENT_OUTPUT</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">install</span><span class="p">(</span><span class="n">Authentication</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">jwt</span> <span class="p">{</span>
+            <span class="n">verifier</span><span class="p">(</span><span class="n">simpleJwt</span><span class="p">.</span><span class="na">verifier</span><span class="p">)</span>
+            <span class="n">validate</span> <span class="p">{</span>
+                <span class="n">UserIdPrincipal</span><span class="p">(</span><span class="nb">it</span><span class="p">.</span><span class="na">payload</span><span class="p">.</span><span class="na">getClaim</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="na">asString</span><span class="p">())</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">install</span><span class="p">(</span><span class="n">StatusPages</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">exception</span><span class="o">&lt;</span><span class="n">InvalidCredentialsException</span><span class="o">&gt;</span> <span class="p">{</span>
+            <span class="n">call</span><span class="p">.</span><span class="na">respond</span><span class="p">(</span><span class="n">HttpStatusCode</span><span class="p">.</span><span class="na">Unauthorized</span><span class="p">,</span> <span class="n">mapOf</span><span class="p">(</span><span class="s">&quot;OK&quot;</span> <span class="n">to</span> <span class="kc">false</span><span class="p">,</span> <span class="s">&quot;error&quot;</span> <span class="n">to</span> <span class="p">(</span><span class="nb">it</span><span class="p">.</span><span class="na">message</span> <span class="o">?:</span> <span class="s">&quot;&quot;</span><span class="p">)))</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">install</span><span class="p">(</span><span class="n">CORS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">method</span><span class="p">(</span><span class="n">HttpMethod</span><span class="p">.</span><span class="na">Options</span><span class="p">)</span>
+        <span class="n">method</span><span class="p">(</span><span class="n">HttpMethod</span><span class="p">.</span><span class="na">Get</span><span class="p">)</span>
+        <span class="n">method</span><span class="p">(</span><span class="n">HttpMethod</span><span class="p">.</span><span class="na">Post</span><span class="p">)</span>
+        <span class="n">method</span><span class="p">(</span><span class="n">HttpMethod</span><span class="p">.</span><span class="na">Put</span><span class="p">)</span>
+        <span class="n">method</span><span class="p">(</span><span class="n">HttpMethod</span><span class="p">.</span><span class="na">Delete</span><span class="p">)</span>
+        <span class="n">method</span><span class="p">(</span><span class="n">HttpMethod</span><span class="p">.</span><span class="na">Patch</span><span class="p">)</span>
+        <span class="n">header</span><span class="p">(</span><span class="n">HttpHeaders</span><span class="p">.</span><span class="na">Authorization</span><span class="p">)</span>
+        <span class="n">allowCredentials</span> <span class="o">=</span> <span class="kc">true</span>
+        <span class="n">anyHost</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="n">routing</span> <span class="p">{</span>
+        <span class="n">route</span><span class="p">(</span><span class="s">&quot;/snippets&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">authenticate</span> <span class="p">{</span>
+                <span class="k">get</span> <span class="p">{</span>
+                    <span class="n">call</span><span class="p">.</span><span class="na">respond</span><span class="p">(</span><span class="n">mapOf</span><span class="p">(</span><span class="s">&quot;snippets&quot;</span> <span class="n">to</span> <span class="n">synchronized</span><span class="p">(</span><span class="n">snippets</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">snippets</span><span class="p">.</span><span class="na">toList</span><span class="p">()</span>
+                    <span class="p">}))</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">authenticate</span> <span class="p">{</span>
+                <span class="n">post</span> <span class="p">{</span>
+                    <span class="kd">val</span> <span class="nv">post</span> <span class="o">=</span> <span class="n">call</span><span class="p">.</span><span class="na">receive</span><span class="o">&lt;</span><span class="n">PostSnippet</span><span class="o">&gt;</span><span class="p">()</span>
+                    <span class="kd">val</span> <span class="nv">principal</span> <span class="o">=</span> <span class="n">call</span><span class="p">.</span><span class="na">principal</span><span class="o">&lt;</span><span class="n">UserIdPrincipal</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">?:</span> <span class="n">error</span><span class="p">(</span><span class="s">&quot;No principle&quot;</span><span class="p">)</span>
+                    <span class="n">snippets</span> <span class="o">+=</span> <span class="n">Snippet</span><span class="p">(</span><span class="n">principal</span><span class="p">.</span><span class="na">name</span><span class="p">,</span> <span class="n">post</span><span class="p">.</span><span class="na">snippet</span><span class="p">.</span><span class="na">text</span><span class="p">)</span>
+                    <span class="n">call</span><span class="p">.</span><span class="na">respond</span><span class="p">(</span><span class="n">mapOf</span><span class="p">(</span><span class="s">&quot;OK&quot;</span> <span class="n">to</span> <span class="kc">true</span><span class="p">))</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">post</span><span class="p">(</span><span class="s">&quot;/login-register&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">val</span> <span class="nv">post</span> <span class="o">=</span> <span class="n">call</span><span class="p">.</span><span class="na">receive</span><span class="o">&lt;</span><span class="n">LoginRegister</span><span class="o">&gt;</span><span class="p">()</span>
+            <span class="kd">val</span> <span class="nv">user</span> <span class="o">=</span> <span class="n">users</span><span class="p">.</span><span class="na">getOrPut</span><span class="p">(</span><span class="n">post</span><span class="p">.</span><span class="na">user</span><span class="p">)</span> <span class="p">{</span> <span class="n">User</span><span class="p">(</span><span class="n">post</span><span class="p">.</span><span class="na">user</span><span class="p">,</span> <span class="n">post</span><span class="p">.</span><span class="na">password</span><span class="p">)</span> <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">password</span> <span class="o">!=</span> <span class="n">post</span><span class="p">.</span><span class="na">password</span><span class="p">)</span> <span class="k">throw</span> <span class="n">InvalidCredentialsException</span><span class="p">(</span><span class="s">&quot;Invalid credentials&quot;</span><span class="p">)</span>
+            <span class="n">call</span><span class="p">.</span><span class="na">respond</span><span class="p">(</span><span class="n">mapOf</span><span class="p">(</span><span class="s">&quot;token&quot;</span> <span class="n">to</span> <span class="n">simpleJwt</span><span class="p">.</span><span class="na">sign</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">name</span><span class="p">)))</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h2>Ktor与Websocket</h2>
+<p>需要添加Websocket的feature:</p>
+<p><code>compile &quot;io.ktor:ktor-websockets:1.0.0-beta-3&quot;</code></p>
+<p><strong>main.kt</strong></p>
+<div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">io.ktor.application.Application</span>
+<span class="k">import</span> <span class="nn">io.ktor.application.install</span>
+<span class="k">import</span> <span class="nn">io.ktor.http.cio.websocket.DefaultWebSocketSession</span>
+<span class="k">import</span> <span class="nn">io.ktor.http.cio.websocket.Frame</span>
+<span class="k">import</span> <span class="nn">io.ktor.http.cio.websocket.readText</span>
+<span class="k">import</span> <span class="nn">io.ktor.routing.routing</span>
+<span class="k">import</span> <span class="nn">io.ktor.websocket.WebSockets</span>
+<span class="k">import</span> <span class="nn">io.ktor.websocket.webSocket</span>
+<span class="k">import</span> <span class="nn">java.util.*</span>
+<span class="k">import</span> <span class="nn">java.util.concurrent.atomic.AtomicInteger</span>
+<span class="k">import</span> <span class="nn">kotlin.collections.LinkedHashSet</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 18-11-18 下午12:10</span>
+<span class="cm"> */</span>
+
+<span class="kd">class</span> <span class="nc">ChatClient</span><span class="p">(</span><span class="kd">val</span> <span class="nv">session</span><span class="p">:</span> <span class="n">DefaultWebSocketSession</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">companion</span> <span class="kd">object</span> <span class="err">{</span>
+        <span class="kd">var</span> <span class="nv">lastId</span> <span class="o">=</span> <span class="n">AtomicInteger</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">val</span> <span class="nv">id</span> <span class="o">=</span> <span class="n">lastId</span><span class="p">.</span><span class="na">getAndIncrement</span><span class="p">()</span>
+    <span class="kd">val</span> <span class="nv">name</span> <span class="o">=</span> <span class="s">&quot;user</span><span class="si">$</span><span class="n">id</span><span class="s">&quot;</span>
+<span class="p">}</span>
+
+<span class="kd">fun</span> <span class="n">Application</span><span class="p">.</span><span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">install</span><span class="p">(</span><span class="n">WebSockets</span><span class="p">)</span>
+
+    <span class="n">routing</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="nv">wsConnections</span> <span class="o">=</span> <span class="n">Collections</span><span class="p">.</span><span class="na">synchronizedSet</span><span class="p">(</span><span class="n">LinkedHashSet</span><span class="o">&lt;</span><span class="n">ChatClient</span><span class="o">&gt;</span><span class="p">())</span>
+
+        <span class="n">webSocket</span><span class="p">(</span><span class="s">&quot;/chat&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">val</span> <span class="nv">client</span> <span class="o">=</span> <span class="n">ChatClient</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+            <span class="n">wsConnections</span> <span class="o">+=</span> <span class="n">client</span>
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kd">val</span> <span class="nv">frame</span> <span class="o">=</span> <span class="n">incoming</span><span class="p">.</span><span class="na">receive</span><span class="p">()</span>
+                    <span class="k">when</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="k">is</span> <span class="n">Frame</span><span class="p">.</span><span class="na">Text</span> <span class="o">-&gt;</span> <span class="p">{</span>
+                            <span class="kd">val</span> <span class="nv">text</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="na">readText</span><span class="p">()</span>
+                            <span class="k">for</span> <span class="p">(</span><span class="n">conn</span> <span class="k">in</span> <span class="n">wsConnections</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="kd">val</span> <span class="nv">txt</span> <span class="o">=</span> <span class="n">wsConnections</span><span class="p">.</span><span class="na">map</span> <span class="p">{</span> <span class="nb">it</span><span class="p">.</span><span class="na">name</span> <span class="p">}.</span><span class="na">joinToString</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">)</span>
+                                <span class="n">conn</span><span class="p">.</span><span class="na">session</span><span class="p">.</span><span class="na">outgoing</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">Frame</span><span class="p">.</span><span class="na">Text</span><span class="p">(</span><span class="n">txt</span><span class="p">))</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">Exception</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">println</span><span class="p">(</span><span class="s">&quot;Exception: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+                <span class="n">println</span><span class="p">(</span><span class="s">&quot;A connection has gone&quot;</span><span class="p">)</span>
+                <span class="n">wsConnections</span> <span class="o">-=</span> <span class="n">client</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>代码实现的功能：广播消息到每个WS客户端</p>
+<p>文章首发: <a href="http://baijifeilong.github.io/2018/11/18/kotlin-best-practice/">http://baijifeilong.github.io/2018/11/18/kotlin-best-practice/</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/11/18/kotlin-best-practice/index.html";
+        this.page.identifier = "/2018/11/18/kotlin-best-practice/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

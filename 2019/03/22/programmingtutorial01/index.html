@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>面向聪明小白的编程入门教程 开篇(Part 1) - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>面向聪明小白的编程入门教程 开篇(Part 1)</h1>
+    <p>作为一个在磕磕绊绊中蜗行摸索，一步步艰辛成长起来的半吊子程序员，我很早之前就有编写一个编程入门教程的想法。编程虽然不难，但是如果没有过来人的清晰指路，难免会一次次地掉进坑里。轻则在坑里摸爬滚打几天，重则会完全丧失学习的兴趣。今天正好闲来无事，着手写下此教程的开篇。</p>
+<h2>本教程适用读者</h2>
+<p>本教程面向的是小白。这里的小白说的是编程小白，不是计算机小白。如果你没说过操作系统，不知道什么是浏览器，更不会在浏览器里添加书签（收藏），那你此时应该按下键盘上的<code>Ctrl+W</code>关闭此页面（苹果系统需要按下<code>Meta+W</code>，不过如果你是真·计算机小白的话，应该已经看不懂我在说啥了吧）。</p>
+<p>本教程面向的是聪明的小白。作为一名小白，又不够聪明的话，是不适合学编程的。聪明这个词很难定义。我认为聪明的第一要义是勤奋。如果脑子都懒得动，就算天生智商再高，脑子终究也会秀逗。聪明的第二要义是谦逊。懂得越多，越能发现自己的无知。无知并不可怕，可怕的是你今天跟昨天一样无知，甚至比昨天更无知。一个人活了几十年，辛辛苦苦走出了楚门的世界，但你敢保证他看到的新世界不是一个更大的更楚门的世界吗？</p>
+<h2>编程是什么</h2>
+<p>编程，英文名叫<code>Programming</code>，意思是<code>编写程序</code>。何谓程序，就是控制计算机运行的一段指令。何谓指令，只可意会不可言传，不懂的话慢慢体会吧。</p>
+<p>程序是用来控制计算机的，但是直接控制计算机需要用到<code>CPU指令</code>。CPU指令一般使用晦涩难懂的汇编语言（低级语言）代码编写，需要了解一些计算机底层的运行原理才能看得明白。作为一名小白，还是选用高级语言来入门吧。对于编程语言来说，不是越高级越复杂，而是越高级离计算机越远，离人越近，越容易看懂。</p>
+<h2>关于操作系统</h2>
+<p>这门教程里的编程，不是广义的编程，是面向操作系统的编程。直接控制硬件太过复杂，一般情况下，我们都是直接控制操作系统，让操作系统来控制硬件。</p>
+<p>广义的操作系统，除了运行在电脑上，也运行在手机、游戏机、手环等智能设备上。</p>
+<p>本教程面向的是电脑操作系统。常用的电脑操作系统，按使用人数排序，主要是微软公司的<code>Windows</code>(视窗操作系统)，苹果公司的<code>macOS</code>(也俗称苹果系统)和任何人都可以致敬出一个的<code>Linux</code>操作系统。</p>
+<p>如果你没听说过苹果系统的话，你用的应该就是Windows操作系统了。如果你是Linux用户，就别说自己是编程小白了，<code>Ctrl+W</code>走好不送。</p>
+<p>由于Windows系统的用户基数太大，因此本教程主要面向Windows用户，macOS用户可适当参考。</p>
+<p>Windows操作系统，现在主要有三大分支，<code>Windows 10 / Windows 8</code>，<code>Windows 7 / Windows Vista</code>和<code>Windows XP</code>。由于我本人是从<code>Windows Vista</code>开始玩电脑的，有<code>Vista</code>情结，所以至今使用的还是<code>Windows 7</code>。对于使用其他Windows版本的用户，本教程可能会有一丝出入，如果照顾不周，请自行触类旁通。</p>
+<p>知道自己用的是哪个操作系统后，就开始学习编程吧。</p>
+<h2>关于穿墙</h2>
+<p>穿墙，为的是翻越大中华局域网，进入国际互联网。这个伟大的防火墙，就是我们大中华局域网的上帝，God is a girl，上帝的脾气是捉摸不透的，理论上本教程的所有操作都不需要穿墙，但是如果你人品不好，可能会在某个操作上卡上数小时。碰到这种情况的话，您就需要穿墙来降降肾上腺素了。</p>
+<p>穿墙与建墙是一个博弈的过程。事实上，只要上帝愿意，你就永远无法穿过这堵墙。上帝不想让你穿墙，但是想让某些人穿墙，但是他又做不到精准控制，所以我们才有穿墙的机会。如果你愿意的话，就感谢上帝吧。</p>
+<p>上不了外网，必须借助一个可以上外网，你又能访问得到的机器做跳板，来代为处理（代理）你的上网请求。这样的一台（或者多台）服务器，叫做代理服务器。自己搭建一个代理服务器，门槛太高，需要花钱，而且被封杀的机率也高。对于小白用户来说，最好直接使用第三方的代理服务器。</p>
+<p>目前，<a href="https://github.com/getlantern/lantern">蓝灯</a>是最好的穿墙选择。免费（到一定流量后会限速）、高速、相对稳定、支持大部分主流操作系统。蓝灯的下载、安装与使用非常简单，几乎是一键操作。在蓝灯的主页上可以找到对应操作系统的下载链接。对于Windows用户，下载链接是<a href="https://raw.githubusercontent.com/getlantern/lantern-binaries/master/lantern-installer.exe">蓝灯Windows安装器</a>。下载完成后，双击即可安装运行，并自动接管系统的网络连接。</p>
+<p>使用蓝灯有以下注意事项:</p>
+<ol>
+<li>蓝灯的下载链接也可能被墙，多试几次即可</li>
+<li>蓝灯开启后，打开<a href="https://www.google.com">谷歌</a>可以查看是否穿墙成功</li>
+<li>穿墙可能会影响上网速度，需要注意</li>
+<li>蓝灯默认的穿墙策略是智能穿墙，即只穿黑名单网站。如果有些站点穿不过去，需要改用全局穿墙模式</li>
+<li>蓝灯异常退出可能会导致整个系统断网。这时候需要手动取消蓝灯接管操作系统网络连接的配置。配置入口：<code>Internet选项 -&gt; 连接 -&gt; 局域网设置 -&gt; 使用自动配置脚本</code>。取消打勾，即可退出蓝灯代理模式。<code>Internet选项</code>窗口可在控制面板查找，也可在开始菜单中搜索。</li>
+</ol>
+<h2>附录</h2>
+<h3>附录一 汇编语言HelloWorld窗体应用程序代码</h3>
+<div class="highlight"><pre><span></span><span class="nf">.386</span>
+<span class="na">.model</span> <span class="no">flat</span><span class="p">,</span><span class="no">stdcall</span>
+<span class="nf">option</span> <span class="no">casemap</span><span class="p">:</span><span class="no">none</span>
+<span class="nf">include</span> <span class="err">\</span><span class="no">masm32</span><span class="err">\</span><span class="no">include</span><span class="err">\</span><span class="no">windows.inc</span>
+<span class="nf">include</span> <span class="err">\</span><span class="no">masm32</span><span class="err">\</span><span class="no">include</span><span class="err">\</span><span class="no">kernel32.inc</span>
+<span class="nf">includelib</span> <span class="err">\</span><span class="no">masm32</span><span class="err">\</span><span class="no">lib</span><span class="err">\</span><span class="no">kernel32.lib</span>
+<span class="nf">include</span> <span class="err">\</span><span class="no">masm32</span><span class="err">\</span><span class="no">include</span><span class="err">\</span><span class="no">user32.inc</span>
+<span class="nf">includelib</span> <span class="err">\</span><span class="no">masm32</span><span class="err">\</span><span class="no">lib</span><span class="err">\</span><span class="no">user32.lib</span>
+
+<span class="na">.data</span>
+<span class="nf">MsgBoxCaption</span>  <span class="no">db</span> <span class="err">&quot;</span><span class="no">Iczelion</span> <span class="no">Tutorial</span> <span class="no">No.2</span><span class="err">&quot;</span><span class="p">,</span><span class="mi">0</span>
+<span class="nf">MsgBoxText</span>       <span class="no">db</span> <span class="err">&quot;</span><span class="no">Win32</span> <span class="no">Assembly</span> <span class="no">is</span> <span class="no">Great</span><span class="p">!</span><span class="err">&quot;</span><span class="p">,</span><span class="mi">0</span>
+
+<span class="na">.code</span>
+<span class="nl">start:</span>
+<span class="nf">invoke</span> <span class="no">MessageBox</span><span class="p">,</span> <span class="no">NULL</span><span class="p">,</span> <span class="no">addr</span> <span class="no">MsgBoxText</span><span class="p">,</span> <span class="no">addr</span> <span class="no">MsgBoxCaption</span><span class="p">,</span> <span class="no">MB_OK</span>
+<span class="nf">invoke</span> <span class="no">ExitProcess</span><span class="p">,</span> <span class="no">NULL</span>
+<span class="nf">end</span> <span class="no">start</span>
+</pre></div>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2019/03/22/programmingtutorial01/index.html";
+        this.page.identifier = "/2019/03/22/programmingtutorial01/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

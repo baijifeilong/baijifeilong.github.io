@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>面向聪明小白的编程入门教程 熟悉Qt(Part 5) - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>面向聪明小白的编程入门教程 熟悉Qt(Part 5)</h1>
+    <p>对Python的语法有一些基本的了解后，是时候一笔笔勾描我们的文档转换器了。</p>
+<h2>1. 更换新的Python控制台</h2>
+<p>在命令行下打<code>python</code>再回车，会开启一个Python控制台。这个控制台，专业术语叫做REPL(“读取-求值-输出”循环，Read-Eval-Print Loop)，是一个交互式编程环境。意思是，我们不需要写完整段代码再全部运行，而是可以一行代码一行代码地编写，一行代码一行代码地执行。对于初学者来说，这个环境非常有用，可以及时发现程序的错误，也可以直观感受到程序的执行流程。</p>
+<p>Python自带的控制台，功能非常简陋，没有代码高亮，没有代码补全。因此，我推荐使用第三方提供的Python控制台。常用的第三方Python控制台主要有<code>BPython</code>、<code>PTPython</code>和<code>IPython</code>。这三个控制台，经过我的比较，分别有以下特点：</p>
+<ul>
+<li><code>BPython</code> 代码补全的速度最快，但是代码补全不完整，有的符号补不出来，比如<code>__builtins__</code>(Python内建模块，默认自动导入)</li>
+<li><code>PTPython</code> 代码补全的速度稍慢，但是补全地比较完整</li>
+<li><code>IPython</code> 代码补全地比较完整，但是需要按<code>Tab</code>键触发补全，特点是功能强大，比如可以直接执行Shell(系统命令行)</li>
+</ul>
+<p>综合考虑，我们选择使用<code>PTPython</code>。建议读者将这三个控制台都安装上，自行比较。使用PIP安装：</p>
+<ul>
+<li><code>BPython</code>: <code>pip install bpython</code></li>
+<li><code>PTPython</code>: <code>pip install ptpython</code></li>
+<li><code>IPython</code>: <code>pip install ipython</code></li>
+</ul>
+<h2>2. 在控制台中编写并测试Qt应用</h2>
+<p>为了照顾小白用户，前期的教程在<code>Windows</code>下编写。编程环境准备得差不多后，<code>Windows</code>和<code>macOS</code>的用法就差不多了。从现在起，我就切到我用着更顺手的黑苹果系统上继续编写这组教程了。在之后的教程中，命令行下的输出可能会跟<code>Windows</code>读者的不太一样。</p>
+<h3>2.1 初识PTPython</h3>
+<p>在命令行下打<code>ptpython</code>，显示如下：</p>
+<div class="highlight"><pre><span></span> ~/ ptpython
+&gt;&gt;&gt;
+
+ <span class="o">[</span>F4<span class="o">]</span> Emacs  <span class="m">1</span>/1 <span class="o">[</span>F3<span class="o">]</span> History <span class="o">[</span>F6<span class="o">]</span> Paste mode                                                              <span class="o">[</span>F2<span class="o">]</span> Menu - CPython <span class="m">3</span>.7.2
+</pre></div>
+<p>按下键盘上的<code>F4</code>，可以切换<code>Emacs</code>和<code>VIM</code>编辑模式。至于<code>Emacs</code>和<code>VIM</code>是什么，小白用户就可以不用关心了。<code>F3</code>查看命令历史，意思是显示最近打过的Python命令。<code>F6</code>是粘贴模式，我没看出来有啥用。<code>F2</code>打开设置菜单，再按<code>F2</code>关闭菜单。不过这些快捷键都不重要，一般都用不到。</p>
+<h3>2.2 试错</h3>
+<p>我们要创建一个Qt窗体应用，需要调用<code>PyQt5</code>模块的<code>QApplication</code>方法。在<code>PTPython</code>中打<code>QApplication</code>回车，弹出错误提示：</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; QApplication
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, <span class="k">in</span> &lt;module&gt;
+NameError: name <span class="s1">&#39;QApplication&#39;</span> is not defined
+
+name <span class="s1">&#39;QApplication&#39;</span> is not defined
+</pre></div>
+<p>提示中说，名称<code>QApplication</code>没有被定义。Python中有来自官方和第三方的大量模块，不可能全部自动导入。因此，使用模块要先导入。</p>
+<h3>2.3 PTPython的智能提示</h3>
+<p>在<code>PTPython</code>中打<code>from PyQt5.Q</code>，应该会显示如下：</p>
+<div class="highlight"><pre><span></span> ~/ ptpython
+&gt;&gt;&gt; from PyQt5.Q
+           Qt                  QtHelp              QtNetworkAuth       QtQuick             QtSvg               QtXmlPatterns
+           QtBluetooth         QtLocation          QtNfc               QtQuickWidgets      QtTest
+           QtCore              QtMacExtras         QtOpenGL            QtRemoteObjects     QtWebChannel
+           QtDBus              QtMultimedia        QtPositioning       QtSensors           QtWebSockets
+           QtDesigner          QtMultimediaWidgets QtPrintSupport      QtSerialPort        QtWidgets
+           QtGui               QtNetwork           QtQml               QtSql               QtXml
+</pre></div>
+<p><code>PTPython</code>会动态地根据当前输入的字符进行代码的智能提示。我们可以看出来，在<code>PyQt5</code>这个模块中，以大写字母<code>Q</code>开头的子模块共有31个。不过不用害怕，<code>Qt</code>是一个巨无霸的多功能框架，我们只会用到其中的一丢丢功能。</p>
+<p>此时按下回车，<code>PtPython</code>会智能地检测到我们的语法错误，不执行此代码，而是弹出错误提示<code>Syntax Error</code>。</p>
+<h3>2.4 关于类</h3>
+<p>继续补全代码为<code>from PyQt5.Qt import QApplication</code>，回车，没有任何输出。说明我们的这个<code>从模块导入</code>的语句运行没有出错。</p>
+<p>再次输入<code>QApplication</code>回车，显示如下：</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; QApplication
+&lt;class <span class="s1">&#39;PyQt5.QtWidgets.QApplication&#39;</span>&gt;
+</pre></div>
+<p><code>PTPython</code>告诉我们，<code>QApplication</code>是一个名叫<code>PyQt5.QtWidgets.QApplication</code>的类(<code>class</code>)。在<code>Python</code>中，<code>.</code>表示层级关系，<code>PyQt5</code>是根模块，<code>QtWidgets</code>是<code>PyQt5</code>的子模块，<code>QApplication</code>是<code>QtWidgets</code>子模块下的一个类。<code>类</code>是一个比较抽象的概念，是对一组相似对象的归类。这些相似对象有相似的属性（特征/数据），或者也有相似的行为（方法/函数）比如：</p>
+<ul>
+<li>将黄色、紫色、黑色等对象抽象为颜色（类），颜色类规定了这些对象都有属性红色分量(red)、绿色分量(green)、蓝色分量(blue)，都有方法<code>反相</code>，可以将自己的颜色变成相反的颜色</li>
+<li>将橘子、香蕉、苹果等对象抽象为水果（类），水果类规定了这些对象都有属性颜色、味道、价格等</li>
+<li>将文本框、按钮、下拉框等对象抽象为控件，控件类规定了这些对象都有属性位置、大小，都有方法调整位置、调整大小等。</li>
+</ul>
+<p><code>QApplication</code>是我们从<code>PyQt5.Qt</code>模块导入的，但是<code>PTPython</code>却告诉我们<code>QApplication</code>来自<code>PyQt5.QtWidgets</code>。这是因为<code>PyQt5.Qt</code>模块也导入了<code>PyQt5.QtWidgets.QApplication</code>，所以我们也可以从<code>PyQt5.Qt</code>模块导入这个<code>QApplication</code>。<code>PyQt5</code>中常用的一些类分散在多个模块，我推测<code>PyQt5.Qt</code>导入了很多常用类，应该是为了方便程序员一次导入。</p>
+<p>此时，可以试试这些命令：</p>
+<ul>
+<li><code>dir(QApplication)</code> 列出<code>QApplication</code>这个类的数据成员和方法成员</li>
+<li><code>help(QApplication)</code> 显示<code>QApplication</code>这个类的帮助文档。d(Down)下滚，u(Up)上滚，q(Quit)退出。不过这个文档并不详细，详细文档得查询Qt官方文档</li>
+</ul>
+<h3>2.5 实例化QApplication</h3>
+<p><code>QApplication</code>是一个类，但是也可以作为函数(<code>QApplication()</code>)运行。当类名用作函数的时候，这个函数叫做构造函数，这个函数必须返回这个类的一个对象。</p>
+<p>输入<code>app = QApplication()</code>，显示如下报错信息。</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">()</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s2">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span> <span class="ow">not</span> <span class="n">enough</span> <span class="n">arguments</span>
+
+<span class="n">QApplication</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span> <span class="ow">not</span> <span class="n">enough</span> <span class="n">arguments</span>
+</pre></div>
+<p>报错信息告诉我们，这个函数调用没有传递足够的参数。函数的签名（格式）是<code>QApplication(List[str])</code>，意思是函数参数应该是一个字符串列表。这个参数是用来设置Qt的运行环境的，比如切换显示主题（<code>QApplication([None, '-style=macintosh'])</code>可以切换苹果主题）。我们目前不需要处理，所以传递一个空列表即可。</p>
+<p>输入<code>app = QApplication([])</code>，显示如下信息：</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">WARNING</span><span class="p">:</span> <span class="n">QApplication</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">created</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">main</span><span class="p">()</span> <span class="n">thread</span><span class="o">.</span>
+</pre></div>
+<p>这里显示了一条报警信息，这条信息之所以出现，是因为我们当前代码的运行环境是<code>PTPython</code>交互式环境。先无视。</p>
+<p>输入<code>app</code>，显示如下信息：</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">app</span>
+<span class="o">&lt;</span><span class="n">PyQt5</span><span class="o">.</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x10c912948</span><span class="o">&gt;</span>
+</pre></div>
+<p>可见，<code>app</code>是<code>QApplication</code>类的一个对象(object)</p>
+<h3>2.6 换用IPython</h3>
+<p>输入<code>app.exec()</code>，运行这个Qt应用，结果<code>PTPython</code>交互环境直接崩溃：</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">]</span>    <span class="mi">17039</span> <span class="n">segmentation</span> <span class="n">fault</span>  <span class="n">ptpython</span>
+</pre></div>
+<p>这是因为Qt应用必须在主线程（线程是用来让代码并行执行的一种东西）运行，而<code>PTPython</code>把我们的代码运行在了其他线程。而<code>BPython</code>和<code>IPython</code>都没这个问题。<code>IPython</code>虽然需要按<code>Tab</code>键补全代码，但是补全效果好，所以我们换用<code>IPython</code>。</p>
+<div class="highlight"><pre><span></span><span class="err"></span> <span class="o">~/</span> <span class="n">ipython</span>
+<span class="n">Python</span> <span class="mf">3.7.2</span> <span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Feb</span> <span class="mi">12</span> <span class="mi">2019</span><span class="p">,</span> <span class="mi">08</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">36</span><span class="p">)</span>
+<span class="n">Type</span> <span class="s1">&#39;copyright&#39;</span><span class="p">,</span> <span class="s1">&#39;credits&#39;</span> <span class="ow">or</span> <span class="s1">&#39;license&#39;</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span>
+<span class="n">IPython</span> <span class="mf">7.3.0</span> <span class="o">--</span> <span class="n">An</span> <span class="n">enhanced</span> <span class="n">Interactive</span> <span class="n">Python</span><span class="o">.</span> <span class="n">Type</span> <span class="s1">&#39;?&#39;</span> <span class="k">for</span> <span class="n">help</span><span class="o">.</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="n">QApplication</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>在<code>IPython</code>中调用<code>QApplication()</code>方法，没有打印(输出)报警信息，<code>app.exec()</code>也没有崩溃。但是现在，我们的控制台已经卡死不动了。不过这种情况正是我们想要的。如果<code>QApplication.exec</code>方法没有意外情况，而且用户不主动要求退出，就应该永远运行。</p>
+<p>Qt应用运行起来了，但是我们看不到屏幕上多了任何窗体(类似于运行在后台的电脑病毒或木马)。这是因为我们还没有创建任何窗体。但是我们怎么关闭这个没有窗体的应用呢？主要有三种方法：</p>
+<ol>
+<li>直接关闭命令行窗口，会把运行在命令行的程序杀掉</li>
+<li>在Windows任务管理器窗口中找到<code>python.exe</code>，把它结束掉</li>
+<li>在命令行下执行命令<code>taskkill /F /IM python.exe</code>，用命令结束此Qt进程</li>
+</ol>
+<h3>2.7 显示一个空窗体</h3>
+<p>执行以下代码，会显示一个空窗体：</p>
+<div class="highlight"><pre><span></span><span class="err"></span> <span class="o">~/</span> <span class="n">ipython</span>
+<span class="n">Python</span> <span class="mf">3.7.2</span> <span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Feb</span> <span class="mi">12</span> <span class="mi">2019</span><span class="p">,</span> <span class="mi">08</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">36</span><span class="p">)</span>
+<span class="n">Type</span> <span class="s1">&#39;copyright&#39;</span><span class="p">,</span> <span class="s1">&#39;credits&#39;</span> <span class="ow">or</span> <span class="s1">&#39;license&#39;</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span>
+<span class="n">IPython</span> <span class="mf">7.3.0</span> <span class="o">--</span> <span class="n">An</span> <span class="n">enhanced</span> <span class="n">Interactive</span> <span class="n">Python</span><span class="o">.</span> <span class="n">Type</span> <span class="s1">&#39;?&#39;</span> <span class="k">for</span> <span class="n">help</span><span class="o">.</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="n">QApplication</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="n">QWidget</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">wnd</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>其中：</p>
+<ul>
+<li>执行<code>QWidget</code>构造函数，会生成一个空窗体。</li>
+<li>执行<code>QWidget.show</code>成员方法，会将这个窗体标记为显示状态。</li>
+<li>执行<code>QApplication.exec</code>成员方法，会运行Qt应用，显示需要显示的窗体。</li>
+</ul>
+<h3>2.8 尝试多种图形控件</h3>
+<p>在常见的各种图形化应用程序中，除了空窗体，还需要按钮、文本框、下拉框等各种控件。</p>
+<p>在交互式编程环境下，虽然可以一行一行运行代码，但是修改之前运行过的代码并不方便，所以我们接着使用<code>PyCharm</code>。</p>
+<h4>2.8.1 初识文本标签</h4>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="n">QApplication</span>
+<span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="n">QLabel</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>以上代码会显示一个很小的窗体，窗体中有一个文本标签，标签内容是“白云千载空悠悠”。标签的大小正好跟文本大小一致，窗体的大小也正好跟标签的大小一致。这属于一种布局的自适应。</p>
+<h4>2.8.2 空文本标签</h4>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="n">QApplication</span>
+<span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="n">QLabel</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>  <span class="c1"># 跟 lbl = QLabel(&quot;&quot;)的最终效果一致</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>以上代码会显示一个更小的窗体。因为文本是空的，窗体会小到几乎看不见。</p>
+<h3>2.8.3 使用大号字体</h3>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QFont</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p><code>QLabel.setFont</code>成员方法可以用来设置标签的字体。<code>QFont</code>构造函数可以创建字体对象。当给<code>QFont</code>构造函数传递两个参数时，第一个参数是字体名称，第二个参数是字体大小。当字体名称为空，或是找不到时，Qt就会使用默认字体。我们只想修改字体大小，所以第一个参数可以传<code>None</code>。<code>None</code>在Python中表示空对象，在其他编程语言中，这个空对象可能表示为<code>null</code>或<code>nil</code>。</p>
+<h3>2.8.3 使用粗体</h3>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QFont</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>当给<code>QFont</code>构造函数传递三个参数时，第三个参数表示字体风格。这个参数是Qt预定义的几个常量(不变的量)，比如这个<code>QFont.Bold</code>，其实是75。直接用75也能工作，但是难以记忆与阅读。</p>
+<h3>2.8.4 改变标签文本的颜色</h3>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QPalette</span><span class="p">,</span>
+    <span class="n">QColor</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">plt</span> <span class="o">=</span> <span class="n">QPalette</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QPalette</span><span class="o">.</span><span class="n">WindowText</span><span class="p">,</span> <span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;magenta&quot;</span><span class="p">))</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">plt</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>以上代码会将标签文本显示成洋红色。<code>QLabel.setColor</code>方法不存在，要想给<code>QLabel</code>对象设置颜色，需要通过一个调色板对象。把需要的颜色传递给这个调色板，再把这个调色板传递给<code>QLabel</code>对象。</p>
+<p><code>QColor(0xFF0000)</code>这种写法可以根据红绿蓝三原色自由配色。此时，参数传递的不是颜色名称字符串，而是一个数字。表示颜色用16进制数字比较方便，<code>0x</code>开头的数字是16进制数字。三原色中的每一个的范围都是<code>00</code>到<code>FF</code>，可以自由搭配。<code>0xFF0000</code>就表示纯红色。</p>
+<h3>2.8.5 改变窗体大小</h3>
+<p>在<code>Qt</code>中，每个图形控件都是一个抽象的窗体。当这个图形控件作为根控件时，就会自动加上与操作系统相匹配的边框、标题栏和按钮组(最大化、隐藏、关闭等)。所以，我们可以直接将文本标签作为一个根控件(根窗体)。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QPalette</span><span class="p">,</span>
+    <span class="n">QColor</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">plt</span> <span class="o">=</span> <span class="n">QPalette</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QPalette</span><span class="o">.</span><span class="n">WindowText</span><span class="p">,</span> <span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;magenta&quot;</span><span class="p">))</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">plt</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>以上的代码会将窗体的宽度设置为600像素，高度设置为370像素。此处，<code>0.618</code>是一个黄金分割数。据说，长宽比<code>1.618</code>比较养眼。</p>
+<h3>2.8.6 标签文本水平居中</h3>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QPalette</span><span class="p">,</span>
+    <span class="n">QColor</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">plt</span> <span class="o">=</span> <span class="n">QPalette</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QPalette</span><span class="o">.</span><span class="n">WindowText</span><span class="p">,</span> <span class="n">QColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">magenta</span><span class="p">))</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">plt</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p><code>QLabel.setAlignment</code>可以设置对齐策略，对齐策略是个枚举常量，定义在<code>PyQt5.QtCore</code>模块下的<code>Qt</code>类中。同时，我们发现<code>Qt</code>类中也有常用的颜色常量，用颜色常量<code>Qt.magenta</code>可以避免拼写错误。</p>
+<h3>2.8.7 将标签替换为按钮</h3>
+<p>文本标签默认情况下，不响应用户的点击事件。为了让我们的应用可以跟用户交互，我们将文本标签替换为按钮。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QPalette</span><span class="p">,</span>
+    <span class="n">QColor</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: magenta&quot;</span><span class="p">)</span>
+<span class="c1"># plt = QPalette()</span>
+<span class="c1"># plt.setColor(QPalette.WindowText, QColor(Qt.magenta))</span>
+<span class="c1"># btn.setPalette(plt) # 调色板对按钮不起作用</span>
+<span class="c1"># btn.setAlignment(Qt.AlignCenter)  # 按钮默认居中，不支持自定义对齐策略</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>运行此程序，会发现原来的标签被替换成了一个大大的按钮。注意，<code>QPushButton</code>和<code>QLabel</code>支持的方法不太一样，比如，<code>setAlignment</code>方法在<code>QPushButton</code>中不存在，但是<code>QPushButton</code>是默认居中对齐的，我们可以不用处理。<code>setPalette</code>方法无效，改变不了按钮的颜色。我们可以换用<code>QPushButton.setStyleSheet</code>方法来设置按钮文本颜色。这个方法的参数是一个字符串，设置颜色的语法类似于网页设计中用到的<code>CSS</code>。</p>
+<h3>2.8.8 响应按钮的点击事件</h3>
+<p>上个程序虽然显示了一个按钮，但是点击这个按钮后，除了点击动画，什么事都没有发生。这是因为我们没有告诉程序，用户点击按钮后，程序应该干什么。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: magenta&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QApplication</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>执行以上程序，点击按钮，会发现窗口被关闭，应用被退出。这是因为我们处理了按钮的点击事件，处理的逻辑是退出程序。Qt的事件处理，按官方的说法，是一种<code>信号-槽</code>机制。信号是事件对象，比如单击、双击、键盘按键，槽是函数，是程序逻辑，用于接收与处理信号。</p>
+<p>在这个程序中，信号对象是<code>QPushButton.clicked</code>，槽函数是<code>QApplication.exit</code>。信号对象通过调用<code>connect</code>方法连接到槽函数。这样，当用户点击按钮后，Qt系统感应到用户的操作，会生成一个点击事件对象，分发给用户点击的控件，即这个按钮。这个按钮把用户点击事件传递给绑定到的槽函数<code>QApplication.exit</code>，槽函数被执行，程序被退出（程序窗口也被关闭）。</p>
+<h3>2.8.9 匿名函数Lambda</h3>
+<p>槽函数可以是系统的函数、第三方模块的函数，也可以用户自定义的函数。函数可以是有名字的函数，也可以是匿名函数。有名字的函数一般通过<code>def</code>关键字定义，没名字的函数一般通过<code>lambda</code>关键字定义。</p>
+<p>下面这个例子，演示了匿名函数的使用：</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: magenta&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">QApplication</span><span class="o">.</span><span class="n">exit</span><span class="p">())</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>匿名函数通过语法<code>lambda ... : ...</code>定义，冒号左边是函数入参（输入参数），冒号右边是函数出参（函数输出，也可执行程序逻辑）。在上面的例子中，我们定义的匿名函数不关心入参，所以置空。匿名函数的逻辑是退出应用，我们直接调用<code>QApplication.exit()</code>即可。</p>
+<h3>2.8.10 对话框</h3>
+<p>对话框，是人机交互最常见的表现形式之一。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: magenta&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QApplication</span><span class="o">.</span><span class="n">aboutQt</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>执行以上代码，点击按钮，会弹出一个<code>About Qt</code>对话框。这是<code>Qt</code>内置的一个对话框。我们发现这个对话框的文字也是洋红色的，这是因为<code>btn</code>上的样式设置被传递到了它的子对话框上。为了让<code>btn</code>的样式不影响它的子控件，我们需要对样式的影响范围做限定。</p>
+<h3>2.8.11 样式表</h3>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;MyButton&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;#MyButton { color: magenta }&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QApplication</span><span class="o">.</span><span class="n">aboutQt</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>执行以上代码，点击按钮，新弹出的对话框的文本颜色变成了黑色。Qt默认情况下会自动传递样式给子控件，而且没有提供直接阻止这种行为的方法。所以，我们必须在样式表语法中进行限定。样式表<code>#MyButton { color: magenta }</code> 限定了这个样式的作用范围是名字为<code>MyButton</code>的对象。所以，我们需要给我们的按钮起名为<code>MyButton</code>。这个名字是这个按钮在<code>Qt</code>系统中的名字，不是在<code>Python</code>系统中的名字。<code>Qt</code>是用<code>C++</code>语言写的框架，<code>Qt</code>不懂我们的<code>Python</code>代码。所以，我们需要调用<code>QPushButton.setObjectName</code>来给按钮取一个<code>Qt</code>能识别的名字。</p>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2019/03/23/programmingtutorial05/index.html";
+        this.page.identifier = "/2019/03/23/programmingtutorial05/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

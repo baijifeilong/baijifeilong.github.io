@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>ShardingJDBC大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>ShardingJDBC大杂烩</h1>
+    <h2>ShardingJDBC是什么</h2>
+<p>ShardingJDBC是一个数据库分库分表框架，它通过实现自定义的<code>javax.sql.DataSource</code>接口，将分库分表的逻辑封装在了里头，让客户端可以通过<code>JDBC</code>相对透明地访问分片数据库。但是，分片数据库有其固有之局限性，需要谨慎使用。</p>
+<h2>ShardingJDBC快速入门示例</h2>
+<p>以SpringBoot+Maven+MySQL为例</p>
+<h3>1. 引入ShardingJDBC依赖</h3>
+<div class="highlight"><pre><span></span><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>bj<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>hellomaven<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;packaging&gt;</span>jar<span class="nt">&lt;/packaging&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hellomaven<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;url&gt;</span>http://maven.apache.org<span class="nt">&lt;/url&gt;</span>
+
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.1.0.RELEASE<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-jdbc<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>io.shardingsphere<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>sharding-jdbc-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>3.0.0<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</pre></div>
+<h3>2. 创建数据表</h3>
+<p>创建2库3表共6个user表: ds0.user0 ~ ds1.user2</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mysql.connector</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">mysql</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">autocommit</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DROP SCHEMA IF EXISTS ds</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CREATE SCHEMA ds</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CREATE TABLE ds</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.user</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">(_id BIGINT, id INT, username VARCHAR(16))&quot;</span><span class="p">)</span>
+</pre></div>
+<p>对应的SQL</p>
+<div class="highlight"><pre><span></span><span class="k">DROP</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">ds0</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="n">ds0</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">ds0</span><span class="p">.</span><span class="n">user0</span><span class="p">(</span><span class="n">_id</span> <span class="nb">BIGINT</span><span class="p">,</span> <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">username</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">ds0</span><span class="p">.</span><span class="n">user1</span><span class="p">(</span><span class="n">_id</span> <span class="nb">BIGINT</span><span class="p">,</span> <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">username</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">ds0</span><span class="p">.</span><span class="n">user2</span><span class="p">(</span><span class="n">_id</span> <span class="nb">BIGINT</span><span class="p">,</span> <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">username</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span>
+<span class="k">DROP</span> <span class="k">SCHEMA</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">ds1</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">SCHEMA</span> <span class="n">ds1</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">ds1</span><span class="p">.</span><span class="n">user0</span><span class="p">(</span><span class="n">_id</span> <span class="nb">BIGINT</span><span class="p">,</span> <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">username</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">ds1</span><span class="p">.</span><span class="n">user1</span><span class="p">(</span><span class="n">_id</span> <span class="nb">BIGINT</span><span class="p">,</span> <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">username</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">ds1</span><span class="p">.</span><span class="n">user2</span><span class="p">(</span><span class="n">_id</span> <span class="nb">BIGINT</span><span class="p">,</span> <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">username</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span>
+</pre></div>
+<h3>3. 配置ShardingJDBC</h3>
+<p>ShardingJDBC的文档乍一看啥都有，仔细一看下不了手，文档跟项目还不同步，需要面向异常，随机应变。</p>
+<p>以分库策略对2取模，分表策略对3取模为例:</p>
+<p><strong>application.yml</strong></p>
+<div class="highlight"><pre><span></span><span class="nt">sharding</span><span class="p">:</span>
+  <span class="nt">jdbc</span><span class="p">:</span>
+    <span class="nt">datasource</span><span class="p">:</span>
+      <span class="nt">names</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ds0,ds1</span>
+      <span class="nt">ds0</span><span class="p">:</span>
+        <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.zaxxer.hikari.HikariDataSource</span>
+        <span class="nt">jdbc-url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">jdbc:mysql://localhost/ds0</span>
+        <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+      <span class="nt">ds1</span><span class="p">:</span>
+        <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.zaxxer.hikari.HikariDataSource</span>
+        <span class="nt">jdbc-url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">jdbc:mysql://localhost/ds1</span>
+        <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">sharding</span><span class="p">:</span>
+        <span class="nt">tables</span><span class="p">:</span>
+          <span class="nt">user</span><span class="p">:</span>
+            <span class="nt">database-strategy</span><span class="p">:</span>
+              <span class="nt">inline</span><span class="p">:</span>
+                <span class="nt">sharding-column</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">id</span>
+                <span class="nt">algorithm-expression</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ds$-&gt;{id % 2}</span>
+            <span class="nt">table-strategy</span><span class="p">:</span>
+              <span class="nt">inline</span><span class="p">:</span>
+                <span class="nt">sharding-column</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">id</span>
+                <span class="nt">algorithm-expression</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">user$-&gt;{id % 3}</span>
+            <span class="nt">key-generator-column-name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">_id</span>
+<span class="nt">logging</span><span class="p">:</span>
+  <span class="nt">level</span><span class="p">:</span>
+    <span class="nt">root</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">debug</span>
+</pre></div>
+<h3>4. 在主程序中调用ShardingJDBC</h3>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.JdbcTemplate</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="p">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">App</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">App</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">jdbcTemplate</span><span class="p">;</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">index</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(id, username) VALUES (1, &#39;alpha&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(id, username) VALUES (2, &#39;beta&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(id, username) VALUES (3, &#39;gamma&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(id, username) VALUES (4, &#39;theta&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">maps</span> <span class="o">=</span> <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">queryForList</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user WHERE id IN (0,1,2,3,4,5,6,7)&quot;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">maps</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">maps</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>执行主程序，访问<code>localhost:8080/</code>，返回的JSON如下:</p>
+<div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">273847537209704448</span><span class="p">,</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;theta&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">273847537138401280</span><span class="p">,</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;beta&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">273847537163567104</span><span class="p">,</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;gamma&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">273847537096458240</span><span class="p">,</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;alpha&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+<p>MySQL的SQL日志如下:</p>
+<div class="highlight"><pre><span></span><span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">26</span><span class="n">T08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">20</span><span class="p">.</span><span class="mi">690370</span><span class="n">Z</span>	 <span class="mi">1697</span> <span class="n">Query</span>	<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">user1</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">_id</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="mi">273847537096458240</span><span class="p">)</span>
+<span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">26</span><span class="n">T08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">20</span><span class="p">.</span><span class="mi">698059</span><span class="n">Z</span>	 <span class="mi">1696</span> <span class="n">Query</span>	<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">user2</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">_id</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="mi">273847537138401280</span><span class="p">)</span>
+<span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">26</span><span class="n">T08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">20</span><span class="p">.</span><span class="mi">702720</span><span class="n">Z</span>	 <span class="mi">1697</span> <span class="n">Query</span>	<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">user0</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">_id</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="mi">273847537163567104</span><span class="p">)</span>
+<span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">26</span><span class="n">T08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">20</span><span class="p">.</span><span class="mi">717724</span><span class="n">Z</span>	 <span class="mi">1696</span> <span class="n">Query</span>	<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">user1</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">_id</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="mi">273847537209704448</span><span class="p">)</span>
+<span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">26</span><span class="n">T08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">20</span><span class="p">.</span><span class="mi">729676</span><span class="n">Z</span>	 <span class="mi">1697</span> <span class="n">Query</span>	<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user0</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">26</span><span class="n">T08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">20</span><span class="p">.</span><span class="mi">729705</span><span class="n">Z</span>	 <span class="mi">1696</span> <span class="n">Query</span>	<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user0</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">26</span><span class="n">T08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">20</span><span class="p">.</span><span class="mi">732935</span><span class="n">Z</span>	 <span class="mi">1697</span> <span class="n">Query</span>	<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user1</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">26</span><span class="n">T08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">20</span><span class="p">.</span><span class="mi">733504</span><span class="n">Z</span>	 <span class="mi">1696</span> <span class="n">Query</span>	<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user1</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">26</span><span class="n">T08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">20</span><span class="p">.</span><span class="mi">736153</span><span class="n">Z</span>	 <span class="mi">1697</span> <span class="n">Query</span>	<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user2</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">26</span><span class="n">T08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">20</span><span class="p">.</span><span class="mi">736612</span><span class="n">Z</span>	 <span class="mi">1696</span> <span class="n">Query</span>	<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user2</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+<p>可见，ShardingJDBC确实执行了多库多表的插入与查询操作，而且生成了分布式自增ID</p>
+<h3>5. ShardingJDBC的局限性</h3>
+<p>~~ShardingJDBC似乎只支持带有分表键而且查询条件必须是<code>=</code>或<code>IN</code>的查询。导致像<code>SELECT MAX(id) FROM user</code>(查询用户表中的最大ID)这种看似极其简单的查询(每表做一次MAX，中间件做一次归并)也无法进行。~~</p>
+<p>ShardingJDBC的文档做的很烂(PPT文档，理论一大坨，代码没几行)，代码没有能跑得起来的(代码跟文档严重不同步)，示例的代码还只有最基础的用法，看完后对实际的应用几乎无法下手。在这种情况下，还用配置文件做配置，就掉大坑里了。比如我之前写的YAML配置缺了一项配置，还不报错，结果有的代码能跑，有的代码不能跑，文档又稀疏地可怜，让人以为这些功能还没有实现。</p>
+<p>所以，在文档更新之前，还是直接走Java配置吧，至少IDE能给出一些有用的提示。</p>
+<h3>6. ShardingJDBC的纯Java配置</h3>
+<p>创建一个ShardingDataSource，以这个数据源创建数据库连接即可。</p>
+<p>注意: actualDataNodes必须设置，不设置此项不会报错，但是不带ShardingKey的查询会失败(找不到真实表，直接走逻辑表)</p>
+<p><strong>示例代码</strong></p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.Level</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.Logger</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.encoder.PatternLayoutEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.core.ConsoleAppender</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.core.Context</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.zaxxer.hikari.HikariDataSource</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.api.config.ShardingRuleConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.api.config.TableRuleConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.api.config.strategy.InlineShardingStrategyConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.core.constant.properties.ShardingPropertiesConstant</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.commons.lang3.tuple.Pair</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Before</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.JdbcTemplate</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.sql.SQLException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Properties</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.Collectors</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.IntStream</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.Stream</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 2018/12/5 下午9:31</span>
+<span class="cm"> */</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ShardingJdbcTest</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">normalJdbcTemplate</span><span class="p">;</span>
+
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">shardingJdbcTemplate</span><span class="p">;</span>
+
+    <span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&quot;unchecked&quot;</span><span class="p">)</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initLogger</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">((</span><span class="n">Logger</span><span class="p">)</span> <span class="p">(</span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">.</span><span class="na">ROOT_LOGGER_NAME</span><span class="p">))).</span><span class="na">setLevel</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">INFO</span><span class="p">);</span>
+        <span class="p">((</span><span class="n">ConsoleAppender</span><span class="p">)</span> <span class="p">((</span><span class="n">Logger</span><span class="p">)</span> <span class="p">(</span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">.</span><span class="na">ROOT_LOGGER_NAME</span><span class="p">))).</span><span class="na">getAppender</span><span class="p">(</span><span class="s">&quot;console&quot;</span><span class="p">)).</span><span class="na">setEncoder</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternLayoutEncoder</span><span class="p">()</span> <span class="p">{</span>
+            <span class="p">{</span>
+                <span class="n">setContext</span><span class="p">((</span><span class="n">Context</span><span class="p">)</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getILoggerFactory</span><span class="p">());</span>
+                <span class="n">setPattern</span><span class="p">(</span><span class="s">&quot;[%date] %highlight([%level]) [%logger{10} %file:%line] [%thread] %msg%n&quot;</span><span class="p">);</span>
+                <span class="n">start</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initDatabase</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">normalJdbcTemplate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JdbcTemplate</span><span class="p">(</span><span class="k">new</span> <span class="n">HikariDataSource</span><span class="p">()</span> <span class="p">{{</span>
+            <span class="n">setJdbcUrl</span><span class="p">(</span><span class="s">&quot;jdbc:mysql://localhost/foo&quot;</span><span class="p">);</span>
+            <span class="n">setUsername</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+            <span class="n">setPassword</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+        <span class="p">}});</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">:</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="p">{</span>
+            <span class="n">normalJdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;DROP SCHEMA IF EXISTS ds&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+            <span class="n">normalJdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;CREATE SCHEMA ds&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+            <span class="n">normalJdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;USE ds&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">:</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">})</span> <span class="p">{</span>
+                <span class="n">normalJdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;CREATE TABLE user&quot;</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="s">&quot;(id INT, username VARCHAR(32))&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initShadingJdbc</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="p">{</span>
+        <span class="n">TableRuleConfiguration</span> <span class="n">tableRuleConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TableRuleConfiguration</span><span class="p">();</span>
+        <span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setLogicTable</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">);</span>
+        <span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setActualDataNodes</span><span class="p">(</span><span class="s">&quot;ds${0..1}.user${0..2}&quot;</span><span class="p">);</span> <span class="c1">// 必须设置，否则会有意想不到的结果</span>
+        <span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setDatabaseShardingStrategyConfig</span><span class="p">(</span><span class="k">new</span> <span class="n">InlineShardingStrategyConfiguration</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="s">&quot;ds${id % 2}&quot;</span><span class="p">));</span>
+        <span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setTableShardingStrategyConfig</span><span class="p">(</span><span class="k">new</span> <span class="n">InlineShardingStrategyConfiguration</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="s">&quot;user${id % 3}&quot;</span><span class="p">));</span>
+
+        <span class="n">ShardingRuleConfiguration</span> <span class="n">shardingRuleConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ShardingRuleConfiguration</span><span class="p">();</span>
+        <span class="n">shardingRuleConfiguration</span><span class="p">.</span><span class="na">getTableRuleConfigs</span><span class="p">().</span><span class="na">add</span><span class="p">(</span><span class="n">tableRuleConfiguration</span><span class="p">);</span>
+
+        <span class="n">shardingJdbcTemplate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JdbcTemplate</span><span class="p">(</span><span class="n">ShardingDataSourceFactory</span><span class="p">.</span><span class="na">createDataSource</span><span class="p">(</span>
+                <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;ds0&quot;</span><span class="p">,</span> <span class="s">&quot;ds1&quot;</span><span class="p">).</span><span class="na">map</span><span class="p">(</span><span class="n">$</span> <span class="o">-&gt;</span> <span class="n">Pair</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
+                        <span class="n">$</span><span class="p">,</span> <span class="k">new</span> <span class="n">HikariDataSource</span><span class="p">()</span> <span class="p">{{</span>
+                            <span class="n">setJdbcUrl</span><span class="p">(</span><span class="s">&quot;jdbc:mysql://localhost/&quot;</span> <span class="o">+</span> <span class="n">$</span><span class="p">);</span>
+                            <span class="n">setUsername</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+                            <span class="n">setPassword</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+                        <span class="p">}}</span>
+                <span class="p">)).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toMap</span><span class="p">(</span><span class="n">Pair</span><span class="p">::</span><span class="n">getLeft</span><span class="p">,</span> <span class="n">Pair</span><span class="p">::</span><span class="n">getRight</span><span class="p">)),</span>
+                <span class="n">shardingRuleConfiguration</span><span class="p">,</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">(),</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">()</span> <span class="p">{{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">ShardingPropertiesConstant</span><span class="p">.</span><span class="na">SQL_SHOW</span><span class="p">.</span><span class="na">getKey</span><span class="p">(),</span> <span class="s">&quot;true&quot;</span><span class="p">);</span>
+                <span class="p">}}</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">inspectDatabase</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Inspecting database...&quot;</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">:</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">:</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">})</span> <span class="p">{</span>
+                <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">normalJdbcTemplate</span><span class="p">.</span><span class="na">queryForList</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;SELECT * FROM ds%d.user%d&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">));</span>
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;ds%d.user%d: %s&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">list</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Before</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="p">{</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Initializing logger...&quot;</span><span class="p">);</span>
+        <span class="n">initLogger</span><span class="p">();</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Initializing database...&quot;</span><span class="p">);</span>
+        <span class="n">initDatabase</span><span class="p">();</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Initializing jdbc...&quot;</span><span class="p">);</span>
+        <span class="n">initShadingJdbc</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAlpha</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+        <span class="n">inspectDatabase</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Inserting 10 users...\n&quot;</span><span class="p">);</span>
+        <span class="n">IntStream</span><span class="p">.</span><span class="na">rangeClosed</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">).</span><span class="na">forEach</span><span class="p">(</span><span class="n">$</span> <span class="o">-&gt;</span> <span class="p">{</span>
+            <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(id, username) VALUES (?, ?)&quot;</span><span class="p">,</span> <span class="n">$</span><span class="p">,</span> <span class="s">&quot;User&quot;</span> <span class="o">+</span> <span class="n">$</span><span class="p">);</span>
+        <span class="p">});</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">inspectDatabase</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;All users:&quot;</span><span class="p">);</span>
+        <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">queryForList</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user ORDER BY id&quot;</span><span class="p">).</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">Long</span> <span class="n">maxId</span> <span class="o">=</span> <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">queryForObject</span><span class="p">(</span><span class="s">&quot;SELECT MAX(id) FROM user&quot;</span><span class="p">,</span> <span class="n">Long</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Max user id: &quot;</span> <span class="o">+</span> <span class="n">maxId</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">Object</span> <span class="n">eight</span> <span class="o">=</span> <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">queryForMap</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user WHERE id = 8&quot;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;User(id=8): &quot;</span> <span class="o">+</span> <span class="n">eight</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">usersIdLte3</span> <span class="o">=</span> <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">queryForList</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user WHERE id &lt;= 3&quot;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Users(id&lt;=3): &quot;</span> <span class="o">+</span> <span class="n">usersIdLte3</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">usersIdInOneThreeFive</span> <span class="o">=</span> <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">queryForList</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user WHERE id IN (1,3,5)&quot;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Users(id IN (1,3,5)): &quot;</span> <span class="o">+</span> <span class="n">usersIdInOneThreeFive</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><strong>控制台输出</strong></p>
+<div class="highlight"><pre><span></span>13:17:41.816 [main] INFO bj.ShardingJdbcTest - Initializing logger...
+[2018-12-06 13:17:41,932] [INFO] [b.ShardingJdbcTest ShardingJdbcTest.java:106] [main] Initializing database...
+[2018-12-06 13:17:42,175] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:110] [main] HikariPool-1 - Starting...
+[2018-12-06 13:17:42,979] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:123] [main] HikariPool-1 - Start completed.
+[2018-12-06 13:17:43,400] [INFO] [b.ShardingJdbcTest ShardingJdbcTest.java:108] [main] Initializing jdbc...
+[2018-12-06 13:17:44,938] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:110] [main] HikariPool-2 - Starting...
+[2018-12-06 13:17:44,950] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:123] [main] HikariPool-2 - Start completed.
+[2018-12-06 13:17:44,960] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:110] [main] HikariPool-3 - Starting...
+[2018-12-06 13:17:44,972] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:123] [main] HikariPool-3 - Start completed.
+
+Inspecting database...
+ds0.user0: []
+ds0.user1: []
+ds0.user2: []
+ds1.user0: []
+ds1.user1: []
+ds1.user2: []
+
+Inserting 10 users...
+
+[2018-12-06 13:17:45,506] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,507] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 13:17:45,507] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@6622fc65], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 13:17:45,508] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: INSERT INTO user1(id, username) VALUES (?, ?) ::: [[1, User1]]
+[2018-12-06 13:17:45,734] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,734] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 13:17:45,734] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@6622fc65], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 13:17:45,735] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user2(id, username) VALUES (?, ?) ::: [[2, User2]]
+[2018-12-06 13:17:45,742] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,743] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 13:17:45,743] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@6622fc65], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 13:17:45,743] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[3, User3]]
+[2018-12-06 13:17:45,746] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,746] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 13:17:45,747] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@6622fc65], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 13:17:45,747] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user1(id, username) VALUES (?, ?) ::: [[4, User4]]
+[2018-12-06 13:17:45,749] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,750] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 13:17:45,750] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@6622fc65], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 13:17:45,750] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: INSERT INTO user2(id, username) VALUES (?, ?) ::: [[5, User5]]
+[2018-12-06 13:17:45,753] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,754] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 13:17:45,754] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@6622fc65], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 13:17:45,754] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[6, User6]]
+[2018-12-06 13:17:45,757] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,758] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 13:17:45,758] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@6622fc65], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 13:17:45,759] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: INSERT INTO user1(id, username) VALUES (?, ?) ::: [[7, User7]]
+[2018-12-06 13:17:45,762] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,763] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 13:17:45,763] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@6622fc65], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 13:17:45,764] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user2(id, username) VALUES (?, ?) ::: [[8, User8]]
+[2018-12-06 13:17:45,768] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,769] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 13:17:45,769] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@6622fc65], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 13:17:45,769] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[9, User9]]
+[2018-12-06 13:17:45,773] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,773] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 13:17:45,773] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@6622fc65], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 13:17:45,773] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user1(id, username) VALUES (?, ?) ::: [[10, User10]]
+
+Inspecting database...
+ds0.user0: [{id=6, username=User6}]
+ds0.user1: [{id=4, username=User4}, {id=10, username=User10}]
+ds0.user2: [{id=2, username=User2}, {id=8, username=User8}]
+ds1.user0: [{id=3, username=User3}, {id=9, username=User9}]
+ds1.user1: [{id=1, username=User1}, {id=7, username=User7}]
+ds1.user2: [{id=5, username=User5}]
+
+All users:
+[2018-12-06 13:17:45,852] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:45,852] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: SELECT * FROM user ORDER BY id
+[2018-12-06 13:17:45,853] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: SelectStatement(super=DQLStatement(super=AbstractSQLStatement(type=DQL, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user)], parametersIndex=0)), containStar=true, selectListLastPosition=9, groupByLastPosition=0, items=[StarSelectItem(owner=Optional.absent())], groupByItems=[], orderByItems=[OrderItem(owner=Optional.absent(), name=Optional.of(id), orderDirection=ASC, nullOrderDirection=ASC, index=-1, alias=Optional.absent())], limit=null, subQueryStatement=null)
+[2018-12-06 13:17:45,853] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user0 ORDER BY id
+[2018-12-06 13:17:45,853] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user1 ORDER BY id
+[2018-12-06 13:17:45,854] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user2 ORDER BY id
+[2018-12-06 13:17:45,854] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user0 ORDER BY id
+[2018-12-06 13:17:45,854] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user1 ORDER BY id
+[2018-12-06 13:17:45,854] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user2 ORDER BY id
+{id=1, username=User1}
+{id=2, username=User2}
+{id=3, username=User3}
+{id=4, username=User4}
+{id=5, username=User5}
+{id=6, username=User6}
+{id=7, username=User7}
+{id=8, username=User8}
+{id=9, username=User9}
+{id=10, username=User10}
+
+[2018-12-06 13:17:46,007] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:46,010] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: SELECT MAX(id) FROM user
+[2018-12-06 13:17:46,011] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: SelectStatement(super=DQLStatement(super=AbstractSQLStatement(type=DQL, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user)], parametersIndex=0)), containStar=false, selectListLastPosition=15, groupByLastPosition=0, items=[AggregationSelectItem(type=MAX, innerExpression=(id), alias=Optional.absent(), derivedAggregationSelectItems=[], index=-1)], groupByItems=[], orderByItems=[], limit=null, subQueryStatement=null)
+[2018-12-06 13:17:46,012] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT MAX(id) FROM user0
+[2018-12-06 13:17:46,012] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT MAX(id) FROM user1
+[2018-12-06 13:17:46,012] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT MAX(id) FROM user2
+[2018-12-06 13:17:46,012] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT MAX(id) FROM user0
+[2018-12-06 13:17:46,013] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT MAX(id) FROM user1
+[2018-12-06 13:17:46,013] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT MAX(id) FROM user2
+Max user id: 10
+
+[2018-12-06 13:17:46,046] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:46,047] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: SELECT * FROM user WHERE id = 8
+[2018-12-06 13:17:46,047] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: SelectStatement(super=DQLStatement(super=AbstractSQLStatement(type=DQL, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={0=8}, positionIndexMap={})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user)], parametersIndex=0)), containStar=true, selectListLastPosition=9, groupByLastPosition=0, items=[StarSelectItem(owner=Optional.absent())], groupByItems=[], orderByItems=[], limit=null, subQueryStatement=null)
+[2018-12-06 13:17:46,047] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user2 WHERE id = 8
+User(id=8): {id=8, username=User8}
+
+[2018-12-06 13:17:46,054] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:46,054] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: SELECT * FROM user WHERE id &lt;= 3
+[2018-12-06 13:17:46,054] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: SelectStatement(super=DQLStatement(super=AbstractSQLStatement(type=DQL, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user)], parametersIndex=0)), containStar=true, selectListLastPosition=9, groupByLastPosition=0, items=[StarSelectItem(owner=Optional.absent())], groupByItems=[], orderByItems=[], limit=null, subQueryStatement=null)
+[2018-12-06 13:17:46,054] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user0 WHERE id &lt;= 3
+[2018-12-06 13:17:46,054] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user1 WHERE id &lt;= 3
+[2018-12-06 13:17:46,055] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user2 WHERE id &lt;= 3
+[2018-12-06 13:17:46,056] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user0 WHERE id &lt;= 3
+[2018-12-06 13:17:46,056] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user1 WHERE id &lt;= 3
+[2018-12-06 13:17:46,056] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user2 WHERE id &lt;= 3
+Users(id&lt;=3): [{id=2, username=User2}, {id=3, username=User3}, {id=1, username=User1}]
+
+[2018-12-06 13:17:46,071] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 13:17:46,071] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: SELECT * FROM user WHERE id IN (1,3,5)
+[2018-12-06 13:17:46,072] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: SelectStatement(super=DQLStatement(super=AbstractSQLStatement(type=DQL, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=IN, positionValueMap={0=1, 1=3, 2=5}, positionIndexMap={})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user)], parametersIndex=0)), containStar=true, selectListLastPosition=9, groupByLastPosition=0, items=[StarSelectItem(owner=Optional.absent())], groupByItems=[], orderByItems=[], limit=null, subQueryStatement=null)
+[2018-12-06 13:17:46,073] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user0 WHERE id IN (1,3,5)
+[2018-12-06 13:17:46,073] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user1 WHERE id IN (1,3,5)
+[2018-12-06 13:17:46,073] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user2 WHERE id IN (1,3,5)
+Users(id IN (1,3,5)): [{id=3, username=User3}, {id=1, username=User1}, {id=5, username=User5}]
+</pre></div>
+<h3>7. 自定义Sharding策略</h3>
+<p>ShardingJDBC的分库策略和分表策略都得实现同一个接口<code>io.shardingsphere.api.config.strategy.ShardingStrategyConfiguration</code>。这是一个空接口，有五种实现:</p>
+<ol>
+<li><code>io.shardingsphere.api.config.strategy.NoneShardingStrategyConfiguration</code> 不切片</li>
+<li><code>io.shardingsphere.api.config.strategy.InlineShardingStrategyConfiguration</code> Groovy表达式切片</li>
+<li><code>io.shardingsphere.api.config.strategy.HintShardingStrategyConfiguration</code> 按提示切片，所谓的提示指的是分片条件不在标准SQL中，是按ShardingJDBC的特殊要求注入进去的。提示条件保存在ThreadLocal中，通过<code>HintManager.getInstance()</code>获取HintManager单例设置切片值</li>
+<li><code>io.shardingsphere.api.config.strategy.StandardShardingStrategyConfiguration</code> 标准切片策略，需要指定: 1. 切片键; 2. 切片值到真实源/表的映射</li>
+<li><code>io.shardingsphere.api.config.strategy.ComplexShardingStrategyConfiguration</code> 复杂切片策略，适用于有多个切片键的情况。需要指定: 1. 切片键集合; 2. 切片键集合到真实源/表集合的映射</li>
+</ol>
+<p>这些切片策略的切片算法都实现了<code>io.shardingsphere.core.routing.strategy.ShardingAlgorithm</code>接口，这个接口是个空接口，有四个子接口:</p>
+<ol>
+<li><code>io.shardingsphere.api.algorithm.sharding.standard.PreciseShardingAlgorithm</code> 精确标准算法，用于表示切片值到真实源/表的一对一映射</li>
+<li><code>io.shardingsphere.api.algorithm.sharding.standard.RangeShardingAlgorithm</code> 范围切片算法，用于表示切片值范围到真实源/表集合的多对多映射</li>
+<li><code>io.shardingsphere.api.algorithm.sharding.complex.ComplexKeysShardingAlgorithm</code> 多键切片算法，用于表示切片值集合到真实源/表集合的多对多映射</li>
+<li><code>io.shardingsphere.api.algorithm.sharding.hint.HintShardingAlgorithm</code> 提示切片算法，用于表示提示信息到真实源/表集合的一对多映射</li>
+</ol>
+<h4>自定义切片策略举例</h4>
+<h5>1. 普通取模切片</h5>
+<div class="highlight"><pre><span></span><span class="n">TableRuleConfiguration</span> <span class="n">tableRuleConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TableRuleConfiguration</span><span class="p">();</span>
+<span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setLogicTable</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">);</span>
+<span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setActualDataNodes</span><span class="p">(</span><span class="s">&quot;ds${0..1}.user${0..2}&quot;</span><span class="p">);</span>
+<span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setDatabaseShardingStrategyConfig</span><span class="p">(</span><span class="k">new</span> <span class="n">StandardShardingStrategyConfiguration</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">availableTargetNames</span><span class="p">,</span> <span class="n">shardingValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s">&quot;ds&quot;</span> <span class="o">+</span> <span class="p">((</span><span class="n">Number</span><span class="p">)</span> <span class="n">shardingValue</span><span class="p">.</span><span class="na">getValue</span><span class="p">()).</span><span class="na">intValue</span><span class="p">()</span> <span class="o">%</span> <span class="mi">2</span><span class="p">));</span>
+<span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setTableShardingStrategyConfig</span><span class="p">(</span><span class="k">new</span> <span class="n">StandardShardingStrategyConfiguration</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">availableTargetNames</span><span class="p">,</span> <span class="n">shardingValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s">&quot;user&quot;</span> <span class="o">+</span> <span class="p">((</span><span class="n">Number</span><span class="p">)</span> <span class="n">shardingValue</span><span class="p">.</span><span class="na">getValue</span><span class="p">()).</span><span class="na">intValue</span><span class="p">()</span> <span class="o">%</span> <span class="mi">3</span><span class="p">));</span>
+</pre></div>
+<h5>2. 一致性哈希切片</h5>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.Level</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.Logger</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.encoder.PatternLayoutEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.core.ConsoleAppender</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.core.Context</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.zaxxer.hikari.HikariDataSource</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.api.config.ShardingRuleConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.api.config.TableRuleConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.api.config.strategy.StandardShardingStrategyConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.core.constant.properties.ShardingPropertiesConstant</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">lombok.RequiredArgsConstructor</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.commons.codec.digest.DigestUtils</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.commons.lang3.tuple.Pair</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Before</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.JdbcTemplate</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.nio.ByteBuffer</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.SQLException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.Collectors</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.IntStream</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.Stream</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 2018/12/5 下午9:31</span>
+<span class="cm"> */</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ShardingJdbcTest</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">normalJdbcTemplate</span><span class="p">;</span>
+
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">shardingJdbcTemplate</span><span class="p">;</span>
+
+    <span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&quot;unchecked&quot;</span><span class="p">)</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initLogger</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">((</span><span class="n">Logger</span><span class="p">)</span> <span class="p">(</span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">.</span><span class="na">ROOT_LOGGER_NAME</span><span class="p">))).</span><span class="na">setLevel</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">INFO</span><span class="p">);</span>
+        <span class="p">((</span><span class="n">ConsoleAppender</span><span class="p">)</span> <span class="p">((</span><span class="n">Logger</span><span class="p">)</span> <span class="p">(</span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">.</span><span class="na">ROOT_LOGGER_NAME</span><span class="p">))).</span><span class="na">getAppender</span><span class="p">(</span><span class="s">&quot;console&quot;</span><span class="p">)).</span><span class="na">setEncoder</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternLayoutEncoder</span><span class="p">()</span> <span class="p">{</span>
+            <span class="p">{</span>
+                <span class="n">setContext</span><span class="p">((</span><span class="n">Context</span><span class="p">)</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getILoggerFactory</span><span class="p">());</span>
+                <span class="n">setPattern</span><span class="p">(</span><span class="s">&quot;[%date] %highlight([%level]) [%logger{10} %file:%line] [%thread] %msg%n&quot;</span><span class="p">);</span>
+                <span class="n">start</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initDatabase</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">normalJdbcTemplate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JdbcTemplate</span><span class="p">(</span><span class="k">new</span> <span class="n">HikariDataSource</span><span class="p">()</span> <span class="p">{{</span>
+            <span class="n">setJdbcUrl</span><span class="p">(</span><span class="s">&quot;jdbc:mysql://localhost/foo&quot;</span><span class="p">);</span>
+            <span class="n">setUsername</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+            <span class="n">setPassword</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+        <span class="p">}});</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">:</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="p">{</span>
+            <span class="n">normalJdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;DROP SCHEMA IF EXISTS ds&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+            <span class="n">normalJdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;CREATE SCHEMA ds&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+            <span class="n">normalJdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;USE ds&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">:</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">})</span> <span class="p">{</span>
+                <span class="n">normalJdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;CREATE TABLE user&quot;</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="s">&quot;(id INT, username VARCHAR(32))&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initShadingJdbc</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="p">{</span>
+        <span class="nd">@RequiredArgsConstructor</span>
+        <span class="kd">class</span> <span class="nc">Node</span> <span class="kd">implements</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="p">{</span>
+            <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+
+            <span class="kd">private</span> <span class="kt">long</span> <span class="nf">digest</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="n">Integer</span><span class="p">.</span><span class="na">toUnsignedLong</span><span class="p">(</span><span class="n">ByteBuffer</span><span class="p">.</span><span class="na">wrap</span><span class="p">(</span><span class="n">DigestUtils</span><span class="p">.</span><span class="na">md5</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">).</span><span class="na">getInt</span><span class="p">());</span>
+            <span class="p">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="p">(</span><span class="n">Node</span> <span class="n">o</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="n">Long</span><span class="p">.</span><span class="na">compare</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">digest</span><span class="p">(),</span> <span class="n">o</span><span class="p">.</span><span class="na">digest</span><span class="p">());</span>
+            <span class="p">}</span>
+
+            <span class="kd">private</span> <span class="n">Node</span> <span class="nf">route</span><span class="p">(</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">nodes</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">Node</span> <span class="n">node</span> <span class="p">:</span> <span class="n">nodes</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">digest</span><span class="p">()</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="na">digest</span><span class="p">())</span> <span class="p">{</span>
+                        <span class="k">return</span> <span class="n">node</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="k">return</span> <span class="n">nodes</span><span class="p">.</span><span class="na">iterator</span><span class="p">().</span><span class="na">next</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">nodes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">:</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">:</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">})</span> <span class="p">{</span>
+                <span class="n">nodes</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="s">&quot;ds&quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span> <span class="o">+</span> <span class="s">&quot;user&quot;</span> <span class="o">+</span> <span class="n">j</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">TableRuleConfiguration</span> <span class="n">tableRuleConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TableRuleConfiguration</span><span class="p">();</span>
+        <span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setLogicTable</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">);</span>
+        <span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setActualDataNodes</span><span class="p">(</span><span class="s">&quot;ds${0..1}.user${0..2}&quot;</span><span class="p">);</span>
+
+        <span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setDatabaseShardingStrategyConfig</span><span class="p">(</span><span class="k">new</span> <span class="n">StandardShardingStrategyConfiguration</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">availableTargetNames</span><span class="p">,</span> <span class="n">shardingValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">shardingValue</span><span class="p">.</span><span class="na">getValue</span><span class="p">().</span><span class="na">toString</span><span class="p">()).</span><span class="na">route</span><span class="p">(</span><span class="n">nodes</span><span class="p">).</span><span class="na">name</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;\\.&quot;</span><span class="p">)</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">));</span>
+        <span class="n">tableRuleConfiguration</span><span class="p">.</span><span class="na">setTableShardingStrategyConfig</span><span class="p">(</span><span class="k">new</span> <span class="n">StandardShardingStrategyConfiguration</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">availableTargetNames</span><span class="p">,</span> <span class="n">shardingValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">shardingValue</span><span class="p">.</span><span class="na">getValue</span><span class="p">().</span><span class="na">toString</span><span class="p">()).</span><span class="na">route</span><span class="p">(</span><span class="n">nodes</span><span class="p">).</span><span class="na">name</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;\\.&quot;</span><span class="p">)</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">));</span>
+
+        <span class="n">ShardingRuleConfiguration</span> <span class="n">shardingRuleConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ShardingRuleConfiguration</span><span class="p">();</span>
+        <span class="n">shardingRuleConfiguration</span><span class="p">.</span><span class="na">getTableRuleConfigs</span><span class="p">().</span><span class="na">add</span><span class="p">(</span><span class="n">tableRuleConfiguration</span><span class="p">);</span>
+
+        <span class="n">shardingJdbcTemplate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JdbcTemplate</span><span class="p">(</span><span class="n">ShardingDataSourceFactory</span><span class="p">.</span><span class="na">createDataSource</span><span class="p">(</span>
+                <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;ds0&quot;</span><span class="p">,</span> <span class="s">&quot;ds1&quot;</span><span class="p">).</span><span class="na">map</span><span class="p">(</span><span class="n">$</span> <span class="o">-&gt;</span> <span class="n">Pair</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
+                        <span class="n">$</span><span class="p">,</span> <span class="k">new</span> <span class="n">HikariDataSource</span><span class="p">()</span> <span class="p">{{</span>
+                            <span class="n">setJdbcUrl</span><span class="p">(</span><span class="s">&quot;jdbc:mysql://localhost/&quot;</span> <span class="o">+</span> <span class="n">$</span><span class="p">);</span>
+                            <span class="n">setUsername</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+                            <span class="n">setPassword</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+                        <span class="p">}}</span>
+                <span class="p">)).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toMap</span><span class="p">(</span><span class="n">Pair</span><span class="p">::</span><span class="n">getLeft</span><span class="p">,</span> <span class="n">Pair</span><span class="p">::</span><span class="n">getRight</span><span class="p">)),</span>
+                <span class="n">shardingRuleConfiguration</span><span class="p">,</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">(),</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">()</span> <span class="p">{{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">ShardingPropertiesConstant</span><span class="p">.</span><span class="na">SQL_SHOW</span><span class="p">.</span><span class="na">getKey</span><span class="p">(),</span> <span class="s">&quot;true&quot;</span><span class="p">);</span>
+                <span class="p">}}</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">inspectDatabase</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Inspecting database...&quot;</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">:</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">:</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">})</span> <span class="p">{</span>
+                <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">normalJdbcTemplate</span><span class="p">.</span><span class="na">queryForList</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;SELECT * FROM ds%d.user%d&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">));</span>
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;ds%d.user%d: %s&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">list</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Before</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="p">{</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Initializing logger...&quot;</span><span class="p">);</span>
+        <span class="n">initLogger</span><span class="p">();</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Initializing database...&quot;</span><span class="p">);</span>
+        <span class="n">initDatabase</span><span class="p">();</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Initializing jdbc...&quot;</span><span class="p">);</span>
+        <span class="n">initShadingJdbc</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAlpha</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+        <span class="n">inspectDatabase</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Inserting 10 users...\n&quot;</span><span class="p">);</span>
+        <span class="n">IntStream</span><span class="p">.</span><span class="na">rangeClosed</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">).</span><span class="na">forEach</span><span class="p">(</span><span class="n">$</span> <span class="o">-&gt;</span> <span class="p">{</span>
+            <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(id, username) VALUES (?, ?)&quot;</span><span class="p">,</span> <span class="n">$</span><span class="p">,</span> <span class="s">&quot;User&quot;</span> <span class="o">+</span> <span class="n">$</span><span class="p">);</span>
+        <span class="p">});</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">inspectDatabase</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;All users:&quot;</span><span class="p">);</span>
+        <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">queryForList</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user ORDER BY id&quot;</span><span class="p">).</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">Long</span> <span class="n">maxId</span> <span class="o">=</span> <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">queryForObject</span><span class="p">(</span><span class="s">&quot;SELECT MAX(id) FROM user&quot;</span><span class="p">,</span> <span class="n">Long</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Max user id: &quot;</span> <span class="o">+</span> <span class="n">maxId</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">Object</span> <span class="n">eight</span> <span class="o">=</span> <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">queryForMap</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user WHERE id = 8&quot;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;User(id=8): &quot;</span> <span class="o">+</span> <span class="n">eight</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">usersIdLte3</span> <span class="o">=</span> <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">queryForList</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user WHERE id &lt;= 3&quot;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Users(id&lt;=3): &quot;</span> <span class="o">+</span> <span class="n">usersIdLte3</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">usersIdInOneThreeFive</span> <span class="o">=</span> <span class="n">shardingJdbcTemplate</span><span class="p">.</span><span class="na">queryForList</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user WHERE id IN (1,3,5)&quot;</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Users(id IN (1,3,5)): &quot;</span> <span class="o">+</span> <span class="n">usersIdInOneThreeFive</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>控制台输出:</p>
+<div class="highlight"><pre><span></span>16:30:29.966 [main] INFO bj.ShardingJdbcTest - Initializing logger...
+[2018-12-06 16:30:30,095] [INFO] [b.ShardingJdbcTest ShardingJdbcTest.java:138] [main] Initializing database...
+[2018-12-06 16:30:30,370] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:110] [main] HikariPool-1 - Starting...
+[2018-12-06 16:30:31,103] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:123] [main] HikariPool-1 - Start completed.
+[2018-12-06 16:30:31,428] [INFO] [b.ShardingJdbcTest ShardingJdbcTest.java:140] [main] Initializing jdbc...
+[2018-12-06 16:30:32,698] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:110] [main] HikariPool-2 - Starting...
+[2018-12-06 16:30:32,707] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:123] [main] HikariPool-2 - Start completed.
+[2018-12-06 16:30:32,712] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:110] [main] HikariPool-3 - Starting...
+[2018-12-06 16:30:32,725] [INFO] [c.z.h.HikariDataSource HikariDataSource.java:123] [main] HikariPool-3 - Start completed.
+
+Inspecting database...
+ds0.user0: []
+ds0.user1: []
+ds0.user2: []
+ds1.user0: []
+ds1.user1: []
+ds1.user2: []
+
+Inserting 10 users...
+
+[2018-12-06 16:30:33,041] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,042] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 16:30:33,042] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@54dcfa5a], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 16:30:33,043] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[1, User1]]
+[2018-12-06 16:30:33,173] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,173] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 16:30:33,174] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@54dcfa5a], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 16:30:33,174] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[2, User2]]
+[2018-12-06 16:30:33,178] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,179] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 16:30:33,179] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@54dcfa5a], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 16:30:33,179] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[3, User3]]
+[2018-12-06 16:30:33,182] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,183] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 16:30:33,183] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@54dcfa5a], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 16:30:33,183] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[4, User4]]
+[2018-12-06 16:30:33,187] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,187] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 16:30:33,188] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@54dcfa5a], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 16:30:33,188] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[5, User5]]
+[2018-12-06 16:30:33,192] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,192] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 16:30:33,192] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@54dcfa5a], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 16:30:33,192] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[6, User6]]
+[2018-12-06 16:30:33,197] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,197] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 16:30:33,197] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@54dcfa5a], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 16:30:33,197] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[7, User7]]
+[2018-12-06 16:30:33,201] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,201] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 16:30:33,201] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@54dcfa5a], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 16:30:33,202] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[8, User8]]
+[2018-12-06 16:30:33,206] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,206] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 16:30:33,206] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@54dcfa5a], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 16:30:33,207] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user2(id, username) VALUES (?, ?) ::: [[9, User9]]
+[2018-12-06 16:30:33,210] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,210] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: INSERT INTO user(id, username) VALUES (?, ?)
+[2018-12-06 16:30:33,210] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: InsertStatement(super=DMLStatement(super=AbstractSQLStatement(type=DML, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={}, positionIndexMap={0=0})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user), io.shardingsphere.core.parsing.parser.token.InsertValuesToken@54dcfa5a], parametersIndex=2)), columns=[Column(name=id, tableName=user), Column(name=username, tableName=user)], generatedKeyConditions=[], insertValues=InsertValues(insertValues=[InsertValue(type=VALUES, expression=(?, ?), parametersCount=2)]), columnsListLastPosition=29, generateKeyColumnIndex=-1, insertValuesListLastPosition=44)
+[2018-12-06 16:30:33,211] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: INSERT INTO user0(id, username) VALUES (?, ?) ::: [[10, User10]]
+
+Inspecting database...
+ds0.user0: [{id=1, username=User1}, {id=2, username=User2}, {id=3, username=User3}, {id=4, username=User4}, {id=5, username=User5}, {id=7, username=User7}, {id=8, username=User8}, {id=10, username=User10}]
+ds0.user1: []
+ds0.user2: [{id=9, username=User9}]
+ds1.user0: [{id=6, username=User6}]
+ds1.user1: []
+ds1.user2: []
+
+All users:
+[2018-12-06 16:30:33,363] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,364] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: SELECT * FROM user ORDER BY id
+[2018-12-06 16:30:33,364] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: SelectStatement(super=DQLStatement(super=AbstractSQLStatement(type=DQL, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user)], parametersIndex=0)), containStar=true, selectListLastPosition=9, groupByLastPosition=0, items=[StarSelectItem(owner=Optional.absent())], groupByItems=[], orderByItems=[OrderItem(owner=Optional.absent(), name=Optional.of(id), orderDirection=ASC, nullOrderDirection=ASC, index=-1, alias=Optional.absent())], limit=null, subQueryStatement=null)
+[2018-12-06 16:30:33,365] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user0 ORDER BY id
+[2018-12-06 16:30:33,365] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user1 ORDER BY id
+[2018-12-06 16:30:33,365] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user2 ORDER BY id
+[2018-12-06 16:30:33,366] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user0 ORDER BY id
+[2018-12-06 16:30:33,366] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user1 ORDER BY id
+[2018-12-06 16:30:33,366] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user2 ORDER BY id
+{id=1, username=User1}
+{id=2, username=User2}
+{id=3, username=User3}
+{id=4, username=User4}
+{id=5, username=User5}
+{id=6, username=User6}
+{id=7, username=User7}
+{id=8, username=User8}
+{id=9, username=User9}
+{id=10, username=User10}
+
+[2018-12-06 16:30:33,483] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,483] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: SELECT MAX(id) FROM user
+[2018-12-06 16:30:33,483] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: SelectStatement(super=DQLStatement(super=AbstractSQLStatement(type=DQL, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user)], parametersIndex=0)), containStar=false, selectListLastPosition=15, groupByLastPosition=0, items=[AggregationSelectItem(type=MAX, innerExpression=(id), alias=Optional.absent(), derivedAggregationSelectItems=[], index=-1)], groupByItems=[], orderByItems=[], limit=null, subQueryStatement=null)
+[2018-12-06 16:30:33,484] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT MAX(id) FROM user0
+[2018-12-06 16:30:33,484] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT MAX(id) FROM user1
+[2018-12-06 16:30:33,484] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT MAX(id) FROM user2
+[2018-12-06 16:30:33,485] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT MAX(id) FROM user0
+[2018-12-06 16:30:33,485] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT MAX(id) FROM user1
+[2018-12-06 16:30:33,485] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT MAX(id) FROM user2
+Max user id: 10
+
+[2018-12-06 16:30:33,505] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,505] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: SELECT * FROM user WHERE id = 8
+[2018-12-06 16:30:33,506] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: SelectStatement(super=DQLStatement(super=AbstractSQLStatement(type=DQL, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=EQUAL, positionValueMap={0=8}, positionIndexMap={})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user)], parametersIndex=0)), containStar=true, selectListLastPosition=9, groupByLastPosition=0, items=[StarSelectItem(owner=Optional.absent())], groupByItems=[], orderByItems=[], limit=null, subQueryStatement=null)
+[2018-12-06 16:30:33,506] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user0 WHERE id = 8
+User(id=8): {id=8, username=User8}
+
+[2018-12-06 16:30:33,511] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,511] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: SELECT * FROM user WHERE id &lt;= 3
+[2018-12-06 16:30:33,512] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: SelectStatement(super=DQLStatement(super=AbstractSQLStatement(type=DQL, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user)], parametersIndex=0)), containStar=true, selectListLastPosition=9, groupByLastPosition=0, items=[StarSelectItem(owner=Optional.absent())], groupByItems=[], orderByItems=[], limit=null, subQueryStatement=null)
+[2018-12-06 16:30:33,512] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user0 WHERE id &lt;= 3
+[2018-12-06 16:30:33,512] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user1 WHERE id &lt;= 3
+[2018-12-06 16:30:33,512] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user2 WHERE id &lt;= 3
+[2018-12-06 16:30:33,513] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user0 WHERE id &lt;= 3
+[2018-12-06 16:30:33,513] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user1 WHERE id &lt;= 3
+[2018-12-06 16:30:33,513] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds1 ::: SELECT * FROM user2 WHERE id &lt;= 3
+Users(id&lt;=3): [{id=1, username=User1}, {id=2, username=User2}, {id=3, username=User3}]
+
+[2018-12-06 16:30:33,529] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Rule Type: sharding
+[2018-12-06 16:30:33,531] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Logic SQL: SELECT * FROM user WHERE id IN (1,3,5)
+[2018-12-06 16:30:33,532] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] SQLStatement: SelectStatement(super=DQLStatement(super=AbstractSQLStatement(type=DQL, tables=Tables(tables=[Table(name=user, alias=Optional.absent())]), conditions=Conditions(orCondition=OrCondition(andConditions=[AndCondition(conditions=[Condition(column=Column(name=id, tableName=user), operator=IN, positionValueMap={0=1, 1=3, 2=5}, positionIndexMap={})])])), sqlTokens=[TableToken(skippedSchemaNameLength=0, originalLiterals=user)], parametersIndex=0)), containStar=true, selectListLastPosition=9, groupByLastPosition=0, items=[StarSelectItem(owner=Optional.absent())], groupByItems=[], orderByItems=[], limit=null, subQueryStatement=null)
+[2018-12-06 16:30:33,532] [INFO] [Sharding-Sphere-SQL SQLLogger.java:71] [main] Actual SQL: ds0 ::: SELECT * FROM user0 WHERE id IN (1,3,5)
+Users(id IN (1,3,5)): [{id=1, username=User1}, {id=3, username=User3}, {id=5, username=User5}]
+</pre></div>
+<h3>ShardingJDBC整合到现有项目</h3>
+<p>一般情况直接替换数据源即可。也可以用多个数据源。</p>
+<ol>
+<li>在创建ShardingJDBC的数据源时(<code>ShardingDataSourceFactory.createDataSource(...)</code>)添加一个不使用切片的数据源</li>
+<li>将不切片的数据源设为ShardingJDBC的默认数据源 <code>shardingRuleConfiguration.setDefaultDataSourceName(&quot;foo&quot;)</code></li>
+</ol>
+<h3>ShardingJDBC设置绑定表</h3>
+<p>在ShardingJDBC中，如果对分片表使用Join，会对同一数据源内的所有实表相互Join，Join路径为两逻辑表对应实表数量的笛卡尔积</p>
+<p>如果两表为父子表，而且使用了相同的分片策略，可以将两表设为绑定关系，这样在Join的时候，就可以一对一Join</p>
+<p>文章首发: <a href="https://baijifeilong.github.io/2018/11/26/sharding-jdbc">https://baijifeilong.github.io/2018/11/26/sharding-jdbc</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/11/26/sharding-jdbc/index.html";
+        this.page.identifier = "/2018/11/26/sharding-jdbc/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

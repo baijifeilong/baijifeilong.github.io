@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>MyBatis多数据源的配置 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>MyBatis多数据源的配置</h1>
+    <p>MyBatis多数据源的配置主要有两种方式:</p>
+<ol>
+<li>通过@MapperScan注解，对不同包下的Mapper使用不同的sqlSessionFactory</li>
+<li>通过@MapperScan注解加自定义注解，对使用不同注解的Mapper使用不同的sqlSessionFactory</li>
+</ol>
+<p>第二种配置相对灵活，示例如下:</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.Level</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.Logger</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.zaxxer.hikari.HikariDataSource</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.shardingsphere.shardingjdbc.spring.boot.SpringBootConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ibatis.annotations.Mapper</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ibatis.annotations.Select</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ibatis.session.SqlSessionFactory</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.mybatis.spring.SqlSessionFactoryBean</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.mybatis.spring.annotation.MapperScan</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.WebApplicationType</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.context.event.ApplicationReadyEvent</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.ApplicationListener</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Primary</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.JdbcTemplate</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">javax.sql.DataSource</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 2018/12/6 下午9:29</span>
+<span class="cm"> * &lt;p&gt;</span>
+<span class="cm"> * MyBatis多数据源演示</span>
+<span class="cm"> */</span>
+<span class="nd">@SpringBootApplication</span><span class="p">(</span><span class="n">exclude</span> <span class="o">=</span> <span class="p">{</span><span class="n">SpringBootConfiguration</span><span class="p">.</span><span class="na">class</span><span class="p">})</span>
+<span class="nd">@Configuration</span>
+<span class="nd">@MapperScan</span><span class="p">(</span><span class="n">annotationClass</span> <span class="o">=</span> <span class="n">Mapper</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">basePackageClasses</span> <span class="o">=</span> <span class="n">MyBatisApp</span><span class="p">.</span><span class="na">class</span><span class="p">,</span>
+        <span class="n">sqlSessionFactoryRef</span> <span class="o">=</span> <span class="s">&quot;sqlSessionFactory&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyBatisApp</span> <span class="kd">implements</span> <span class="n">ApplicationListener</span><span class="o">&lt;</span><span class="n">ApplicationReadyEvent</span><span class="o">&gt;</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * SecondaryMapper配置</span>
+<span class="cm">     * \@MapperScan 注解一次只能添加一个，所以需要单独再加一个配置类</span>
+<span class="cm">     * 自定义@MapperScan会替换MyBatis自动添加的默认@MapperScan。所以主@MapperScan也必须显式添加</span>
+<span class="cm">     */</span>
+    <span class="nd">@Configuration</span>
+    <span class="nd">@MapperScan</span><span class="p">(</span><span class="n">annotationClass</span> <span class="o">=</span> <span class="n">SecondaryMapper</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">basePackageClasses</span> <span class="o">=</span> <span class="n">MyBatisApp</span><span class="p">.</span><span class="na">class</span><span class="p">,</span>
+            <span class="n">sqlSessionFactoryRef</span> <span class="o">=</span> <span class="s">&quot;sqlSessionFactorySecond&quot;</span><span class="p">)</span>
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">SecondaryMapperConfiguration</span> <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">new</span> <span class="n">SpringApplication</span><span class="p">(</span><span class="n">MyBatisApp</span><span class="p">.</span><span class="na">class</span><span class="p">)</span> <span class="p">{{</span>
+            <span class="n">setWebApplicationType</span><span class="p">(</span><span class="n">WebApplicationType</span><span class="p">.</span><span class="na">NONE</span><span class="p">);</span>
+        <span class="p">}}.</span><span class="na">run</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">DataSource</span> <span class="n">dataSource</span><span class="p">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">DataSource</span> <span class="n">dataSourceSecond</span><span class="p">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">jdbcTemplate</span><span class="p">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">UserMapper</span> <span class="n">userMapper</span><span class="p">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">SecondaryUserMapper</span> <span class="n">secondaryUserMapper</span><span class="p">;</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initLogger</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">((</span><span class="n">Logger</span><span class="p">)</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">MyBatisApp</span><span class="p">.</span><span class="na">class</span><span class="p">)).</span><span class="na">setLevel</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">DEBUG</span><span class="p">);</span>
+        <span class="p">((</span><span class="n">Logger</span><span class="p">)</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">JdbcTemplate</span><span class="p">.</span><span class="na">class</span><span class="p">)).</span><span class="na">setLevel</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">DEBUG</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initDatabase</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">String</span> <span class="n">oldDatabase</span> <span class="o">=</span> <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">queryForObject</span><span class="p">(</span><span class="s">&quot;SELECT DATABASE()&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;DROP SCHEMA IF EXISTS one&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;CREATE SCHEMA one&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;USE one&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;CREATE TABLE user(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(32) CHARSET &#39;utf8&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(name) VALUES (&#39;人民的儿子&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(name) VALUES (&#39;人民的孙子&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(name) VALUES (&#39;人民的曾孙子&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;DROP SCHEMA IF EXISTS two&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;CREATE SCHEMA two&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;USE two&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;CREATE TABLE user(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(32) CHARSET &#39;utf8&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(name) VALUES (&#39;人民的爹&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(name) VALUES (&#39;人民的爷&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(name) VALUES (&#39;人民的太爷&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO user(name) VALUES (&#39;人民的老太爷&#39;)&quot;</span><span class="p">);</span>
+        <span class="n">jdbcTemplate</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="s">&quot;USE &quot;</span> <span class="o">+</span> <span class="n">oldDatabase</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onApplicationEvent</span><span class="p">(</span><span class="n">ApplicationReadyEvent</span> <span class="n">applicationReadyEvent</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">initLogger</span><span class="p">();</span>
+        <span class="n">initDatabase</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Users:&quot;</span><span class="p">);</span>
+        <span class="n">userMapper</span><span class="p">.</span><span class="na">selectAll</span><span class="p">().</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secondary users:&quot;</span><span class="p">);</span>
+        <span class="n">secondaryUserMapper</span><span class="p">.</span><span class="na">selectAll</span><span class="p">().</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 主数据源</span>
+<span class="cm">     * &lt;p&gt;</span>
+<span class="cm">     * 如果不添加@Primary注解, MyBatis可以工作，但是JdbcTemplate无法注入</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return .</span>
+<span class="cm">     */</span>
+    <span class="nd">@Primary</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">DataSource</span> <span class="nf">dataSource</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">HikariDataSource</span><span class="p">()</span> <span class="p">{{</span>
+            <span class="n">setJdbcUrl</span><span class="p">(</span><span class="s">&quot;jdbc:mysql://localhost/one?useUnicode=true&amp;characterEncoding=utf8&quot;</span><span class="p">);</span>
+            <span class="n">setUsername</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+            <span class="n">setPassword</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+        <span class="p">}};</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 副数据源</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return .</span>
+<span class="cm">     */</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">DataSource</span> <span class="nf">dataSourceSecond</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">HikariDataSource</span><span class="p">()</span> <span class="p">{{</span>
+            <span class="n">setJdbcUrl</span><span class="p">(</span><span class="s">&quot;jdbc:mysql://localhost/two?useUnicode=true&amp;characterEncoding=utf8&quot;</span><span class="p">);</span>
+            <span class="n">setUsername</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+            <span class="n">setPassword</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+        <span class="p">}};</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 主SqlSessionFactory。使用主数据源。自定义SqlSessionFactory后，MyBatis就不自动添加SqlSessionFactory了，所以必须有</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return .</span>
+<span class="cm">     * @throws Exception .</span>
+<span class="cm">     */</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">SqlSessionFactory</span> <span class="nf">sqlSessionFactory</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">SqlSessionFactoryBean</span><span class="p">()</span> <span class="p">{{</span>
+            <span class="n">setDataSource</span><span class="p">(</span><span class="n">dataSource</span><span class="p">);</span>
+        <span class="p">}}.</span><span class="na">getObject</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 副SqlSessionFactory。使用副数据源</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return .</span>
+<span class="cm">     * @throws Exception .</span>
+<span class="cm">     */</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">SqlSessionFactory</span> <span class="nf">sqlSessionFactorySecond</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">SqlSessionFactoryBean</span><span class="p">()</span> <span class="p">{{</span>
+            <span class="n">setDataSource</span><span class="p">(</span><span class="n">dataSourceSecond</span><span class="p">);</span>
+        <span class="p">}}.</span><span class="na">getObject</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Mapper</span>
+    <span class="kd">interface</span> <span class="nc">UserMapper</span> <span class="p">{</span>
+        <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user&quot;</span><span class="p">)</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="nf">selectAll</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@SecondaryMapper</span>
+    <span class="kd">interface</span> <span class="nc">SecondaryUserMapper</span> <span class="p">{</span>
+        <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;SELECT * FROM user&quot;</span><span class="p">)</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="nf">selectAll</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 自定义Mapper注解，用于标识使用的数据源</span>
+<span class="cm">     */</span>
+    <span class="nd">@Target</span><span class="p">(</span><span class="n">ElementType</span><span class="p">.</span><span class="na">TYPE</span><span class="p">)</span>
+    <span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+    <span class="nd">@interface</span> <span class="n">SecondaryMapper</span> <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>控制台输出:</p>
+<div class="highlight"><pre><span></span>.   ____          _            __ _ _
+ /\\ / ___&#39;_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | &#39;_ | &#39;_| | &#39;_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  &#39;  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.0.RELEASE)
+
+2018-12-07 11:49:02.596  INFO 5154 --- [           main] bj.MyBatisApp                            : Starting MyBatisApp on MacBook-Air-2.local with PID 5154 (/Users/yuchao/temp/java/hellomaven/target/classes started by yuchao in /Users/yuchao/temp/java/hellomaven)
+2018-12-07 11:49:02.633  INFO 5154 --- [           main] bj.MyBatisApp                            : No active profile set, falling back to default profiles: default
+2018-12-07 11:49:05.341  INFO 5154 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2018-12-07 11:49:05.499  INFO 5154 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2018-12-07 11:49:05.547  INFO 5154 --- [           main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2018-12-07 11:49:05.569  INFO 5154 --- [           main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2018-12-07 11:49:05.569  INFO 5154 --- [           main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.0 created.
+2018-12-07 11:49:05.570  INFO 5154 --- [           main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2018-12-07 11:49:05.571  INFO 5154 --- [           main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.0) &#39;quartzScheduler&#39; with instanceId &#39;NON_CLUSTERED&#39;
+  Scheduler class: &#39;org.quartz.core.QuartzScheduler&#39; - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool &#39;org.quartz.simpl.SimpleThreadPool&#39; - with 10 threads.
+  Using job-store &#39;org.quartz.simpl.RAMJobStore&#39; - which does not support persistence. and is not clustered.
+
+2018-12-07 11:49:05.571  INFO 5154 --- [           main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler &#39;quartzScheduler&#39; initialized from an externally provided properties instance.
+2018-12-07 11:49:05.571  INFO 5154 --- [           main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.0
+2018-12-07 11:49:05.571  INFO 5154 --- [           main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@769a58e5
+2018-12-07 11:49:05.780  WARN 5154 --- [           main] reactor.netty.tcp.TcpResources           : [http] resources will use the default LoopResources: DefaultLoopResources {prefix=reactor-http, daemon=true, selectCount=4, workerCount=4}
+2018-12-07 11:49:05.780  WARN 5154 --- [           main] reactor.netty.tcp.TcpResources           : [http] resources will use the default ConnectionProvider: PooledConnectionProvider {name=http, poolFactory=reactor.netty.resources.ConnectionProvider$$Lambda$284/1788545647@10667848}
+2018-12-07 11:49:06.061  INFO 5154 --- [           main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2018-12-07 11:49:06.062  INFO 5154 --- [           main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2018-12-07 11:49:06.079  INFO 5154 --- [           main] bj.MyBatisApp                            : Started MyBatisApp in 4.645 seconds (JVM running for 6.354)
+2018-12-07 11:49:06.084 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL query [SELECT DATABASE()]
+2018-12-07 11:49:06.105 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [DROP SCHEMA IF EXISTS one]
+2018-12-07 11:49:06.115 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [CREATE SCHEMA one]
+2018-12-07 11:49:06.117 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [USE one]
+2018-12-07 11:49:06.119 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [CREATE TABLE user(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(32) CHARSET &#39;utf8&#39;)]
+2018-12-07 11:49:06.153 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [INSERT INTO user(name) VALUES (&#39;人民的儿子&#39;)]
+2018-12-07 11:49:06.157 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [INSERT INTO user(name) VALUES (&#39;人民的孙子&#39;)]
+2018-12-07 11:49:06.161 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [INSERT INTO user(name) VALUES (&#39;人民的曾孙子&#39;)]
+2018-12-07 11:49:06.164 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [DROP SCHEMA IF EXISTS two]
+2018-12-07 11:49:06.174 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [CREATE SCHEMA two]
+2018-12-07 11:49:06.176 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [USE two]
+2018-12-07 11:49:06.178 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [CREATE TABLE user(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(32) CHARSET &#39;utf8&#39;)]
+2018-12-07 11:49:06.226 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [INSERT INTO user(name) VALUES (&#39;人民的爹&#39;)]
+2018-12-07 11:49:06.231 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [INSERT INTO user(name) VALUES (&#39;人民的爷&#39;)]
+2018-12-07 11:49:06.235 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [INSERT INTO user(name) VALUES (&#39;人民的太爷&#39;)]
+2018-12-07 11:49:06.243 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [INSERT INTO user(name) VALUES (&#39;人民的老太爷&#39;)]
+2018-12-07 11:49:06.246 DEBUG 5154 --- [           main] o.s.jdbc.core.JdbcTemplate               : Executing SQL statement [USE one]
+Users:
+2018-12-07 11:49:06.271 DEBUG 5154 --- [           main] bj.MyBatisApp$UserMapper.selectAll       : ==&gt;  Preparing: SELECT * FROM user
+2018-12-07 11:49:06.297 DEBUG 5154 --- [           main] bj.MyBatisApp$UserMapper.selectAll       : ==&gt; Parameters:
+2018-12-07 11:49:06.314 DEBUG 5154 --- [           main] bj.MyBatisApp$UserMapper.selectAll       : &lt;==      Total: 3
+{name=人民的儿子, id=1}
+{name=人民的孙子, id=2}
+{name=人民的曾孙子, id=3}
+Secondary users:
+2018-12-07 11:49:06.318  INFO 5154 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2018-12-07 11:49:06.324  INFO 5154 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2018-12-07 11:49:06.325 DEBUG 5154 --- [           main] b.M.selectAll                            : ==&gt;  Preparing: SELECT * FROM user
+2018-12-07 11:49:06.325 DEBUG 5154 --- [           main] b.M.selectAll                            : ==&gt; Parameters:
+2018-12-07 11:49:06.328 DEBUG 5154 --- [           main] b.M.selectAll                            : &lt;==      Total: 4
+{name=人民的爹, id=1}
+{name=人民的爷, id=2}
+{name=人民的太爷, id=3}
+{name=人民的老太爷, id=4}
+</pre></div>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/12/07/mybatis-multiple-datasource/index.html";
+        this.page.identifier = "/2018/12/07/mybatis-multiple-datasource/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

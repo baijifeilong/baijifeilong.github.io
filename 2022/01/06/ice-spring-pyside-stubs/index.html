@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>IceSpringPySideStubs - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>IceSpringPySideStubs</h1>
+    <p>PySide/PyQt stubs with Qt signals and Qt documents and more.</p>
+<p>Supported Qt bindings now: PySide2, PySide6, PyQt5, PyQt6.</p>
+<h2>Official sites</h2>
+<ul>
+<li>Home: <a href="https://baijifeilong.github.io/2022/01/06/ice-spring-pyside-stubs/index.html">https://baijifeilong.github.io/2022/01/06/ice-spring-pyside-stubs/index.html</a></li>
+<li>Github: <a href="https://github.com/baijifeilong/IceSpringPySideStubs">https://github.com/baijifeilong/IceSpringPySideStubs</a></li>
+<li>PyPI(PySide2): <a href="https://pypi.org/project/IceSpringPySideStubs-PySide2">https://pypi.org/project/IceSpringPySideStubs-PySide2</a></li>
+<li>PyPI(PySide6): <a href="https://pypi.org/project/IceSpringPySideStubs-PySide6">https://pypi.org/project/IceSpringPySideStubs-PySide6</a></li>
+<li>PyPI(PyQt5): <a href="https://pypi.org/project/IceSpringPySideStubs-PyQt5">https://pypi.org/project/IceSpringPySideStubs-PyQt5</a></li>
+<li>PyPI(PyQt6): <a href="https://pypi.org/project/IceSpringPySideStubs-PyQt6">https://pypi.org/project/IceSpringPySideStubs-PyQt6</a></li>
+</ul>
+<h2>Features</h2>
+<ul>
+<li>Qt official documents support</li>
+<li>Qt signals support</li>
+<li>More correct type annotations</li>
+<li>Recognition of unknown method names</li>
+<li>Better performance: one class one file</li>
+<li>More editable: one class one file</li>
+<li>Clean: all codes are well formatted</li>
+<li>Direct link to the Official Qt site</li>
+</ul>
+<h2>Known issues</h2>
+<ul>
+<li>Unknown method name recognition not worked in PyCharm/IDEA</li>
+</ul>
+<h3>Unknown method name recognition not worked in PyCharm/IDEA</h3>
+<p>You should remove the PySide/PyQt skeleton generated by PyCharm, and make the skeleton root folder only-read to prevent regeneration.</p>
+<h2>Install</h2>
+<ul>
+<li>PySide2: <code>pip install IceSpringPySideStubs-PySide2</code></li>
+<li>PySide6: <code>pip install IceSpringPySideStubs-PySide6</code></li>
+<li>PyQt5: <code>pip install IceSpringPySideStubs-PyQt5</code></li>
+<li>PyQt6: <code>pip install IceSpringPySideStubs-PyQt6</code></li>
+</ul>
+<h2>Usage</h2>
+<p>Out of the box</p>
+<h2>Build</h2>
+<h3>Prerequisites</h3>
+<p>Offline Qt documents are required. If not, download them:</p>
+<ol>
+<li>Install <a href="https://zealdocs.org/">Zeal</a>. <code>scoop install zeal</code> for Windows users.</li>
+<li>Open <code>Zeal</code>, Download <code>Qt5</code> and <code>Qt6</code> from <code>Docsets</code></li>
+</ol>
+<h3>Build steps</h3>
+<ol>
+<li><code>git clone https://github.com/baijifeilong/IceSpringPySideStubs</code></li>
+<li><code>cd IceSpringPySideStubs</code></li>
+<li><code>python -mvenv venv</code></li>
+<li><code>./venv/Scripts/pip.exe install -r requirements.txt</code></li>
+<li><code>vim main.py</code> Change <code>docFilenames</code> if your <code>Qt</code> document wasn't downloaded by <code>scoop</code>+<code>zeal</code></li>
+<li><code>./venv/Scripts/python.exe main.py</code> Generate stubs in <code>target</code> folder.</li>
+<li><code>./venv/Scripts/python.exe build.py</code> Generate <code>.whl</code> package in <code>target</code> folder.</li>
+<li><code>./venv/Scripts/pip.exe install __generated_whl_package__.whl</code> Install the <code>.whl</code> package</li>
+</ol>
+<h2>License</h2>
+<p>MIT</p>
+<h2>Example snippets</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">typing</span>
+
+<span class="kn">import</span> <span class="nn">PySide2.QtCore</span>
+
+
+<span class="k">class</span> <span class="nc">QObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://doc.qt.io/qt-5/qobject.html</span>
+
+<span class="sd">    **Detailed Description**</span>
+
+<span class="sd">    QObject is the heart of the Qt **Object Model** . The central feature in</span>
+<span class="sd">    this model is a very powerful mechanism for seamless object communication</span>
+<span class="sd">    called **signals and slots** . You can connect a signal to a slot with</span>
+<span class="sd">    **connect** () and destroy the connection with **disconnect** (). To avoid</span>
+<span class="sd">    never ending notification loops you can temporarily block signals with</span>
+<span class="sd">    **blockSignals** (). The protected functions **connectNotify** () and</span>
+<span class="sd">    **disconnectNotify** () make it possible to track connections.</span>
+
+<span class="sd">    QObjects organize themselves in **object trees** . When you create a QObject</span>
+<span class="sd">    with another object as parent, the object will automatically add itself to</span>
+<span class="sd">    the parent\&#39;s **children** () list. The parent takes ownership of the object;</span>
+<span class="sd">    i.e., it will automatically delete its children in its destructor. You can</span>
+<span class="sd">    look for an object by name and optionally type using **findChild** () or</span>
+<span class="sd">    **findChildren** ().</span>
+
+<span class="sd">    Every object has an **objectName** () and its class name can be found via</span>
+<span class="sd">    the corresponding **metaObject** () (see **QMetaObject::className** ()). You</span>
+<span class="sd">    can determine whether the object\&#39;s class inherits another class in the</span>
+<span class="sd">    QObject inheritance hierarchy by using the **inherits** () function.</span>
+
+<span class="sd">    When an object is deleted, it emits a **destroyed** () signal. You can catch</span>
+<span class="sd">    this signal to avoid dangling references to QObjects.</span>
+
+<span class="sd">    QObjects can receive events through **event** () and filter the events of</span>
+<span class="sd">    other objects. See **installEventFilter** () and **eventFilter** () for</span>
+<span class="sd">    details. A convenience handler, **childEvent** (), can be reimplemented to</span>
+<span class="sd">    catch child events.</span>
+
+<span class="sd">    Last but not least, QObject provides the basic timer support in Qt; see</span>
+<span class="sd">    **QTimer**  for high-level support for timers.</span>
+
+<span class="sd">    Notice that the **Q_OBJECT**  macro is mandatory for any object that</span>
+<span class="sd">    implements signals, slots or properties. You also need to run the **Meta</span>
+<span class="sd">    Object Compiler**  on the source file. We strongly recommend the use of this</span>
+<span class="sd">    macro in all subclasses of QObject regardless of whether or not they</span>
+<span class="sd">    actually use signals, slots and properties, since failure to do so may lead</span>
+<span class="sd">    certain functions to exhibit strange behavior.</span>
+
+<span class="sd">    All Qt widgets inherit QObject. The convenience function **isWidgetType** ()</span>
+<span class="sd">    returns whether an object is actually a widget. It is much faster than</span>
+<span class="sd">    **qobject_cast** &lt;**QWidget**  *&gt;( **obj** ) or **obj** -&gt;**inherits**</span>
+<span class="sd">    (&quot;**QWidget** &quot;).</span>
+
+<span class="sd">    Some QObject functions, e.g. **children** (), return a **QObjectList** .</span>
+<span class="sd">    **QObjectList**  is a typedef for **QList** &lt;QObject *&gt;.</span>
+
+<span class="sd">    **Thread Affinity**</span>
+
+<span class="sd">    A QObject instance is said to have a **thread affinity** , or that it</span>
+<span class="sd">    **lives** in a certain thread. When a QObject receives a **queued signal**</span>
+<span class="sd">    or a **posted event** , the slot or event handler will run in the thread</span>
+<span class="sd">    that the object lives in.</span>
+
+<span class="sd">    **Note:** If a QObject has no thread affinity (that is, if **thread** ()</span>
+<span class="sd">    returns zero), or if it lives in a thread that has no running event loop,</span>
+<span class="sd">    then it cannot receive queued signals or posted events.</span>
+
+<span class="sd">    By default, a QObject lives in the thread in which it is created. An</span>
+<span class="sd">    object\&#39;s thread affinity can be queried using **thread** () and changed</span>
+<span class="sd">    using **moveToThread** ().</span>
+
+<span class="sd">    All QObjects must live in the same thread as their parent. Consequently:</span>
+
+<span class="sd">    * **setParent** () will fail if the two QObjects involved live in different</span>
+<span class="sd">    threads.</span>
+<span class="sd">      * When a QObject is moved to another thread, all its children</span>
+<span class="sd">    will be automatically moved too.</span>
+<span class="sd">      * **moveToThread** () will fail if the</span>
+<span class="sd">    QObject has a parent.</span>
+<span class="sd">      * If QObjects are created within **QThread::run**</span>
+<span class="sd">    (), they cannot become children of the **QThread**  object because the</span>
+<span class="sd">    **QThread**  does not live in the thread that calls **QThread::run** ().</span>
+
+<span class="sd">    **Note:** A QObject\&#39;s member variables **do not** automatically become its</span>
+<span class="sd">    children. The parent-child relationship must be set by either passing a</span>
+<span class="sd">    pointer to the child\&#39;s **constructor** , or by calling **setParent** ().</span>
+<span class="sd">    Without this step, the object\&#39;s member variables will remain in the old</span>
+<span class="sd">    thread when **moveToThread** () is called.</span>
+
+<span class="sd">    **No Copy Constructor or Assignment Operator**</span>
+
+<span class="sd">    QObject has neither a copy constructor nor an assignment operator. This is</span>
+<span class="sd">    by design. Actually, they are declared, but in a `private` section with the</span>
+<span class="sd">    macro **Q_DISABLE_COPY** (). In fact, all Qt classes derived from QObject</span>
+<span class="sd">    (direct or indirect) use this macro to declare their copy constructor and</span>
+<span class="sd">    assignment operator to be private. The reasoning is found in the discussion</span>
+<span class="sd">    on **Identity vs Value**  on the Qt **Object Model**  page.</span>
+
+<span class="sd">    The main consequence is that you should use pointers to QObject (or to your</span>
+<span class="sd">    QObject subclass) where you might otherwise be tempted to use your QObject</span>
+<span class="sd">    subclass as a value. For example, without a copy constructor, you can\&#39;t use</span>
+<span class="sd">    a subclass of QObject as the value to be stored in one of the container</span>
+<span class="sd">    classes. You must store pointers.</span>
+
+<span class="sd">    **Auto-Connection**</span>
+
+<span class="sd">    Qt\&#39;s meta-object system provides a mechanism to automatically connect</span>
+<span class="sd">    signals and slots between QObject subclasses and their children. As long as</span>
+<span class="sd">    objects are defined with suitable object names, and slots follow a simple</span>
+<span class="sd">    naming convention, this connection can be performed at run-time by the</span>
+<span class="sd">    **QMetaObject::connectSlotsByName** () function.</span>
+
+<span class="sd">    **uic**  generates code that invokes this function to enable auto-connection</span>
+<span class="sd">    to be performed between widgets on forms created with **Qt Designer**. More</span>
+<span class="sd">    information about using auto-connection with **Qt Designer** is given in the</span>
+<span class="sd">    **Using a Designer UI File in Your C++ Application**  section of the **Qt</span>
+<span class="sd">    Designer** manual.</span>
+
+<span class="sd">    **Dynamic Properties**</span>
+
+<span class="sd">    From Qt 4.2, dynamic properties can be added to and removed from QObject</span>
+<span class="sd">    instances at run-time. Dynamic properties do not need to be declared at</span>
+<span class="sd">    compile-time, yet they provide the same advantages as static properties and</span>
+<span class="sd">    are manipulated using the same API - using **property** () to read them and</span>
+<span class="sd">    **setProperty** () to write them.</span>
+
+<span class="sd">    From Qt 4.3, dynamic properties are supported by **Qt Designer** , and both</span>
+<span class="sd">    standard Qt widgets and user-created forms can be given dynamic properties.</span>
+
+<span class="sd">    **Internationalization (I18n)**</span>
+
+<span class="sd">    All QObject subclasses support Qt\&#39;s translation features, making it possible</span>
+<span class="sd">    to translate an application\&#39;s user interface into different languages.</span>
+
+<span class="sd">    To make user-visible text translatable, it must be wrapped in calls to the</span>
+<span class="sd">    **tr** () function. This is explained in detail in the **Writing Source Code</span>
+<span class="sd">    for Translation**  document.</span>
+
+<span class="sd">    **See also** **QMetaObject** , **QPointer** , **QObjectCleanupHandler** ,</span>
+<span class="sd">    **Q_DISABLE_COPY** (), and **Object Trees &amp; Ownership** .</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">PySide2</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">]</span> <span class="o">=</span> <span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        https://doc.qt.io/qt-5/qobject.html#QObject</span>
+
+<span class="sd">        **QObject::QObject(QObject * parent = nullptr)**</span>
+
+<span class="sd">        Constructs an object with parent object **parent**.</span>
+
+<span class="sd">        The parent of an object may be viewed as the object&#39;s owner. For</span>
+<span class="sd">        instance, a **dialog box**  is the parent of the **OK** and **Cancel**</span>
+<span class="sd">        buttons it contains.</span>
+
+<span class="sd">        The destructor of a parent object destroys all child objects.</span>
+
+<span class="sd">        Setting **parent** to `nullptr` constructs an object with no parent. If</span>
+<span class="sd">        the object is a widget, it will become a top-level window.</span>
+
+<span class="sd">        **Note:** This function can be invoked via the meta-object system and</span>
+<span class="sd">        from QML. See **Q_INVOKABLE** .</span>
+
+<span class="sd">        **See also** **parent** (), **findChild** (), and **findChildren** ().</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">objectName</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        https://doc.qt.io/qt-5/qobject.html#objectName-prop</span>
+
+<span class="sd">        **objectName : QString**</span>
+
+<span class="sd">        This property holds the name of this object</span>
+
+<span class="sd">        You can find an object by name (and type) using **findChild** (). You</span>
+<span class="sd">        can find a set of objects with **findChildren** ().</span>
+
+<span class="sd">        **qDebug** (&quot;MyClass::setPrecision(): (%s) invalid precision %f&quot;,</span>
+<span class="sd">        **qPrintable** (objectName()), newPrecision);</span>
+
+<span class="sd">        By default, this property contains an empty string.</span>
+
+<span class="sd">        **Access functions:**</span>
+
+<span class="sd">        QString **objectName** () const</span>
+<span class="sd">        void **setObjectName** (const QString</span>
+<span class="sd">        &amp; **name** )</span>
+
+<span class="sd">        **Notifier signal:**</span>
+
+<span class="sd">        void ****objectNameChanged** ** (const QString &amp; **objectName** )[see</span>
+<span class="sd">        note below]</span>
+
+<span class="sd">        **Note:** This is a private signal. It can be used in signal connections</span>
+<span class="sd">        but cannot be emitted by the user.</span>
+
+<span class="sd">        **See also** **metaObject** () and **QMetaObject::className** ().</span>
+
+<span class="sd">        **Member Function Documentation**</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">setObjectName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        https://doc.qt.io/qt-5/qobject.html#objectName-prop</span>
+
+<span class="sd">        **objectName : QString**</span>
+
+<span class="sd">        This property holds the name of this object</span>
+
+<span class="sd">        You can find an object by name (and type) using **findChild** (). You</span>
+<span class="sd">        can find a set of objects with **findChildren** ().</span>
+
+<span class="sd">        **qDebug** (&quot;MyClass::setPrecision(): (%s) invalid precision %f&quot;,</span>
+<span class="sd">        **qPrintable** (objectName()), newPrecision);</span>
+
+<span class="sd">        By default, this property contains an empty string.</span>
+
+<span class="sd">        **Access functions:**</span>
+
+<span class="sd">        QString **objectName** () const</span>
+<span class="sd">        void **setObjectName** (const QString</span>
+<span class="sd">        &amp; **name** )</span>
+
+<span class="sd">        **Notifier signal:**</span>
+
+<span class="sd">        void ****objectNameChanged** ** (const QString &amp; **objectName** )[see</span>
+<span class="sd">        note below]</span>
+
+<span class="sd">        **Note:** This is a private signal. It can be used in signal connections</span>
+<span class="sd">        but cannot be emitted by the user.</span>
+
+<span class="sd">        **See also** **metaObject** () and **QMetaObject::className** ().</span>
+
+<span class="sd">        **Member Function Documentation**</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">objectNameChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PySide2</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">SignalInstance</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        https://doc.qt.io/qt-5/qobject.html#objectNameChanged</span>
+
+<span class="sd">        **[signal] void QObject::objectNameChanged(const QString &amp; objectName</span>
+<span class="sd">        )**</span>
+
+<span class="sd">        This signal is emitted after the object&#39;s name has been changed. The new</span>
+<span class="sd">        object name is passed as **objectName**.</span>
+
+<span class="sd">        **Note:** This is a private signal. It can be used in signal connections</span>
+<span class="sd">        but cannot be emitted by the user.</span>
+
+<span class="sd">        **Note:** Notifier signal for property **objectName** .</span>
+
+<span class="sd">        **See also** **QObject::objectName** .</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+
+<span class="c1"># More..........................................................................</span>
+<span class="c1"># Lines.........................................................................</span>
+<span class="c1"># Here..........................................................................</span>
+<span class="c1"># Are...........................................................................</span>
+<span class="c1"># Omitted.......................................................................</span>
+</pre></div>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2022/01/06/ice-spring-pyside-stubs/index.html";
+        this.page.identifier = "/2022/01/06/ice-spring-pyside-stubs/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

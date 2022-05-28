@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>面向聪明小白的编程入门教程 低耦合高内聚(Part 9) - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>面向聪明小白的编程入门教程 低耦合高内聚(Part 9)</h1>
+    <p>在上一节的示例中，我们的程序已经膨胀到了一百多行，代码也开始变得乱七八糟。在这一节中，我们将学习如何拆解代码，构造有条理的程序。</p>
+<p>代码变长变乱，不仅影响别人的阅读和理解，更容易藏污纳垢，给以后的扩展与维护留下隐患。</p>
+<p>代码太长，而每一行代码又都是必要的，不能随便删掉。所以，我们想到的第一种思路就是拆分代码。将一段很长的代码拆分成多段相对较短的代码，每段代码处理起来就会相对容易一些。</p>
+<p>事实上，之前的代码我们已经用到了代码拆分。我们将段子的下载功能封装到了两个类(class)中。不过，我们当初这么做不是为了分解代码，而是为了实现多线程不得已而为之。</p>
+<p>我们的段子下载器名字叫<code>JokesFetcher</code>。顾名思义，是用来下载段子的。但是这个下载器不仅下载了段子，还在下载结束后更新了UI。这样，这个类实现的功能不仅超出了它名字中表达的范围，更将更新界面和下载段子的逻辑揉到了一起。</p>
+<p>相关度不高的代码逻辑被混杂在一起，在代码量较少时还勉强可以看懂，但是当代码量变大时，就会将整个程序搞得一团糟。就算是在现有的代码上添加新功能，也会很难下手。</p>
+<p>这种现象在软件设计界的专业术语叫做违背了<code>单一职责</code>。</p>
+<p>拆解代码，必然需要选择一个拆解的维度。为了程序逻辑的清晰，一般的拆解维度是代码块的功能。拆解的原则是“低耦合高内聚”，意思是每个代码块里面的代码相关度要特别高，实现的是明确的同一个任务，各个代码块要尽可能减少关联，降低交互的成本。</p>
+<p>在我们的代码中，为了程序的简洁，应用、窗体、布局、控件、下载器等功能各异的对象，都被放在了全局的作用域下。随着我们代码的扩张，这些变量的数量在不断窜升，它们之间的关联关系也越来越模糊。</p>
+<p>为了将这些变量归类整理，我们引入了面向对象的编程思想。我们把内聚性(内在关联性)很强的数据和方法封装在一个类(<code>class</code>)里，再通过功能相对单一的各个类的相互通信，组装成我们的整个应用程序。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QWidget</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QVBoxLayout</span><span class="p">,</span>
+    <span class="n">QSizePolicy</span><span class="p">,</span>
+    <span class="n">QHBoxLayout</span><span class="p">,</span>
+    <span class="n">QProgressDialog</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QThread</span><span class="p">,</span> <span class="n">pyqtSignal</span><span class="p">,</span> <span class="n">QSignalMapper</span>
+<span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span>
+<span class="kn">from</span> <span class="nn">parsel</span> <span class="kn">import</span> <span class="n">Selector</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+
+
+<span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="n">QApplication</span><span class="p">):</span>
+    <span class="n">wnd</span><span class="p">:</span> <span class="n">QWidget</span>
+    <span class="n">dlg</span><span class="p">:</span> <span class="n">QProgressDialog</span>
+    <span class="n">btn</span><span class="p">:</span> <span class="n">QPushButton</span>
+    <span class="n">lbl</span><span class="p">:</span> <span class="n">QLabel</span>
+    <span class="n">lft</span><span class="p">:</span> <span class="n">QVBoxLayout</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapper</span> <span class="o">=</span> <span class="n">QSignalMapper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jokesFetcher</span> <span class="o">=</span> <span class="n">JokesFetcher</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jokeFetcher</span> <span class="o">=</span> <span class="n">JokeFetcher</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupDialog</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupEvents</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">setupEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jokesFetcher</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onJokesFetched</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jokeFetcher</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onJokeFetched</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">show</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">jokesFetcher</span><span class="o">.</span><span class="n">start</span><span class="p">()])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapper</span><span class="o">.</span><span class="n">mapped</span><span class="p">[</span><span class="s2">&quot;QString&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">url</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">show</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">jokeFetcher</span><span class="o">.</span><span class="n">startWithUrl</span><span class="p">(</span><span class="n">url</span><span class="p">)])</span>
+
+    <span class="k">def</span> <span class="nf">onJokesFetched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jokes</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">joke</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">jokes</span><span class="p">):</span>
+            <span class="n">btn</span><span class="p">:</span> <span class="n">QPushButton</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lft</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mapper</span><span class="o">.</span><span class="n">setMapping</span><span class="p">(</span><span class="n">btn</span><span class="p">,</span> <span class="n">joke</span><span class="p">[</span><span class="s2">&quot;href&quot;</span><span class="p">])</span>
+            <span class="n">btn</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">joke</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">][:</span><span class="mi">24</span><span class="p">],</span> <span class="mi">12</span><span class="p">))</span>
+            <span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mapper</span><span class="o">.</span><span class="n">map</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">onJokeFetched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">joke</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lbl</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">joke</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">setupDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dlg</span> <span class="o">=</span> <span class="n">QProgressDialog</span><span class="p">()</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">setCancelButton</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">FramelessWindowHint</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">setWindowModality</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowModal</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span> <span class="o">=</span> <span class="n">dlg</span>
+
+    <span class="k">def</span> <span class="nf">setupLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Ready.&quot;</span><span class="p">)</span>
+        <span class="n">lbl</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+        <span class="n">lbl</span><span class="o">.</span><span class="n">setWordWrap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">lbl</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;font-size: 36px&quot;</span><span class="p">)</span>
+        <span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;刷新段子&quot;</span><span class="p">)</span>
+        <span class="n">lft</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">lft</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">top</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">top</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lft</span><span class="p">)</span>
+        <span class="n">top</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lbl</span><span class="p">)</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">box</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+        <span class="n">box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+        <span class="n">box</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">box</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">wnd</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">wnd</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;五个段子&quot;</span><span class="p">)</span>
+        <span class="n">wnd</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">999</span><span class="p">,</span> <span class="mi">999</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+        <span class="n">wnd</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+        <span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">wnd</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+            <span class="s2">&quot;* { font-size: 72px; color: lime; background: darkturquoise }&quot;</span>
+            <span class="s2">&quot;QLabel { background: teal; qproperty-alignment: AlignCenter }&quot;</span>
+            <span class="s2">&quot;QPushButton { background: darkgreen; border: none }&quot;</span>
+            <span class="s2">&quot;QPushButton:hover { background: seagreen }&quot;</span>
+            <span class="s2">&quot;QPushButton:pressed { background: green }&quot;</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+            <span class="n">wgt</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;段子</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">wgt</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;* { font-size: 36px; background: steelblue }&quot;</span>
+                              <span class="s2">&quot;*:hover { background: cadetblue }&quot;</span><span class="p">)</span>
+            <span class="n">wgt</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+            <span class="n">lft</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wgt</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wnd</span> <span class="o">=</span> <span class="n">wnd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn</span> <span class="o">=</span> <span class="n">btn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lbl</span> <span class="o">=</span> <span class="n">lbl</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lft</span> <span class="o">=</span> <span class="n">lft</span>
+
+
+<span class="k">class</span> <span class="nc">JokeFetcher</span><span class="p">(</span><span class="n">QThread</span><span class="p">):</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">html</span><span class="p">)</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//article//h1/text()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Selector</span><span class="p">(</span><span class="n">html</span><span class="p">)</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//article/section/p/text()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getall</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">startWithUrl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">JokesFetcher</span><span class="p">(</span><span class="n">QThread</span><span class="p">):</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="s2">&quot;https://duanziwang.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="n">jokes</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">attrib</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Selector</span><span class="p">(</span><span class="n">html</span><span class="p">)</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//div/li/a&quot;</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">jokes</span><span class="p">)</span>
+
+
+<span class="n">App</span><span class="p">()</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>经过封装，我们将整个应用程序抽象成<code>App</code>类。而<code>Qt</code>应用也需要一个全局的<code>QApplication</code>，我们正好将我们的<code>App</code>类继承<code>QApplication</code>。</p>
+<p>对于这个应用，我们将其拆解成三个方法：初始化布局、初始化对话框与初始化事件处理。在初始化布局中，我们将应用程序所需要的各种控件创建出来，并布局到窗体中。在初始化对话框中，我们创建了一个单独的加载对话框。在初始化事件处理中，我们将刷新段子与加载单个段子的事件与相应的槽函数连接起来。</p>
+<p>对于刷新段子列表和刷新段子内容等与段子下载器无关的功能，我们将其移动到了<code>App</code>类中。这样，便保证了下载器的单一职责，减少了下载器与外界不必要的耦合。</p>
+<p><code>低耦合高内聚</code>这种编程思想，只可意会不可言传。说起来是一套，做起来可能又是一套。思想这种东西，需要靠自己领悟。在对代码精益求精的追求中，必然会走向<code>低耦合高内聚</code>。</p>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2019/03/26/programmingtutorial09/index.html";
+        this.page.identifier = "/2019/03/26/programmingtutorial09/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

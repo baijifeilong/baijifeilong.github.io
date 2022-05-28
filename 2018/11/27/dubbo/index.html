@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>Dubbo大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>Dubbo大杂烩</h1>
+    <h2>Dubbo入门</h2>
+<h3>配置Maven依赖</h3>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.alibaba.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>dubbo-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<h3>服务提供端</h3>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">io.github.baijifeilong.dubbo.mydubboprovider</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.github.baijifeilong.dubbo.mydubboconsumer.MyDubboConsumerApp</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">lombok.SneakyThrows</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.WebApplicationType</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.builder.SpringApplicationBuilder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.context.event.ApplicationReadyEvent</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.ApplicationListener</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Nonnull</span><span class="p">;</span>
+
+<span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&quot;SpringFacetCodeInspection&quot;</span><span class="p">)</span>
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableDubboConfiguration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyDubboProviderApp</span> <span class="kd">implements</span> <span class="n">ApplicationListener</span><span class="o">&lt;</span><span class="n">ApplicationReadyEvent</span><span class="o">&gt;</span> <span class="p">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Dubbo服务端和消费端都必须配置applicationName</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;spring.application.name&quot;</span><span class="p">,</span> <span class="n">MyDubboConsumerApp</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getSimpleName</span><span class="p">());</span>
+        <span class="c1">// 使用本地注册器</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;spring.dubbo.registry&quot;</span><span class="p">,</span> <span class="s">&quot;N/A&quot;</span><span class="p">);</span>
+        <span class="c1">// 启动非Web服务</span>
+        <span class="k">new</span> <span class="n">SpringApplicationBuilder</span><span class="p">(</span><span class="n">MyDubboProviderApp</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">web</span><span class="p">(</span><span class="n">WebApplicationType</span><span class="p">.</span><span class="na">NONE</span><span class="p">).</span><span class="na">run</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="nd">@SneakyThrows</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onApplicationEvent</span><span class="p">(</span><span class="nd">@Nonnull</span> <span class="n">ApplicationReadyEvent</span> <span class="n">applicationReadyEvent</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Ready&quot;</span><span class="p">);</span>
+        <span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">join</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IHelloService</span> <span class="p">{</span>
+        <span class="n">String</span> <span class="nf">hello</span><span class="p">(</span><span class="n">String</span> <span class="n">name</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@com.alibaba.dubbo.config.annotation.Service</span>
+    <span class="nd">@Component</span>
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">HelloService</span> <span class="kd">implements</span> <span class="n">IHelloService</span> <span class="p">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">(</span><span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="s">&quot;Hello &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>服务消费端</h3>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">io.github.baijifeilong.dubbo.mydubboconsumer</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.alibaba.dubbo.config.annotation.Reference</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.github.baijifeilong.dubbo.mydubboprovider.MyDubboProviderApp</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">lombok.SneakyThrows</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.WebApplicationType</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.builder.SpringApplicationBuilder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.context.event.ApplicationReadyEvent</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.ApplicationListener</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Nonnull</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="p">;</span>
+
+<span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&quot;SpringFacetCodeInspection&quot;</span><span class="p">)</span>
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableDubboConfiguration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyDubboConsumerApp</span> <span class="kd">implements</span> <span class="n">ApplicationListener</span><span class="o">&lt;</span><span class="n">ApplicationReadyEvent</span><span class="o">&gt;</span> <span class="p">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Dubbo服务端和消费端都必须配置applicationName</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;spring.application.name&quot;</span><span class="p">,</span> <span class="n">MyDubboConsumerApp</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getSimpleName</span><span class="p">());</span>
+        <span class="c1">// Dubbo(服务端、客户端都有)默认会开启qos服务，只有在dubbo配置文件中才能禁用。所以此处只能换个端口</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;dubbo.qos.port&quot;</span><span class="p">,</span> <span class="s">&quot;33333&quot;</span><span class="p">);</span>
+        <span class="k">new</span> <span class="n">SpringApplicationBuilder</span><span class="p">(</span><span class="n">MyDubboConsumerApp</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">web</span><span class="p">(</span><span class="n">WebApplicationType</span><span class="p">.</span><span class="na">NONE</span><span class="p">).</span><span class="na">run</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">Holder</span> <span class="n">holder</span><span class="p">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="nd">@SneakyThrows</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onApplicationEvent</span><span class="p">(</span><span class="nd">@Nonnull</span> <span class="n">ApplicationReadyEvent</span> <span class="n">applicationReadyEvent</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;ready&quot;</span><span class="p">);</span>
+        <span class="n">holder</span><span class="p">.</span><span class="na">run</span><span class="p">();</span>
+        <span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">join</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * &quot;@Reference&quot;在@EnableDubboConfiguration注解的类里面不能直接注入成功，所以此处放在Holder里</span>
+<span class="cm">     */</span>
+    <span class="nd">@Component</span>
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Holder</span> <span class="p">{</span>
+        <span class="c1">// 必须配置，没默认值</span>
+        <span class="nd">@Reference</span><span class="p">(</span><span class="n">url</span> <span class="o">=</span> <span class="s">&quot;dubbo://127.0.0.1:20880&quot;</span><span class="p">)</span>
+        <span class="kd">private</span> <span class="n">MyDubboProviderApp</span><span class="p">.</span><span class="na">IHelloService</span> <span class="n">helloService</span><span class="p">;</span>
+
+        <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">helloService</span><span class="p">.</span><span class="na">hello</span><span class="p">(</span><span class="s">&quot;word&quot;</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>控制台输出</h3>
+<p><strong>服务端</strong></p>
+<div class="highlight"><pre><span></span>2019-01-12 10:49:55.132  INFO 11467 --- [           main] c.a.dubbo.common.logger.LoggerFactory    : using logger: com.alibaba.dubbo.common.logger.log4j.Log4jLoggerAdapter
+
+  ████████▄  ███    █▄  ▀█████████▄  ▀█████████▄   ▄██████▄  
+  ███   ▀███ ███    ███   ███    ███   ███    ███ ███    ███ 
+  ███    ███ ███    ███   ███    ███   ███    ███ ███    ███ 
+  ███    ███ ███    ███  ▄███▄▄▄██▀   ▄███▄▄▄██▀  ███    ███ 
+  ███    ███ ███    ███ ▀▀███▀▀▀██▄  ▀▀███▀▀▀██▄  ███    ███ 
+  ███    ███ ███    ███   ███    ██▄   ███    ██▄ ███    ███ 
+  ███   ▄███ ███    ███   ███    ███   ███    ███ ███    ███ 
+  ████████▀  ████████▀  ▄█████████▀  ▄█████████▀   ▀██████▀  
+
+
+ :: Dubbo ::        (v2.6.0)
+
+  .   ____          _            __ _ _
+ /\\ / ___&#39;_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | &#39;_ | &#39;_| | &#39;_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  &#39;  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.1.RELEASE)
+
+2019-01-12 10:49:55.545  INFO 11467 --- [           main] i.g.b.d.m.MyDubboProviderApp             : Starting MyDubboProviderApp on bogon with PID 11467 (/Users/bj/workspace/java/myjavademos/target/classes started by bj in /Users/bj/workspace/java/myjavademos)
+2019-01-12 10:49:55.549  INFO 11467 --- [           main] i.g.b.d.m.MyDubboProviderApp             : No active profile set, falling back to default profiles: default
+2019-01-12 10:49:57.977  WARN 11467 --- [           main] t.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in &#39;[io.github.baijifeilong.dubbo.mydubboprovider]&#39; package. Please check your configuration.
+2019-01-12 10:49:58.000  WARN 11467 --- [           main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in &#39;[io.github.baijifeilong.dubbo.mydubboprovider]&#39; package. Please check your configuration.
+2019-01-12 10:49:58.578  INFO 11467 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-01-12 10:49:58.585  INFO 11467 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-01-12 10:49:58.648  INFO 11467 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23ms. Found 0 repository interfaces.
+2019-01-12 10:49:59.703  INFO 11467 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean &#39;org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration&#39; of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$19704d5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-01-12 10:49:59.833  INFO 11467 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean &#39;spring.dubbo-com.alibaba.dubbo.spring.boot.DubboProperties&#39; of type [com.alibaba.dubbo.spring.boot.DubboProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-01-12 10:49:59.840  INFO 11467 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean &#39;com.alibaba.dubbo.spring.boot.DubboConsumerAutoConfiguration&#39; of type [com.alibaba.dubbo.spring.boot.DubboConsumerAutoConfiguration$$EnhancerBySpringCGLIB$$3bb19df7] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-01-12 10:50:00.088  INFO 11467 --- [           main] com.alibaba.dubbo.qos.server.Server      :  [DUBBO] qos-server bind localhost:22222, dubbo version: 2.6.0, current host: 127.0.0.1
+2019-01-12 10:50:00.283  INFO 11467 --- [           main] com.alibaba.dubbo.config.AbstractConfig  :  [DUBBO] Export dubbo service io.github.baijifeilong.dubbo.mydubboprovider.MyDubboProviderApp$IHelloService to local registry, dubbo version: 2.6.0, current host: 127.0.0.1
+2019-01-12 10:50:00.283  INFO 11467 --- [           main] com.alibaba.dubbo.config.AbstractConfig  :  [DUBBO] Export dubbo service io.github.baijifeilong.dubbo.mydubboprovider.MyDubboProviderApp$IHelloService to url dubbo://192.168.1.104:20880/io.github.baijifeilong.dubbo.mydubboprovider.MyDubboProviderApp$IHelloService?anyhost=true&amp;application=MyDubboConsumerApp&amp;bind.ip=192.168.1.104&amp;bind.port=20880&amp;dubbo=2.6.0&amp;generic=false&amp;interface=io.github.baijifeilong.dubbo.mydubboprovider.MyDubboProviderApp$IHelloService&amp;methods=hello&amp;pid=11467&amp;side=provider&amp;timestamp=1547261400196, dubbo version: 2.6.0, current host: 127.0.0.1
+2019-01-12 10:50:00.422  INFO 11467 --- [           main] c.a.d.remoting.transport.AbstractServer  :  [DUBBO] Start NettyServer bind /0.0.0.0:20880, export /192.168.1.104:20880, dubbo version: 2.6.0, current host: 127.0.0.1
+2019-01-12 10:50:00.463  INFO 11467 --- [           main] t.m.m.autoconfigure.MapperCacheDisabler  : Clear tk.mybatis.mapper.util.MsUtil CLASS_CACHE cache.
+2019-01-12 10:50:00.464  INFO 11467 --- [           main] t.m.m.autoconfigure.MapperCacheDisabler  : Clear tk.mybatis.mapper.genid.GenIdUtil CACHE cache.
+2019-01-12 10:50:00.464  INFO 11467 --- [           main] t.m.m.autoconfigure.MapperCacheDisabler  : Clear tk.mybatis.mapper.version.VersionUtil CACHE cache.
+2019-01-12 10:50:00.468  INFO 11467 --- [           main] t.m.m.autoconfigure.MapperCacheDisabler  : Clear EntityHelper entityTableMap cache.
+2019-01-12 10:50:01.125  INFO 11467 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-01-12 10:50:01.391  INFO 11467 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-01-12 10:50:01.743  INFO 11467 --- [           main] i.g.b.d.m.MyDubboProviderApp             : Started MyDubboProviderApp in 7.458 seconds (JVM running for 8.32)
+Ready
+2019-01-12 10:50:02.011  INFO 11467 --- [on(2)-127.0.0.1] io.lettuce.core.EpollProvider            : Starting without optional epoll library
+2019-01-12 10:50:02.027  INFO 11467 --- [on(2)-127.0.0.1] io.lettuce.core.KqueueProvider           : Starting with kqueue library
+</pre></div>
+<p><strong>消费端</strong></p>
+<div class="highlight"><pre><span></span>2019-01-12 10:50:15.800  INFO 11470 --- [           main] c.a.dubbo.common.logger.LoggerFactory    : using logger: com.alibaba.dubbo.common.logger.log4j.Log4jLoggerAdapter
+
+  ████████▄  ███    █▄  ▀█████████▄  ▀█████████▄   ▄██████▄
+  ███   ▀███ ███    ███   ███    ███   ███    ███ ███    ███
+  ███    ███ ███    ███   ███    ███   ███    ███ ███    ███
+  ███    ███ ███    ███  ▄███▄▄▄██▀   ▄███▄▄▄██▀  ███    ███
+  ███    ███ ███    ███ ▀▀███▀▀▀██▄  ▀▀███▀▀▀██▄  ███    ███
+  ███    ███ ███    ███   ███    ██▄   ███    ██▄ ███    ███
+  ███   ▄███ ███    ███   ███    ███   ███    ███ ███    ███
+  ████████▀  ████████▀  ▄█████████▀  ▄█████████▀   ▀██████▀
+
+
+ :: Dubbo ::        (v2.6.0)
+
+  .   ____          _            __ _ _
+ /\\ / ___&#39;_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | &#39;_ | &#39;_| | &#39;_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  &#39;  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.1.RELEASE)
+
+2019-01-12 10:50:16.205  INFO 11470 --- [           main] i.g.b.d.m.MyDubboConsumerApp             : Starting MyDubboConsumerApp on bogon with PID 11470 (/Users/bj/workspace/java/myjavademos/target/classes started by bj in /Users/bj/workspace/java/myjavademos)
+2019-01-12 10:50:16.209  INFO 11470 --- [           main] i.g.b.d.m.MyDubboConsumerApp             : No active profile set, falling back to default profiles: default
+2019-01-12 10:50:18.951  WARN 11470 --- [           main] t.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in &#39;[io.github.baijifeilong.dubbo.mydubboconsumer]&#39; package. Please check your configuration.
+2019-01-12 10:50:18.978  WARN 11470 --- [           main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in &#39;[io.github.baijifeilong.dubbo.mydubboconsumer]&#39; package. Please check your configuration.
+2019-01-12 10:50:19.403  INFO 11470 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-01-12 10:50:19.405  INFO 11470 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-01-12 10:50:19.423  INFO 11470 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7ms. Found 0 repository interfaces.
+2019-01-12 10:50:19.714  INFO 11470 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean &#39;org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration&#39; of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$c644d36b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-01-12 10:50:19.741  INFO 11470 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean &#39;spring.dubbo-com.alibaba.dubbo.spring.boot.DubboProperties&#39; of type [com.alibaba.dubbo.spring.boot.DubboProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-01-12 10:50:19.743  INFO 11470 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean &#39;com.alibaba.dubbo.spring.boot.DubboConsumerAutoConfiguration&#39; of type [com.alibaba.dubbo.spring.boot.DubboConsumerAutoConfiguration$$EnhancerBySpringCGLIB$$5f6c8d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-01-12 10:50:19.865  INFO 11470 --- [           main] com.alibaba.dubbo.qos.server.Server      :  [DUBBO] qos-server bind localhost:33333, dubbo version: 2.6.0, current host: 127.0.0.1
+2019-01-12 10:50:20.150  INFO 11470 --- [           main] c.a.d.remoting.transport.AbstractClient  :  [DUBBO] Successed connect to server /192.168.1.104:20880 from NettyClient 192.168.1.104 using dubbo version 2.6.0, channel is NettyChannel [channel=[id: 0x28501a4b, /192.168.1.104:61488 =&gt; /192.168.1.104:20880]], dubbo version: 2.6.0, current host: 192.168.1.104
+2019-01-12 10:50:20.150  INFO 11470 --- [           main] c.a.d.remoting.transport.AbstractClient  :  [DUBBO] Start NettyClient bogon/192.168.1.104 connect to the server /192.168.1.104:20880, dubbo version: 2.6.0, current host: 192.168.1.104
+2019-01-12 10:50:20.188  INFO 11470 --- [           main] com.alibaba.dubbo.config.AbstractConfig  :  [DUBBO] Refer dubbo service io.github.baijifeilong.dubbo.mydubboprovider.MyDubboProviderApp$IHelloService from url dubbo://127.0.0.1:20880/io.github.baijifeilong.dubbo.mydubboprovider.MyDubboProviderApp$IHelloService?application=MyDubboConsumerApp&amp;dubbo=2.6.0&amp;interface=io.github.baijifeilong.dubbo.mydubboprovider.MyDubboProviderApp$IHelloService&amp;methods=hello&amp;pid=11470&amp;register.ip=192.168.1.104&amp;side=consumer&amp;timestamp=1547261419977, dubbo version: 2.6.0, current host: 192.168.1.104
+2019-01-12 10:50:20.269  INFO 11470 --- [           main] t.m.m.autoconfigure.MapperCacheDisabler  : Clear tk.mybatis.mapper.util.MsUtil CLASS_CACHE cache.
+2019-01-12 10:50:20.270  INFO 11470 --- [           main] t.m.m.autoconfigure.MapperCacheDisabler  : Clear tk.mybatis.mapper.genid.GenIdUtil CACHE cache.
+2019-01-12 10:50:20.270  INFO 11470 --- [           main] t.m.m.autoconfigure.MapperCacheDisabler  : Clear tk.mybatis.mapper.version.VersionUtil CACHE cache.
+2019-01-12 10:50:20.274  INFO 11470 --- [           main] t.m.m.autoconfigure.MapperCacheDisabler  : Clear EntityHelper entityTableMap cache.
+2019-01-12 10:50:20.923  INFO 11470 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-01-12 10:50:21.213  INFO 11470 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-01-12 10:50:21.551  INFO 11470 --- [           main] i.g.b.d.m.MyDubboConsumerApp             : Started MyDubboConsumerApp in 7.218 seconds (JVM running for 8.4)
+ready
+Hello word
+2019-01-12 10:50:21.806  INFO 11470 --- [on(4)-127.0.0.1] io.lettuce.core.EpollProvider            : Starting without optional epoll library
+2019-01-12 10:50:21.821  INFO 11470 --- [on(4)-127.0.0.1] io.lettuce.core.KqueueProvider           : Starting with kqueue library
+</pre></div>
+<h2>Dubbo之坑</h2>
+<p>Dubbo死磕XML，注定到处是坑</p>
+<h3>不能用Dubbo传输匿名类</h3>
+<p>不能用Dubbo传输匿名类，匿名容器类除外。Dubbo默认使用Hession序列化对象。对于容器类，序列化容器中的所有元素并组装。对于非容器类，用Java的反射API获取这个类的所有Field，并依次序列化。匿名类自带一个名叫&quot;this$0&quot;的Field，存放的是匿名类所在类。所以，序列化匿名类时，会报匿名类所在类未实现序列化的异常，或者是匿名类所在类所引用的类的未实现序列化的异常，或是因为循环递归引用导致的堆栈溢出异常，或是其他乱七八糟的异常。</p>
+<p>文章首发: <a href="https://baijifeilong.github.io/2018/11/27/dubbo">https://baijifeilong.github.io/2018/11/27/dubbo</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/11/27/dubbo/index.html";
+        this.page.identifier = "/2018/11/27/dubbo/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

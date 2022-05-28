@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>面向聪明小白的编程入门教程 熟悉Python(Part 4) - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>面向聪明小白的编程入门教程 熟悉Python(Part 4)</h1>
+    <p>经过之前的热身，我们已经大概了解了编程是怎么回事。接下来，我们就动手写一个最简单的空窗体应用程序吧。</p>
+<h2>1. 了解IDE</h2>
+<p>之前的教程中，我们安装了<code>Notepad ++</code>和<code>Visual Studio Code</code>。<code>Nodepad ++</code>是一个小巧的文本编辑器，<code>Visual Studio Code</code>是一个全能型文本编辑器，算是大半个IDE吧。</p>
+<p>IDE(Integrated Development Environment)，一般译为集成开发环境，可以理解为开发过程中需要的工具组合。软件开发中，IDE并不是不可或缺的，毕竟IDE也是被开发出来的。</p>
+<p>IDE一般提供这些功能：代码编辑、代码搜索、代码分析、代码执行、代码调试、版本控制（用于代码修改历史的追溯）、项目管理（软件写到后期，可能需要将单个文件拆解成多个文件，不然巨无霸的代码难以阅读）、代码重构（一键更改代码风格）、项目部署（应用打包）等。</p>
+<p>对于我们一百行代码的小项目来说，一般只能用到IDE中很少的一部分功能：代码编辑、代码执行、代码调试。其中代码编辑，又包括代码高亮、智能补全、智能纠错、码品分析等。</p>
+<p>我们的项目只有一百行代码，用得着IDE吗？其实用不用IDE，跟代码行数无关。一个智能的IDE，是学习编程最好的老师。在一个智能的IDE里，每敲入一个字符，IDE就会根据上下文给出他的建议、提示或报警。在一次次的互动中，我们慢慢学会了规避常见的错误、选择最佳的语法、写出最整齐的代码。有些教程教新手使用文本编辑器编程，甚至用记事本编程，简直是误人子弟。</p>
+<h2>2. 选择IDE</h2>
+<p>现代的IDE，主要有微软公司的<code>Visual Studio</code>，苹果公司的<code>XCode</code>，IBM公司的<code>Eclipse</code>，甲骨文公司的<code>Netbeans</code>和Jebrains公司的<code>IntelliJ IDEA</code>。这些IDE主要都不是做Python开发的，但是理论上，他们都可以通过插件集成Python开发。</p>
+<p>这五个IDE中，<code>Visual Studio</code>原来是收费的，现在不要钱了。<code>XCode</code>不要钱，但是是苹果机专用。<code>Eclipse</code>、<code>Netbeans</code>一直是免费软件。到现在为止，只有<code>IntelliJ IDEA</code>是收费的IDE。</p>
+<p><code>IntelliJ IDEA</code>来自捷克的<code>Jetbrains</code>公司。这家公司的主营业务就是<code>IDE</code>。术业有专攻，这家公司做IDE的技术应该是宇宙第一。用这个IDE，经常能惊喜地发现它提供的某个功能，正是自己需要的，但自己之前根本没意识到自己有这个需要（像是乔布斯做的产品，帮用户想需求）。</p>
+<p><code>IntelliJ IDEA</code>可以安装<code>Python</code>插件，以支持Python开发。但是，Jetbrains也提供了<code>IntelliJ IDEA</code>的缩水版<code>PyCharm</code>，内置支持了Python开发，IDE售价也便宜了许多。不过，对于我这种没有版权意识的低素质人来说，也没啥感觉。</p>
+<p><code>PyCharm</code>分两个版本，一种是专业版，按年收费，每年三五百块钱吧。一种是社区版，免费使用，但是功能有缩水。低素质人用软件只用旗舰版，我也没去了解到底缩水了哪些功能。</p>
+<p>为了不错过任何有意思的功能，我们直接选择<code>PyCharm</code>专业版。<code>PyCharm</code>专业版虽然收费，但是也提供了30天全功能不骚扰的免费试用。如果30天后我们学Python的热度还没褪尽，再研究破解（或者直接用免费版）不迟。</p>
+<p>使用<code>Chocolatey</code>安装<code>PyCharm</code>: <code>choco install pycharm</code></p>
+<h2>3. 使用PyCharm</h2>
+<p>对于小的Python脚本来说，无所谓项目不项目的概念。直接新建一个空的<code>.py</code>文件，用<code>PyCharm</code>打开即可运行。但是，做软件最好把源代码单独放一个目录里头，这样也方便后期扩展或是添加文档。</p>
+<p>按业界惯例，编写的第一个计算机程序，应该起名叫HelloWorld。</p>
+<p>在桌面上Shift右键，打开命令行窗口，输入命令<code>mkdir helloworld &amp;&amp; cd helloworld &amp;&amp; echo&gt;app.py &amp;&amp; explorer .</code>。这条命令是四条命令的组合，这四条命令的意思分别是：</p>
+<ol>
+<li><code>mkdir helloworld</code> 创建文件夹（MaKeDIRectory）helloworld</li>
+<li><code>cd helloworld</code> 切换目录（ChangeDirectory）到helloworld</li>
+<li><code>echo&gt;app.py</code> 发送空白文本到<code>app.py</code>，用作创建空文件</li>
+<li><code>explorer .</code> 在我的电脑中打开当前目录(helloworld)</li>
+</ol>
+<p>此时，应该能看到新创建的Python空文件<code>app.py</code>。以上操作都可以通过鼠标键盘操作完成，但是命令行也是程序员吃饭的看家本领，多学点没有坏处。</p>
+<p>打开<code>PyCharm</code>，选择<code>File -&gt; Open</code>，打开桌面上的<code>helloworld</code>文件夹。双击左边文件夹树下的<code>app.py</code>，进入代码编辑。</p>
+<p>在编辑界面输入<code>print(&quot;Hello World&quot;)</code>，然后在代码区域用鼠标右键调出菜单，左键选择<code>Run app</code>。如无意外，PyCharm会开启一个停靠在底部的控制台窗口，输出&quot;Hello World&quot;。</p>
+<p>在原来的控制台窗口中，打<code>python app.py</code>，应该也能看到&quot;Hello World&quot;的输出。</p>
+<p><code>PyCharm</code>比较重要的几个快捷键：</p>
+<ul>
+<li><code>Ctrl + 鼠标左键</code> 可见跳到符号(变量、方法、类)的定义处</li>
+<li><code>Ctrl + Alt + 左箭头</code> 可以跳到光标上次停留的地方</li>
+<li><code>Ctrl + Alt + L</code> 格式化代码</li>
+</ul>
+<h2>4. HelloWorld</h2>
+<p>但是，这个HelloWorld仅仅是一个控制台版的HelloWorld。我们要做的是一个带窗口的HelloWorld。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QWidget</span>  <span class="c1"># 从PyQt5的Qt包中导入QApplication和QWidget</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>  <span class="c1"># 创建Qt应用程序，起名为app</span>
+<span class="n">wnd</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>  <span class="c1"># 创建一个窗体，起名为wnd</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">)</span>  <span class="c1"># 设置窗体标题为&quot;Hello World&quot;</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># 显示这个窗体 在Qt中，新创建的窗体默认不显示</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>  <span class="c1"># 执行Qt应用程序，一直接受与处理用户的键盘鼠标等事件，知道窗体被关闭，应用被退出</span>
+</pre></div>
+<p>复制以上代码到<code>app.py</code>，右键运行此程序，应该可以看到一个空窗体显示出来，窗体标题是“Hello World”</p>
+<h2>5. HelloWorld代码分析</h2>
+<h3>5.1 <code>from PyQt5.Qt import QApplication, QWidget</code></h3>
+<p>从PyQt5的Qt子模块中导入QApplication和QWidget。PyQt5是一个图形模块，我们借助这个模块来绘制窗体。Qt是这个模块的子模块，父子模块用&quot;.&quot;符号连接。<code>from ... import ...</code>即从...导入...。导入的多个项目之间，用逗号隔开。在Python中，如果要使用外部模块，必须先导入。这样这些符号才能在程序中被识别。</p>
+<p>PyQt5这个框架(模块、包)的底层是<code>Qt5</code>，一个使用<code>C++</code>语言编写的图形界面框架。PyQt5是对Qt5这个框架使用Python语言的封装。因此，Qt5的相关资料也适用于<code>PyQt5</code>。</p>
+<h3>5.2 <code>app = QApplication([])</code></h3>
+<p>创建Qt应用程序，起名为app。这句代码之前有个空行。Python一般无视空行、空格、制表符等空白符号。这些空白符号是为了对齐代码、方便阅读用的。</p>
+<p>如果要用<code>PyQt5</code>创建窗体，必须先创建一个Qt应用。<code>函数名(...)</code>这种形式，在Python中叫函数调用。所谓函数，就是一段可以重复利用的代码，函数名就是给这段代码起的名字。我们给他一个输入，他处理后给我们一个输出。比如输入1，输出&quot;奇数&quot;，输入2，输出&quot;偶数&quot;。这个处理过程是任意的，可以执行任意代码，做任意的事。</p>
+<p><code>QApplication([])</code>即调用名字为<code>QApplication</code>的函数，小括号中是函数的参数（输入）。这个函数要求的输入格式是一个列表(可以存放0个、1个或任意多个元素的数据结构)，列表使用方括号表示，里面的各元素用逗号隔开，<code>[]</code>表示空列表。<code>QApplication</code>这个函数的参数我们目前不关心，但是函数的定义中这个参数是必选项，所以使用空列表。</p>
+<p><code>QApplication</code>这个函数运行成功后，返回一个代表Qt应用程序的对象。因为之后需要引用这个对象，所以需要给他一个名字。<code>name = value</code>这种语法，称为赋值语句，即用<code>name</code>表示这个<code>value</code>。</p>
+<h3>5.3 wnd = QWidget()</h3>
+<p>创建一个窗体，起名为wnd。此处创建的一个窗体，只是在内存中创建的一个在程序逻辑上代表窗体的区域，并不是真正的屏幕上显示的窗体。此处<code>QWidget</code>也是一个函数，输入为空，输出（返回）一个空窗体对象。</p>
+<h3>5.4 wnd.setWindowTitle(&quot;Hello World&quot;)</h3>
+<p>默认的窗体的标题栏是空白的。如果要修改标题栏，需要调用窗体的<code>setWindowTitle</code>函数。括号中的参数是一个字符串（一个字符序列，因为字符序列中什么字符都可能有，可能会和其他代码发生冲突，因此必须要用引号来定界），调用这个函数后，窗体的标题就会更新为这个字符串。</p>
+<h3>5.5 wnd.show()</h3>
+<p>显示窗体。实际上调用此代码后，并不会马上显示窗体。因为此时Qt应用还没有执行，不可能会有窗体的显示。这个函数（方法）的真正作用是标记，标记这个窗口需要被显示。因为在Qt中，窗体的默认状态是隐藏。</p>
+<h3>5.6 app.exec()</h3>
+<p>运行Qt应用。等待用户对窗体的操作，并作出正确的反馈。比如，点击关闭按钮，会关闭窗体，退出应用。理论上，如果没有意外情况的话，这个函数是一个永远运行不会结束的函数。因为这个函数要保证只要系统不关机，用户不退出应用，应用的窗体就要一直显示，而且永远能响应用户的点击和拖拽等事件。</p>
+<h2>6. 该系统地学习一下Python了</h2>
+<p>我不做小白很多年，已经几乎忘了小白是怎么思考问题的。但是上一小节直接冒出了6行功能各异的代码，我觉得再怎么解释给小白听，小白都是要蒙逼的。所以，是时候来稍微系统地学一遍Python了。</p>
+<p>作为过来人，我给小白们几点忠告：</p>
+<ol>
+<li>别指望一遍就学会，这是不可能的，碰到想不明白的问题就囫囵吞枣直接跳过，以后慢慢体会吧</li>
+<li>别只看一个人的教程，要多看看其他人是怎么讲的。每个人都有自己的局限性，多听听各方的解释，更容易学明白</li>
+<li>别老盯着第一章看，要学会适当地跳读，别在没什么营养的地方浪费时间</li>
+<li>一定要多动手，一个字符一个字符地跟着敲，哪怕完全搞不懂，也先混个手熟</li>
+<li>不要怕程序报错。程序报错越多（种类），人进步越快。碰到报错要仔细阅读报错信息，分析出错原因</li>
+<li>碰到不懂的名词，多查百科，大略浏览一下，先让大脑对这个东西有个概念</li>
+<li>多改代码，就算教程没提到，对同一个函数，也要多试试不同的参数，看看不同参数对程序的影响</li>
+<li>不要保留没用的代码，要多尝试，确保每一行代码、每一个字符都是不可或缺，不要被无用的代码所羁绊</li>
+<li>眼观六路，耳听八方，对顺便扫到的各种函数要多尝试，多猜测，多揣摩设计者的意图</li>
+<li>用好IDE，IDE的忠告都是有价值的，不要忽略它</li>
+<li>不要为了学而学，编程是为了解决问题的，可以自己想出一些有趣的点子，自己写代码去实现</li>
+<li>不要强迫自己学不敢兴趣的东西，大概了解一些语法后，再以需求出发，层层倒推，步步逼近</li>
+<li>善用搜索引擎，碰到问题先推理，搞不定的话再搜索</li>
+</ol>
+<p>最最重要的一点，我的教程只是提供一些思路和方法，很多知识点可能有意无意会被漏掉，或解释不清。只看我的教程，一定会看懵的！！！</p>
+<p>编程语言的语法，比较杂，比较碎，我也不知道从何教起。因此，推荐几个学习资料，方便读者学习参考。</p>
+<ol>
+<li><a href="https://learnxinyminutes.com/docs/zh-cn/python-cn/">极简Python教程</a> 可能不太适合小白入门，但是可作为快速参考。</li>
+<li>用搜索引擎搜索<code>Python入门</code>、<code>Python教程</code>或者<code>Python tutorial</code>，多挑几个教程，选择能看明白的。</li>
+<li><a href="https://www.bilibili.com/">哔哩哔哩</a>上搜索<code>Python</code>，有大量入门教程，自己挑选。</li>
+</ol>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2019/03/22/programmingtutorial04/index.html";
+        this.page.identifier = "/2019/03/22/programmingtutorial04/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

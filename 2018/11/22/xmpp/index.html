@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>XMPP大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>XMPP大杂烩</h1>
+    <h2>XMPP是什么</h2>
+<p>XMPP是基于XML的即时通讯协议。对即时通讯场景进行了高度抽象，比如用订阅对方的上下线状态表示好友。提供了文本通讯、用户上下线通知、联系人管理、群组聊天等功能，还可以安装插件或自行拓展。</p>
+<h2>服务端的安装</h2>
+<p>服务端一般用OpenFire。</p>
+<p>以macOS为例，官网直接下载安装包，安装完成后，在系统菜单中打开OpenFire控制台，进入OpenFire的Web后台，走完配置向导。数据库可以用OpenFire自带的嵌入式数据库，也可以配置为MySQL。如果是局域网测试的话，主机名最好设置成内网IP。最后一步需要设置管理员密码，管理员的账号是admin。配置完成后，可以登录OpenFire的管理后台。</p>
+<p>OpenFire服务器默认开放用户注册、开放建群，所以可以不管OpenFire后台，直接拿来使用。</p>
+<h2>用户注册</h2>
+<p>大多XMPP客户端不提供用户注册功能，所以最好在OpenFire后台直接添加用户。试了多个客户端，只有Psi可以成功注册用户，而且登录之后找不到退出的地方，也找不到创建用户的地方。</p>
+<h2>客户端的选择</h2>
+<p>XMPP的图形客户端特别多，但是一个比一个难用。在macOS上勉强可以使用的主要有Spark、Adium、Jitsi和Thunderbird。Spark是OpenFire官方提供的客户端，在使用时要注意禁用安全选项，如果主机不受信任的话。</p>
+<p>命令行下的客户端，可以使用Profanity</p>
+<h2>用户登录</h2>
+<p>登录XMPP账户，需要服务器、用户名、密码三个字段。如果客户端没有提供单独的服务器输入框的话，用户名改用<code>用户名@服务器</code></p>
+<h2>Profanity的使用</h2>
+<p>Profanity不提供用户注册功能，需要先在后台添加用户，或者用其他客户端注册。</p>
+<ul>
+<li>登录 <code>/connect 用户名@服务器 tls disable</code></li>
+<li>登出 <code>/disconnect</code></li>
+<li>开启聊天 <code>/msg 用户名@服务器/用户昵称 文本</code></li>
+<li>切换窗口 <code>Alt/Option+数字</code> Alt+1是系统窗口，其他是聊天窗口</li>
+<li>添加用户到通讯录(非好友，不能订阅用户的上下线消息) <code>/roster add 用户名@服务器</code></li>
+<li>添加用户为好友 <code>/sub request 用户名@服务器</code></li>
+<li>收到添加好友请求时允许 <code>/sub allow 用户名@服务器</code></li>
+<li>进入聊天室/群组/房间，不存在则根据向导创建 <code>/join 房间名@服务器</code></li>
+<li>切换在线状态 <code>/away</code>=离开 <code>/online</code>=在线 <code>/dnd</code>=忙碌 ...</li>
+<li>退出软件 <code>/quit</code></li>
+</ul>
+<h2>Smack的使用</h2>
+<p>Smack是OpenFire提供的支持XMPP协议的Java接口</p>
+<h3>引入Smack依赖</h3>
+<ul>
+<li>org.igniterealtime.smack:smack-tcp 同时包含了Smack核心库。之所以有这个包，是因为XMPP也能运行在其他协议之上</li>
+<li>org.igniterealtime.smack:smack-java7 平台依赖。用作初始化。不包含此库也能编译成功，但是跑不起来</li>
+<li>org.igniterealtime.smack:smack-extensions Smake扩展包。算是必备，至少联系人管理功能需要这个包</li>
+</ul>
+<h3>Smack示例代码</h3>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">io.vavr.control.Try</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smack.AbstractXMPPConnection</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smack.ConnectionConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smack.SmackException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smack.XMPPException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smack.chat2.ChatManager</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smack.packet.Message</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smack.roster.Roster</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smack.roster.RosterEntry</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smack.tcp.XMPPTCPConnection</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jivesoftware.smackx.iqregister.AccountManager</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jxmpp.jid.impl.JidCreate</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.jxmpp.jid.parts.Localpart</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.net.InetAddress</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Set</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 2018/11/22 下午4:33</span>
+<span class="cm"> */</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BazTest</span> <span class="p">{</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAlpha</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">InterruptedException</span><span class="p">,</span> <span class="n">XMPPException</span><span class="p">,</span> <span class="n">SmackException</span> <span class="p">{</span>
+        <span class="c1">// 创建连接，并连接到服务器</span>
+        <span class="n">AbstractXMPPConnection</span> <span class="n">connection</span> <span class="o">=</span> <span class="k">new</span> <span class="n">XMPPTCPConnection</span><span class="p">(</span><span class="n">XMPPTCPConnectionConfiguration</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">setXmppDomain</span><span class="p">(</span><span class="s">&quot;172.16.5.254&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">setHostAddress</span><span class="p">(</span><span class="n">InetAddress</span><span class="p">.</span><span class="na">getByName</span><span class="p">(</span><span class="s">&quot;172.16.5.254&quot;</span><span class="p">))</span> <span class="c1">// 服务器地址直接用IP的话，不能用setHost()</span>
+                <span class="p">.</span><span class="na">setSecurityMode</span><span class="p">(</span><span class="n">ConnectionConfiguration</span><span class="p">.</span><span class="na">SecurityMode</span><span class="p">.</span><span class="na">disabled</span><span class="p">)</span> <span class="c1">// 禁用安全模式，如果服务器不受信任</span>
+                <span class="p">.</span><span class="na">build</span><span class="p">()).</span><span class="na">connect</span><span class="p">();</span>
+
+        <span class="c1">// 注册用户</span>
+        <span class="n">AccountManager</span> <span class="n">accountManager</span> <span class="o">=</span> <span class="n">AccountManager</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="n">connection</span><span class="p">);</span>
+        <span class="n">accountManager</span><span class="p">.</span><span class="na">sensitiveOperationOverInsecureConnection</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+        <span class="n">accountManager</span><span class="p">.</span><span class="na">createAccount</span><span class="p">(</span><span class="n">Localpart</span><span class="p">.</span><span class="na">from</span><span class="p">(</span><span class="s">&quot;gamma&quot;</span><span class="p">),</span> <span class="s">&quot;gamma&quot;</span><span class="p">);</span>
+
+        <span class="c1">// 登录</span>
+        <span class="n">connection</span><span class="p">.</span><span class="na">login</span><span class="p">(</span><span class="s">&quot;gamma&quot;</span><span class="p">,</span> <span class="s">&quot;gamma&quot;</span><span class="p">);</span>
+
+        <span class="c1">// 监听XMPP包(包括PING、在线状态、聊天消息等)</span>
+        <span class="n">connection</span><span class="p">.</span><span class="na">addSyncStanzaListener</span><span class="p">(</span><span class="n">packet</span> <span class="o">-&gt;</span> <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;[SyncStanzaListener] Packet received {}&quot;</span><span class="p">,</span> <span class="n">packet</span><span class="p">),</span> <span class="n">stanza</span> <span class="o">-&gt;</span> <span class="kc">true</span><span class="p">);</span>
+
+        <span class="c1">// 只监听聊天消息</span>
+        <span class="n">ChatManager</span><span class="p">.</span><span class="na">getInstanceFor</span><span class="p">(</span><span class="n">connection</span><span class="p">).</span><span class="na">addIncomingListener</span><span class="p">((</span><span class="n">entityBareJid</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">chat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;[IncomingListener] Message received %s : %s&quot;</span><span class="p">,</span> <span class="n">entityBareJid</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="na">getBody</span><span class="p">()));</span>
+            <span class="c1">// Echo此消息</span>
+            <span class="n">Try</span><span class="p">.</span><span class="na">run</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">chat</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getBody</span><span class="p">()));</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Roster</span><span class="p">.</span><span class="na">getInstanceFor</span><span class="p">(</span><span class="n">connection</span><span class="p">).</span><span class="na">getEntries</span><span class="p">());</span>
+        <span class="p">});</span>
+
+        <span class="c1">// 发送消息</span>
+        <span class="n">connection</span><span class="p">.</span><span class="na">sendStanza</span><span class="p">(</span><span class="k">new</span> <span class="n">Message</span><span class="p">(</span><span class="s">&quot;theta@172.16.5.254&quot;</span><span class="p">,</span> <span class="s">&quot;MESSAGE_BY_CONNECTION&quot;</span><span class="p">));</span>
+        <span class="c1">// 发送消息 方式二</span>
+        <span class="n">ChatManager</span><span class="p">.</span><span class="na">getInstanceFor</span><span class="p">(</span><span class="n">connection</span><span class="p">).</span><span class="na">chatWith</span><span class="p">(</span><span class="n">JidCreate</span><span class="p">.</span><span class="na">entityBareFrom</span><span class="p">(</span><span class="s">&quot;theta@172.16.5.254&quot;</span><span class="p">)).</span><span class="na">send</span><span class="p">(</span><span class="s">&quot;MESSAGE_BY_CHAT_MANAGER&quot;</span><span class="p">);</span>
+
+        <span class="c1">// 获取联系人集合</span>
+        <span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span> <span class="c1">// 等待联系人更新</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">RosterEntry</span><span class="o">&gt;</span> <span class="n">entries</span> <span class="o">=</span> <span class="n">Roster</span><span class="p">.</span><span class="na">getInstanceFor</span><span class="p">(</span><span class="n">connection</span><span class="p">).</span><span class="na">getEntries</span><span class="p">();</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Contacts: {} persons&quot;</span><span class="p">,</span> <span class="n">entries</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
+        <span class="n">entries</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+
+        <span class="c1">// 保持运行</span>
+        <span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">join</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><strong>控制台日志</strong></p>
+<div class="highlight"><pre><span></span><span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.924</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">IQ</span> <span class="n">Stanza</span> <span class="p">(</span><span class="n">query</span> <span class="n">jabber</span><span class="o">:</span><span class="n">iq</span><span class="o">:</span><span class="n">roster</span><span class="p">)</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">gvsBl</span><span class="o">-</span><span class="mi">5</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="bp">result</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.933</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Presence</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">1</span><span class="n">gwvh0rdvv</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">L85kQ</span><span class="o">-</span><span class="mi">6</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">available</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.933</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Presence</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">1</span><span class="n">pj92olp11</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">RamcN</span><span class="o">-</span><span class="mi">7</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">available</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.933</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Presence</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">8</span><span class="n">aadbwm30s</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">xkaYN</span><span class="o">-</span><span class="mi">7</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">available</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.934</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Presence</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="n">profanity</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">prof_presence_595</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">available</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.937</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Presence</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">9</span><span class="n">trigmn7f2</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">SJ41s</span><span class="o">-</span><span class="mi">7</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">available</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.937</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Presence</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">42</span><span class="n">awvmq6te</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">iMJUx</span><span class="o">-</span><span class="mi">6</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">available</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.937</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Presence</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">92</span><span class="n">ijqtzgxi</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="mi">9</span><span class="n">gG6o</span><span class="o">-</span><span class="mi">7</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">available</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.937</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Presence</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">494</span><span class="n">vwn454w</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">byYRm</span><span class="o">-</span><span class="mi">7</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">available</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.938</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Presence</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">4</span><span class="n">wurqkoj8y</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="mi">3</span><span class="n">BnGN</span><span class="o">-</span><span class="mi">7</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">available</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">4.939</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Presence</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">9</span><span class="n">vx8ve5vdm</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">YSZxk</span><span class="o">-</span><span class="mi">6</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">available</span><span class="o">,</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">5.939</span> <span class="p">[</span><span class="n">main</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="n">Contacts</span><span class="o">:</span> <span class="mi">3</span> <span class="n">persons</span>
+<span class="o">:</span> <span class="n">beta</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span>
+<span class="o">:</span> <span class="n">alpha</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span>
+<span class="o">:</span> <span class="n">theta</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">6.876</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Message</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">theta</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="n">profanity</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">prof_msg_670</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">chat</span><span class="o">,</span><span class="p">]</span>
+<span class="p">[</span><span class="n">IncomingListener</span><span class="p">]</span> <span class="n">Message</span> <span class="n">received</span> <span class="n">theta</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span> <span class="o">:</span> <span class="n">hello</span>
+<span class="p">[</span><span class="o">:</span> <span class="n">beta</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">,</span> <span class="o">:</span> <span class="n">alpha</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">,</span> <span class="o">:</span> <span class="n">theta</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="p">]</span>
+<span class="mi">10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mi">2</span><span class="mf">8.839</span> <span class="p">[</span><span class="n">Smack</span> <span class="n">Cached</span> <span class="n">Executor</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">bj</span><span class="o">.</span><span class="n">BazTest</span> <span class="o">-</span> <span class="p">[</span><span class="n">SyncStanzaListener</span><span class="p">]</span> <span class="n">Packet</span> <span class="n">received</span> <span class="n">Message</span> <span class="n">Stanza</span> <span class="p">[</span><span class="k">to</span><span class="o">=</span><span class="n">gamma</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="mi">612</span><span class="n">m1g1ciz</span><span class="o">,</span><span class="n">from</span><span class="o">=</span><span class="n">theta</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">/</span><span class="n">profanity</span><span class="o">,</span><span class="n">id</span><span class="o">=</span><span class="n">prof_msg_671</span><span class="o">,</span><span class="k">type</span><span class="o">=</span><span class="n">chat</span><span class="o">,</span><span class="p">]</span>
+<span class="p">[</span><span class="n">IncomingListener</span><span class="p">]</span> <span class="n">Message</span> <span class="n">received</span> <span class="n">theta</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span> <span class="o">:</span> <span class="n">world</span>
+<span class="p">[</span><span class="o">:</span> <span class="n">beta</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">,</span> <span class="o">:</span> <span class="n">alpha</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="o">,</span> <span class="o">:</span> <span class="n">theta</span><span class="o">@</span><span class="mi">17</span><span class="mf">2.16</span><span class="o">.</span><span class="mf">5.254</span><span class="p">]</span>
+</pre></div>
+<h2>OpenFireAPI的使用</h2>
+<p>OpenFire通过插件对外提供REST格式的API，用于管理OpenFire服务</p>
+<p>插件名: <code>REST API</code></p>
+<p>插件安装: 进入OpenFire控制台，进入<code>插件</code>标签页，选择<code>REST API</code>插件并安装。因为有墙下载不动的话，可以去官网下载，在控制台上传插件。</p>
+<p>插件安装完成后，需要在控制台找到REST API的设置页，启用REST API，并指定认证方式(用户名+密码 或 令牌)</p>
+<h3>通过官方JavaAPI调用</h3>
+<p>OpenFire提供了JavaAPI，需要添加依赖项:</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.igniterealtime<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>rest-api-client<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.1.4<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.glassfish.jersey.inject<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>jersey-hk2<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>用法:</p>
+<div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBeta</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">AuthenticationToken</span> <span class="n">authenticationToken</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AuthenticationToken</span><span class="p">(</span><span class="s">&quot;vg85cTxbTYuXiOMH&quot;</span><span class="p">);</span>
+    <span class="n">RestApiClient</span> <span class="n">restApiClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestApiClient</span><span class="p">(</span><span class="s">&quot;http://localhost&quot;</span><span class="p">,</span> <span class="mi">9090</span><span class="p">,</span> <span class="n">authenticationToken</span><span class="p">);</span>
+    <span class="n">UserEntities</span> <span class="n">users</span> <span class="o">=</span> <span class="n">restApiClient</span><span class="p">.</span><span class="na">getUsers</span><span class="p">();</span>
+    <span class="n">users</span><span class="p">.</span><span class="na">getUsers</span><span class="p">().</span><span class="na">forEach</span><span class="p">(</span><span class="n">$</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">$</span><span class="p">.</span><span class="na">getUsername</span><span class="p">()));</span>
+<span class="p">}</span>
+</pre></div>
+<h3>直接通过HTTP调用</h3>
+<p>OpenFire的REST-API主要提供了用户管理、群组管理、聊天室管理、系统属性管理、广播消息、踢用户下线等功能，示例调用如下:</p>
+<div class="highlight"><pre><span></span>### 查询用户列表
+
+GET http://localhost:9090/plugins/restapi/v1/users
+Authorization: vg85cTxbTYuXiOMH
+Accept: application/json
+
+### 查询alpha用户的通讯录
+
+GET http://localhost:9090/plugins/restapi/v1/users/alpha/roster
+Authorization: vg85cTxbTYuXiOMH
+Accept: application/json
+
+### 创建用户
+
+POST http://localhost:9090/plugins/restapi/v1/users
+Content-Type: application/json
+Authorization: vg85cTxbTYuXiOMH
+Accept: application/json
+
+{
+  &quot;username&quot;: &quot;one&quot;,
+  &quot;password&quot;: &quot;one&quot;
+}
+
+### 查询聊天室列表
+
+GET http://localhost:9090/plugins/restapi/v1/chatrooms
+# Authorization: Basic YWRtaW46c29uZ2ppYW53ZWkxOTkz
+# Authorization: Basic YWRtaW46MTIzNDU=
+Authorization: vg85cTxbTYuXiOMH
+Accept: application/json
+
+### 查询系统属性列表
+
+GET http://localhost:9090/plugins/restapi/v1/system/properties
+Authorization: vg85cTxbTYuXiOMH
+Accept: application/json
+
+### 查询当前会话列表(当前登录的用户)
+
+GET http://localhost:9090/plugins/restapi/v1/sessions
+Authorization: vg85cTxbTYuXiOMH
+Accept: application/json
+
+### 广播消息给所有用户
+
+POST http://localhost:9090/plugins/restapi/v1/messages/users
+Content-Type: application/json
+Authorization: vg85cTxbTYuXiOMH
+Accept: application/json
+
+{
+  &quot;body&quot;: &quot;广播&quot;
+}
+
+### 查询安全日志
+
+GET http://localhost:9090/plugins/restapi/v1/logs/security?limit=3
+Authorization: vg85cTxbTYuXiOMH
+Accept: application/json
+</pre></div>
+<h2>OpenFire保存用户聊天记录</h2>
+<p>OpenFire默认不保存用户聊天记录。需要<code>Monitoring Service</code>监控插件提供支持。</p>
+<p>插件安装完成后，默认不归档用户聊天记录。打开OpenFire控制台, 进入<code>服务器 =&gt; 档案文件 =&gt; 存档设置</code>菜单，勾选<code>Archive one-to-one chats</code>和<code>Archive group chats</code>后，可启用用户聊天记录归档。</p>
+<p>聊天记录归档存放在数据表<code>ofMessageArchive</code>中，示例归档记录如下:</p>
+<p>&lt;table&gt;
+&lt;tr&gt;&lt;th&gt;messageID&lt;/th&gt;&lt;th&gt;conversationID&lt;/th&gt;&lt;th&gt;fromJID&lt;/th&gt;&lt;th&gt;fromJIDResource&lt;/th&gt;&lt;th&gt;toJID&lt;/th&gt;&lt;th&gt;toJIDResource&lt;/th&gt;&lt;th&gt;sentDate&lt;/th&gt;&lt;th&gt;body&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;gamma@172.16.5.254&lt;/td&gt;&lt;td&gt;profanity&lt;/td&gt;&lt;td&gt;alpha@172.16.5.254&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;td&gt;1543326953867&lt;/td&gt;&lt;td&gt;hello&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;gamma@172.16.5.254&lt;/td&gt;&lt;td&gt;profanity&lt;/td&gt;&lt;td&gt;alpha@172.16.5.254&lt;/td&gt;&lt;td&gt;NULL&lt;/td&gt;&lt;td&gt;1543326954898&lt;/td&gt;&lt;td&gt;world&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;alpha@172.16.5.254&lt;/td&gt;&lt;td&gt;jitsi-357v9t2&lt;/td&gt;&lt;td&gt;gamma@172.16.5.254&lt;/td&gt;&lt;td&gt;profanity&lt;/td&gt;&lt;td&gt;1543327016162&lt;/td&gt;&lt;td&gt;what&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;alpha@172.16.5.254&lt;/td&gt;&lt;td&gt;jitsi-357v9t2&lt;/td&gt;&lt;td&gt;gamma@172.16.5.254&lt;/td&gt;&lt;td&gt;profanity&lt;/td&gt;&lt;td&gt;1543327017366&lt;/td&gt;&lt;td&gt;who&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;gamma@172.16.5.254&lt;/td&gt;&lt;td&gt;profanity&lt;/td&gt;&lt;td&gt;alpha@172.16.5.254&lt;/td&gt;&lt;td&gt;jitsi-357v9t2&lt;/td&gt;&lt;td&gt;1543327056415&lt;/td&gt;&lt;td&gt;i know you&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;gamma@172.16.5.254&lt;/td&gt;&lt;td&gt;profanity&lt;/td&gt;&lt;td&gt;alpha@172.16.5.254&lt;/td&gt;&lt;td&gt;jitsi-357v9t2&lt;/td&gt;&lt;td&gt;1543327063030&lt;/td&gt;&lt;td&gt;you know me ?&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</p>
+<h2>OpenFire通过组件实现机器人</h2>
+<p>OpenFire可以通过Smake实现机器人，但是这种实现一次只能实现一个机器人。组件可以注册到特定子域名，对所有的消息进行拦截处理，可以一次实现无数个机器人。</p>
+<p>组件密码可以在OpenFire的后台设置。</p>
+<p>示例代码:</p>
+<div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testGamma</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">ComponentException</span><span class="p">,</span> <span class="n">InterruptedException</span> <span class="p">{</span>
+    <span class="n">ExternalComponentManager</span> <span class="n">componentManager</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ExternalComponentManager</span><span class="p">(</span><span class="s">&quot;172.16.5.254&quot;</span><span class="p">);</span>
+    <span class="n">componentManager</span><span class="p">.</span><span class="na">setSecretKey</span><span class="p">(</span><span class="s">&quot;MyBot&quot;</span><span class="p">,</span> <span class="s">&quot;mypwd&quot;</span><span class="p">);</span>
+    <span class="n">componentManager</span><span class="p">.</span><span class="na">setMultipleAllowed</span><span class="p">(</span><span class="s">&quot;MyBot&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="n">componentManager</span><span class="p">.</span><span class="na">addComponent</span><span class="p">(</span><span class="s">&quot;MyBot&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">MyRobot</span><span class="p">());</span>
+    <span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">join</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyRobot</span> <span class="kd">extends</span> <span class="n">AbstractComponent</span> <span class="p">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getDescription</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;This is my bot&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;MyWonderfulRobot&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">handleMessage</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">xmpp</span><span class="p">.</span><span class="na">packet</span><span class="p">.</span><span class="na">Message</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;==================&quot;</span><span class="p">);</span>
+        <span class="n">send</span><span class="p">(</span><span class="k">new</span> <span class="n">org</span><span class="p">.</span><span class="na">xmpp</span><span class="p">.</span><span class="na">packet</span><span class="p">.</span><span class="na">Message</span><span class="p">()</span> <span class="p">{{</span>
+            <span class="k">this</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getTo</span><span class="p">());</span>
+            <span class="k">this</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getFrom</span><span class="p">());</span>
+            <span class="k">this</span><span class="p">.</span><span class="na">setType</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getType</span><span class="p">());</span>
+            <span class="k">this</span><span class="p">.</span><span class="na">setBody</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getBody</span><span class="p">());</span>
+        <span class="p">}});</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>永和可以通过JID(<code>&lt;any&gt;@mybot.172.16.5.254</code>)与机器人通信。</p>
+<p>注意:</p>
+<p>OpenFire不会自动清理挂掉的机器人，将<code>multipleAllowed</code>设为true后，可以在一个子域名上注册多个机器人，每个机器人对用户消息进行负载均衡。当其中一台机器人挂掉后，用户消息就会按挂掉机器人的比例失去响应。此时只能重新启动OpenFire服务器。</p>
+<p>文章首发: <a href="https://baijifeilong.github.io/2018/11/22/xmpp">https://baijifeilong.github.io/2018/11/22/xmpp</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/11/22/xmpp/index.html";
+        this.page.identifier = "/2018/11/22/xmpp/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

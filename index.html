@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    
+    <ul id="articles"><li><a href="2022/04/25/ice-spring-music-player/index.html">[0228] 2022-04-25 | Ice Spring Music Player</a></li>
+<li><a href="2022/01/09/ice-spring-real-optional/index.html">[0227] 2022-01-09 | IceSpringRealOptional</a></li>
+<li><a href="2022/01/08/ice-spring-path-lib/index.html">[0226] 2022-01-08 | IceSpringPathLib</a></li>
+<li><a href="2022/01/06/ice-spring-pyside-stubs/index.html">[0225] 2022-01-06 | IceSpringPySideStubs</a></li>
+<li><a href="2021/05/08/right-or-wrong/index.html">[0224] 2021-05-08 | 程序员视角看是非</a></li>
+<li><a href="2020/01/09/cef/index.html">[0223] 2020-01-09 | Cef示例</a></li>
+<li><a href="2020/01/07/clion-qt-msvc/index.html">[0222] 2020-01-07 | CLion配置MSVC版Qt</a></li>
+<li><a href="2020/01/06/vue/index.html">[0221] 2020-01-06 | Vue搭配TypeScript</a></li>
+<li><a href="2019/12/05/rust-web-view/index.html">[0220] 2019-12-05 | Rust之WebView趟坑</a></li>
+<li><a href="2019/11/26/domain/index.html">[0219] 2019-11-26 | GithubPages使用自定义域名</a></li>
+<li><a href="2019/04/21/about996/index.html">[0213] 2019-04-21 | 关于996</a></li>
+<li><a href="2019/03/26/programmingtutorial10/index.html">[0212] 2019-03-26 | 面向聪明小白的编程入门教程 完成文档转换器(Part 10)</a></li>
+<li><a href="2019/03/26/programmingtutorial09/index.html">[0211] 2019-03-26 | 面向聪明小白的编程入门教程 低耦合高内聚(Part 9)</a></li>
+<li><a href="2019/03/26/programmingtutorial08/index.html">[0210] 2019-03-26 | 面向聪明小白的编程入门教程 多任务(Part 8)</a></li>
+<li><a href="2019/03/24/programmingtutorial07/index.html">[0209] 2019-03-24 | 面向聪明小白的编程入门教程 做点有意思的东西(Part 7)</a></li>
+<li><a href="2019/03/23/programmingtutorial06/index.html">[0208] 2019-03-23 | 面向聪明小白的编程入门教程 深入Qt(Part 6)</a></li>
+<li><a href="2019/03/23/programmingtutorial05/index.html">[0207] 2019-03-23 | 面向聪明小白的编程入门教程 熟悉Qt(Part 5)</a></li>
+<li><a href="2019/03/22/programmingtutorial04/index.html">[0206] 2019-03-22 | 面向聪明小白的编程入门教程 熟悉Python(Part 4)</a></li>
+<li><a href="2019/03/22/programmingtutorial03/index.html">[0205] 2019-03-22 | 面向聪明小白的编程入门教程 照猫画猫(Part 3)</a></li>
+<li><a href="2019/03/22/programmingtutorial02/index.html">[0204] 2019-03-22 | 面向聪明小白的编程入门教程 利其器(Part 2)</a></li>
+<li><a href="2019/03/22/programmingtutorial01/index.html">[0203] 2019-03-22 | 面向聪明小白的编程入门教程 开篇(Part 1)</a></li>
+<li><a href="2019/03/21/makeos/index.html">[0202] 2019-03-21 | 自制操作系统</a></li>
+<li><a href="2019/03/20/celery/index.html">[0201] 2019-03-20 | Celery大杂烩</a></li>
+<li><a href="2019/03/19/pythonwsgi/index.html">[0200] 2019-03-19 | WSGI大杂烩</a></li>
+<li><a href="2019/03/19/pythontimeit/index.html">[0199] 2019-03-19 | Python之TimeIt</a></li>
+<li><a href="2019/03/19/pythonasyncio/index.html">[0198] 2019-03-19 | Python之AsyncIO大杂烩</a></li>
+<li><a href="2019/03/19/apachebench/index.html">[0197] 2019-03-19 | ApacheBench大杂烩</a></li>
+<li><a href="2019/03/18/pythongenerator/index.html">[0196] 2019-03-18 | Python生成器大杂烩</a></li>
+<li><a href="2019/03/17/pythondecorator/index.html">[0195] 2019-03-17 | Python装饰器</a></li>
+<li><a href="2019/03/16/offerop/index.html">[0194] 2019-03-16 | 面向Offer编程</a></li>
+<li><a href="2019/03/16/jvmprogrammer/index.html">[0193] 2019-03-16 | 那些懂JVM的人，真的会写代码吗？</a></li>
+<li><a href="2019/03/15/tensorflow/index.html">[0192] 2019-03-15 | TensorFlow大杂烩</a></li>
+<li><a href="2019/02/25/rawsteel/index.html">[0190] 2019-02-25 | Rawsteel音乐播放器</a></li>
+<li><a href="2019/02/25/justpingit/index.html">[0189] 2019-02-25 | JustPingIt 网络延迟测试工具</a></li>
+<li><a href="2019/02/24/unity-demo/index.html">[0188] 2019-02-24 | Unity2D示例</a></li>
+<li><a href="2019/02/23/phaser/index.html">[0187] 2019-02-23 | Phaser大杂烩</a></li>
+<li><a href="2019/02/23/phaser-demo/index.html">[0186] 2019-02-23 | 使用Phaser制作一个简单游戏</a></li>
+<li><a href="2019/02/22/mysql-inspector/index.html">[0185] 2019-02-22 | MySQL透视器，大型MySQL数据库透视工具</a></li>
+<li><a href="2019/02/22/my-doctor/index.html">[0184] 2019-02-22 | 麦多文档转换器，跨平台常用文档转换器</a></li>
+<li><a href="2019/02/22/ice-spring/index.html">[0183] 2019-02-22 | 冰泉音乐，最纯的播放器给最纯的你</a></li>
+<li><a href="2019/02/22/googuo/index.html">[0182] 2019-02-22 | 谷国搜索，多国谷歌同页搜索</a></li>
+<li><a href="2019/01/13/rust/index.html">[0181] 2019-01-13 | Rust大杂烩</a></li>
+<li><a href="2019/01/13/gstreamer/index.html">[0180] 2019-01-13 | GStreamer大杂烩</a></li>
+<li><a href="2019/01/13/glib/index.html">[0179] 2019-01-13 | GLib大杂烩</a></li>
+<li><a href="2019/01/12/rmi/index.html">[0178] 2019-01-12 | RMI大杂烩</a></li>
+<li><a href="2018/12/26/mybatis-interceptor/index.html">[0177] 2018-12-26 | MyBatis拦截器演示</a></li>
+<li><a href="2018/12/24/html/index.html">[0176] 2018-12-24 | HTML大杂烩</a></li>
+<li><a href="2018/12/23/unity/index.html">[0175] 2018-12-23 | Unity大杂烩</a></li>
+<li><a href="2018/12/22/ios/index.html">[0174] 2018-12-22 | iOS大杂烩</a></li>
+<li><a href="2018/12/13/spring-validator/index.html">[0171] 2018-12-13 | SpringValidator</a></li>
+<li><a href="2018/12/13/redis/index.html">[0170] 2018-12-13 | Redis大杂烩</a></li>
+<li><a href="2018/12/13/ehcache/index.html">[0169] 2018-12-13 | Ehcache大杂烩</a></li>
+<li><a href="2018/12/12/spring-boot-scheduler/index.html">[0168] 2018-12-12 | SpringBoot任务调度器</a></li>
+<li><a href="2018/12/12/java-bean-utils/index.html">[0167] 2018-12-12 | Java对象工具类</a></li>
+<li><a href="2018/12/11/mybatis-sql-builder/index.html">[0166] 2018-12-11 | MyBatisSQLBuilder</a></li>
+<li><a href="2018/12/11/jooq/index.html">[0165] 2018-12-11 | JOOQ大杂烩</a></li>
+<li><a href="2018/12/10/windows7-gpt/index.html">[0164] 2018-12-10 | Ghost版Windows7在GPT分区的安装</a></li>
+<li><a href="2018/12/10/windows-security/index.html">[0163] 2018-12-10 | Windows电脑安全防护技巧</a></li>
+<li><a href="2018/12/10/tor/index.html">[0162] 2018-12-10 | 洋葱路由大杂烩</a></li>
+<li><a href="2018/12/10/thread-pool/index.html">[0161] 2018-12-10 | Java线程池</a></li>
+<li><a href="2018/12/10/stopwatch/index.html">[0160] 2018-12-10 | StopWatch大杂烩</a></li>
+<li><a href="2018/12/10/spring/index.html">[0159] 2018-12-10 | Spring大杂烩</a></li>
+<li><a href="2018/12/10/spring-configuration/index.html">[0158] 2018-12-10 | SpringBoot配置</a></li>
+<li><a href="2018/12/10/spring-boot-life-cycle/index.html">[0157] 2018-12-10 | SpringBoot生命周期</a></li>
+<li><a href="2018/12/10/spring-aop/index.html">[0156] 2018-12-10 | SpringAOP大杂烩</a></li>
+<li><a href="2018/12/10/servlet-filter/index.html">[0155] 2018-12-10 | Servlet过滤器大杂烩</a></li>
+<li><a href="2018/12/10/qtjambi/index.html">[0154] 2018-12-10 | QtJambi大杂烩</a></li>
+<li><a href="2018/12/10/pyqt5/index.html">[0153] 2018-12-10 | PyQt5大杂烩</a></li>
+<li><a href="2018/12/10/okhttp/index.html">[0152] 2018-12-10 | OKHttp</a></li>
+<li><a href="2018/12/10/nuklear/index.html">[0151] 2018-12-10 | Nuklear折腾记</a></li>
+<li><a href="2018/12/10/my-shadowsocks/index.html">[0150] 2018-12-10 | 自用梭子</a></li>
+<li><a href="2018/12/10/linux-global-proxy/index.html">[0149] 2018-12-10 | Linux全局代理</a></li>
+<li><a href="2018/12/10/linux-global-proxy-pass-china/index.html">[0148] 2018-12-10 | Linux全局代理跳过国内IP</a></li>
+<li><a href="2018/12/10/java-string-concatenation/index.html">[0147] 2018-12-10 | Java字符串连接</a></li>
+<li><a href="2018/12/10/java-stacktrace/index.html">[0146] 2018-12-10 | Stacktrace</a></li>
+<li><a href="2018/12/10/java-serialization/index.html">[0145] 2018-12-10 | Java对象序列化</a></li>
+<li><a href="2018/12/10/java-dynamic-proxy/index.html">[0144] 2018-12-10 | Java动态代理</a></li>
+<li><a href="2018/12/10/java-assist/index.html">[0143] 2018-12-10 | JavaAssist大杂烩</a></li>
+<li><a href="2018/12/10/java-annotation/index.html">[0142] 2018-12-10 | Java注解大杂烩</a></li>
+<li><a href="2018/12/10/jackson/index.html">[0141] 2018-12-10 | Jackson大杂烩</a></li>
+<li><a href="2018/12/10/j2v8/index.html">[0140] 2018-12-10 | j2v8大杂烩</a></li>
+<li><a href="2018/12/10/iup/index.html">[0139] 2018-12-10 | IUP折腾记</a></li>
+<li><a href="2018/12/10/hibernate/index.html">[0138] 2018-12-10 | Hibernate大杂烩</a></li>
+<li><a href="2018/12/10/github-as-maven-repo/index.html">[0137] 2018-12-10 | Github做Maven仓库</a></li>
+<li><a href="2018/12/10/filter-vs-interceptor/index.html">[0136] 2018-12-10 | 过滤器VS拦截器</a></li>
+<li><a href="2018/12/10/cglib/index.html">[0135] 2018-12-10 | CGLib大杂烩</a></li>
+<li><a href="2018/12/10/bandwagon/index.html">[0134] 2018-12-10 | 搬瓦工穿墙的最佳姿势</a></li>
+<li><a href="2018/12/10/adblocks/index.html">[0133] 2018-12-10 | Adblocks大杂烩</a></li>
+<li><a href="2018/12/10/adb/index.html">[0132] 2018-12-10 | ADB大杂烩</a></li>
+<li><a href="2018/12/09/tornadofx/index.html">[0131] 2018-12-09 | TornadoFX大杂烩</a></li>
+<li><a href="2018/12/09/java-player/index.html">[0130] 2018-12-09 | Java播放多媒体</a></li>
+<li><a href="2018/12/07/mybatis-multiple-datasource/index.html">[0129] 2018-12-07 | MyBatis多数据源的配置</a></li>
+<li><a href="2018/12/06/hash/index.html">[0128] 2018-12-06 | 哈希大杂烩</a></li>
+<li><a href="2018/12/05/supervisor/index.html">[0127] 2018-12-05 | Supervisor大杂烩</a></li>
+<li><a href="2018/12/04/rtmp/index.html">[0126] 2018-12-04 | RTMP大杂烩</a></li>
+<li><a href="2018/12/04/player/index.html">[0125] 2018-12-04 | 命令行播放器大杂烩</a></li>
+<li><a href="2018/12/04/multimedia-java/index.html">[0124] 2018-12-04 | Java处理多媒体文件</a></li>
+<li><a href="2018/12/04/hls/index.html">[0123] 2018-12-04 | HLS大杂烩</a></li>
+<li><a href="2018/12/04/ffmpeg/index.html">[0122] 2018-12-04 | FFmpeg大杂烩</a></li>
+<li><a href="2018/12/03/git/index.html">[0121] 2018-12-03 | Git大杂烩</a></li>
+<li><a href="2018/12/03/ezviz/index.html">[0120] 2018-12-03 | 萤石云接口分析</a></li>
+<li><a href="2018/12/03/bash/index.html">[0119] 2018-12-03 | Shell大杂烩</a></li>
+<li><a href="2018/12/02/java/index.html">[0118] 2018-12-02 | Java大杂烩</a></li>
+<li><a href="2018/12/01/live-stream/index.html">[0117] 2018-12-01 | 直播协议大杂烩</a></li>
+<li><a href="2018/11/30/mqtt/index.html">[0116] 2018-11-30 | MQTT大杂烩</a></li>
+<li><a href="2018/11/29/zsh/index.html">[0115] 2018-11-29 | zsh大杂烩</a></li>
+<li><a href="2018/11/29/rime/index.html">[0114] 2018-11-29 | Rime大杂烩</a></li>
+<li><a href="2018/11/29/dropbox/index.html">[0113] 2018-11-29 | Dropbox大杂烩</a></li>
+<li><a href="2018/11/28/su-vs-sudo/index.html">[0112] 2018-11-28 | su VS sudo</a></li>
+<li><a href="2018/11/27/mysql-sharding/index.html">[0111] 2018-11-27 | MySQL分库分表</a></li>
+<li><a href="2018/11/27/dubbo/index.html">[0110] 2018-11-27 | Dubbo大杂烩</a></li>
+<li><a href="2018/11/26/sharding-jdbc/index.html">[0109] 2018-11-26 | ShardingJDBC大杂烩</a></li>
+<li><a href="2018/11/24/macos/index.html">[0108] 2018-11-24 | macOS大杂烩</a></li>
+<li><a href="2018/11/22/xmpp/index.html">[0107] 2018-11-22 | XMPP大杂烩</a></li>
+<li><a href="2018/11/22/mysql-index-single-vs-union/index.html">[0106] 2018-11-22 | MySQL联合索引VS单列索引</a></li>
+<li><a href="2018/11/18/kotlin-best-practice/index.html">[0105] 2018-11-18 | Kotlin 最佳实践</a></li>
+<li><a href="2018/10/23/easy/index.html">[0104] 2018-10-23 | 简简单单真的好难</a></li>
+<li><a href="2018/10/22/tingting/index.html">[0103] 2018-10-22 | nothing</a></li>
+<li><a href="2018/10/04/zipkin/index.html">[0102] 2018-10-04 | Zipkin大杂烩</a></li>
+<li><a href="2018/10/04/wxwidgets/index.html">[0101] 2018-10-04 | wxWidgets大杂烩</a></li>
+<li><a href="2018/10/04/wpf/index.html">[0100] 2018-10-04 | WPF大杂烩</a></li>
+<li><a href="2018/10/04/win32/index.html">[0099] 2018-10-04 | Win32开发大杂烩</a></li>
+<li><a href="2018/10/04/swing/index.html">[0098] 2018-10-04 | Swing大杂烩</a></li>
+<li><a href="2018/10/04/swagger-to-html/index.html">[0097] 2018-10-04 | Spring项目中Swagger文档转HTML</a></li>
+<li><a href="2018/10/04/sqlalchemy/index.html">[0096] 2018-10-04 | SQLAlchemy示例</a></li>
+<li><a href="2018/10/04/spring-security/index.html">[0095] 2018-10-04 | SpringSecurity 大杂烩</a></li>
+<li><a href="2018/10/04/spring-cache/index.html">[0094] 2018-10-04 | SpringCache大杂烩</a></li>
+<li><a href="2018/10/04/spring-boot-servlet/index.html">[0093] 2018-10-04 | 在SpringBoot中使用Servlet</a></li>
+<li><a href="2018/10/04/quartz/index.html">[0092] 2018-10-04 | Quartz大杂烩</a></li>
+<li><a href="2018/10/04/qt4vsqt5/index.html">[0091] 2018-10-04 | Qt4与Qt5的比较</a></li>
+<li><a href="2018/10/04/python/index.html">[0090] 2018-10-04 | Python大杂烩</a></li>
+<li><a href="2018/10/04/python-mysql/index.html">[0089] 2018-10-04 | Python连接MySQL</a></li>
+<li><a href="2018/10/04/perl/index.html">[0088] 2018-10-04 | Perl大杂烩</a></li>
+<li><a href="2018/10/04/perl-to-exe/index.html">[0087] 2018-10-04 | Perl打包EXE</a></li>
+<li><a href="2018/10/04/perl-gui/index.html">[0086] 2018-10-04 | Perl图形库比较</a></li>
+<li><a href="2018/10/04/opengl/index.html">[0085] 2018-10-04 | OpenGL大杂烩</a></li>
+<li><a href="2018/10/04/opengl-utils/index.html">[0084] 2018-10-04 | OpenGL工具箱</a></li>
+<li><a href="2018/10/04/objective-c/index.html">[0083] 2018-10-04 | ObjectiveC大杂烩</a></li>
+<li><a href="2018/10/04/mysql/index.html">[0082] 2018-10-04 | MySQL大杂烩</a></li>
+<li><a href="2018/10/04/mybatis-custom-enum/index.html">[0081] 2018-10-04 | MyBatis处理自定义枚举</a></li>
+<li><a href="2018/10/04/mfc/index.html">[0080] 2018-10-04 | MFC大杂烩</a></li>
+<li><a href="2018/10/04/log4j/index.html">[0079] 2018-10-04 | Log4j大杂烩</a></li>
+<li><a href="2018/10/04/locust/index.html">[0078] 2018-10-04 | Locust大杂烩</a></li>
+<li><a href="2018/10/04/jwt/index.html">[0077] 2018-10-04 | JWT大杂烩</a></li>
+<li><a href="2018/10/04/jmeter/index.html">[0076] 2018-10-04 | jMeter大杂烩</a></li>
+<li><a href="2018/10/04/jdbc-wrapper/index.html">[0075] 2018-10-04 | JDBC的简单封装</a></li>
+<li><a href="2018/10/04/javafx-messcoding/index.html">[0074] 2018-10-04 | JavaFX乱码解决</a></li>
+<li><a href="2018/10/04/java-wait-notify/index.html">[0073] 2018-10-04 | Java之Wait、Notify</a></li>
+<li><a href="2018/10/04/java-thread/index.html">[0072] 2018-10-04 | Java线程大杂烩</a></li>
+<li><a href="2018/10/04/java-servlet/index.html">[0071] 2018-10-04 | Java之Servlet大杂烩</a></li>
+<li><a href="2018/10/04/java-reflection/index.html">[0070] 2018-10-04 | java-reflection</a></li>
+<li><a href="2018/10/04/java-observable/index.html">[0069] 2018-10-04 | java-observable</a></li>
+<li><a href="2018/10/04/java-lambda-exception-wrapper/index.html">[0068] 2018-10-04 | Java之Lambda异常包装器</a></li>
+<li><a href="2018/10/04/java-jna/index.html">[0067] 2018-10-04 | Java之JNA示例</a></li>
+<li><a href="2018/10/04/java-hotswap/index.html">[0066] 2018-10-04 | Java热部署</a></li>
+<li><a href="2018/10/04/java-hashmap/index.html">[0065] 2018-10-04 | Java之HashMap大杂烩</a></li>
+<li><a href="2018/10/04/java-generate-html/index.html">[0064] 2018-10-04 | Java组装HTML</a></li>
+<li><a href="2018/10/04/java-gc/index.html">[0063] 2018-10-04 | Java垃圾回收大杂烩</a></li>
+<li><a href="2018/10/04/iup-lua/index.html">[0062] 2018-10-04 | IupLua大杂烩</a></li>
+<li><a href="2018/10/04/gui-libraries/index.html">[0061] 2018-10-04 | Windows下各图形库大小比较</a></li>
+<li><a href="2018/10/04/gtk/index.html">[0060] 2018-10-04 | GTK大杂烩</a></li>
+<li><a href="2018/10/04/google-json-style-implemention/index.html">[0059] 2018-10-04 | GoogleJSON风格接口的Java实现</a></li>
+<li><a href="2018/10/04/flask/index.html">[0058] 2018-10-04 | Flask大杂烩</a></li>
+<li><a href="2018/10/04/feign/index.html">[0057] 2018-10-04 | Feign大杂烩</a></li>
+<li><a href="2018/10/04/dotnet/index.html">[0056] 2018-10-04 | dotNet大杂烩</a></li>
+<li><a href="2018/10/04/docker/index.html">[0055] 2018-10-04 | Docker大杂烩</a></li>
+<li><a href="2018/10/04/clion/index.html">[0054] 2018-10-04 | CLion大杂烩</a></li>
+<li><a href="2018/10/04/clion-qt/index.html">[0053] 2018-10-04 | 使用CLion开发Qt应用</a></li>
+<li><a href="2018/10/04/china-regions-generation/index.html">[0052] 2018-10-04 | 使用SpringJdbc生成省市县三级JSON</a></li>
+<li><a href="2018/10/04/centos/index.html">[0051] 2018-10-04 | CentOS 大杂烩</a></li>
+<li><a href="2018/10/04/c/index.html">[0050] 2018-10-04 | C大杂烩</a></li>
+<li><a href="2018/10/04/arch-linux/index.html">[0049] 2018-10-04 | ArchLinux大杂烩</a></li>
+<li><a href="2018/10/04/apache-shiro/index.html">[0048] 2018-10-04 | Shiro大杂烩</a></li>
+<li><a href="2018/10/03/python-behave/index.html">[0047] 2018-10-03 | Python Behave 测试框架示例</a></li>
+<li><a href="2018/10/03/logback/index.html">[0046] 2018-10-03 | Logback大杂烩</a></li>
+<li><a href="2018/10/03/jmonkey-networking/index.html">[0045] 2018-10-03 | jMonkey联网入门</a></li>
+<li><a href="2018/06/27/tkmybatis/index.html">[0043] 2018-06-27 | TkMyBatis大杂烩</a></li>
+<li><a href="2018/06/27/spring-boot-init/index.html">[0042] 2018-06-27 | SpringBoot环境搭建</a></li>
+<li><a href="2018/06/27/mybatis/index.html">[0041] 2018-06-27 | MyBatis大杂烩</a></li>
+<li><a href="2018/06/27/kotlin/index.html">[0040] 2018-06-27 | Kotlin大杂烩</a></li>
+<li><a href="2018/06/27/jmonkey/index.html">[0039] 2018-06-27 | jMonkey大杂烩</a></li>
+<li><a href="2018/06/27/gradle/index.html">[0038] 2018-06-27 | Gradle大杂烩</a></li>
+<li><a href="2018/06/24/chrome/index.html">[0037] 2018-06-24 | Chrome大杂烩</a></li>
+<li><a href="2017/09/26/android-in-one-line/index.html">[0035] 2017-09-26 | 一行代码学安卓</a></li>
+<li><a href="2017/09/24/yber/index.html">[0034] 2017-09-24 | Yber——可以灵活调整参数的HTTP接口测试工具</a></li>
+<li><a href="2017/09/23/antea-free-chat/index.html">[0033] 2017-09-23 | 放开那个群主，让我来——安提自由聊(Antea Free Chat)</a></li>
+<li><a href="2017/02/12/sort/index.html">[0032] 2017-02-12 | 排序算法</a></li>
+<li><a href="2016/12/30/android/index.html">[0031] 2016-12-30 | Android 大杂烩</a></li>
+<li><a href="2016/12/22/vim/index.html">[0030] 2016-12-22 | Vim 大杂烩</a></li>
+<li><a href="2016/12/22/sublime-text/index.html">[0029] 2016-12-22 | Sublime Text 大杂烩</a></li>
+<li><a href="2016/12/22/make/index.html">[0028] 2016-12-22 | Make 大杂烩</a></li>
+<li><a href="2016/12/22/linux/index.html">[0027] 2016-12-22 | Linux 大杂烩</a></li>
+<li><a href="2016/12/22/gcc/index.html">[0026] 2016-12-22 | GCC 大杂烩</a></li>
+<li><a href="2016/07/14/struts2-url-named-parameter-redirect-problem/index.html">[0025] 2016-07-14 | Struts2 URL 命名参数在跳转中的问题</a></li>
+<li><a href="2016/07/12/struts2-rest-example/index.html">[0024] 2016-07-12 | Struts2 REST 插件使用示例</a></li>
+<li><a href="2016/07/12/struts2-interceptor-example/index.html">[0023] 2016-07-12 | Struts2 拦截器示例</a></li>
+<li><a href="2016/07/12/struts2-dynamic-url-example/index.html">[0022] 2016-07-12 | Struts2 动态URL使用示例</a></li>
+<li><a href="2016/07/08/struts2-integrate-spring4/index.html">[0021] 2016-07-08 | 在Struts2 中集成 Spring4</a></li>
+<li><a href="2016/07/08/spring4-integrate-hibernate5/index.html">[0020] 2016-07-08 | 在Spring4 中集成 Hibernate5</a></li>
+<li><a href="2016/07/07/struts-i18n/index.html">[0019] 2016-07-07 | Struts2 国际化的配置与使用</a></li>
+<li><a href="2016/07/07/freemarker-example/index.html">[0018] 2016-07-07 | Freemarker 简明用法</a></li>
+<li><a href="2016/07/06/sublime-text-markdown-highlight/index.html">[0017] 2016-07-06 | Sublime Text Markdown 语法高亮</a></li>
+<li><a href="2016/07/06/maven-example/index.html">[0016] 2016-07-06 | 使用Maven创建工程并导出为IDE项目</a></li>
+<li><a href="2016/07/06/idea-set-java-version/index.html">[0015] 2016-07-06 | IDEA 设置 Java 版本</a></li>
+<li><a href="2016/07/06/hibernate5-example/index.html">[0014] 2016-07-06 | Hibernate5 的配置与使用</a></li>
+<li><a href="2016/07/05/struts2-example/index.html">[0013] 2016-07-05 | Struts2 的 XML 配置与注解配置</a></li>
+<li><a href="2016/07/05/spring-ioc-three-usages/index.html">[0012] 2016-07-05 | 使用Spring进行依赖注入的三种用法 </a></li>
+<li><a href="2016/07/05/jetbrains-idea-use-attention/index.html">[0011] 2016-07-05 | Intellij IDEA 的使用技巧</a></li>
+<li><a href="2016/07/05/javaee-web-app-tag-config/index.html">[0010] 2016-07-05 | JavaEE 7 下 web.xml 需要更新模式命名空间</a></li>
+<li><a href="2016/07/05/j2ee-servlet-example/index.html">[0009] 2016-07-05 | J2EE Servlet 示例</a></li>
+<li><a href="2016/07/04/compile-win32-program-with-gcc/index.html">[0008] 2016-07-04 | 使用 GCC 编译Win32程序 </a></li>
+<li><a href="2016/07/04/change-linux-shell-prompt/index.html">[0007] 2016-07-04 | 修改 Linux 命令行提示符</a></li>
+<li><a href="2016/07/01/linux-disk-space-management/index.html">[0006] 2016-07-01 | Linux 下进行磁盘空间管理的几条实用命令</a></li>
+<li><a href="2016/07/01/docker-free-space/index.html">[0005] 2016-07-01 | 释放 Docker 浪费掉的磁盘空间</a></li>
+<li><a href="2016/07/01/cross-gfw-in-linux-shell/index.html">[0004] 2016-07-01 | Linux shell 下 VPN 的安装与使用</a></li>
+<li><a href="2016/06/30/apk-sign/index.html">[0003] 2016-06-30 | Android apk 程序包如何签名</a></li>
+<li><a href="2016/04/26/kaa-platform-structure/index.html">[0002] 2016-04-26 | 物联网平台 Kaa 的技术架构（翻译）</a></li>
+<li><a href="2016/04/21/kaa-introduction/index.html">[0001] 2016-04-21 | 开源物联网平台 Kaa 简介（翻译）</a></li></ul>
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/index.html";
+        this.page.identifier = "/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

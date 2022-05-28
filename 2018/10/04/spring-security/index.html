@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>SpringSecurity 大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>SpringSecurity 大杂烩</h1>
+    <p><strong>App.kt</strong></p>
+<div class="highlight"><pre><span></span><span class="k">package</span> <span class="nn">bj</span>
+
+<span class="k">import</span> <span class="nn">org.springframework.boot.SpringApplication</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.authentication.BadCredentialsException</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.authentication.UsernamePasswordAuthenticationToken</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.config.annotation.web.builders.HttpSecurity</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.config.http.SessionCreationPolicy</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.core.Authentication</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.core.annotation.AuthenticationPrincipal</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.core.authority.SimpleGrantedAuthority</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.core.userdetails.User</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.core.userdetails.UserDetails</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.web.authentication.AnonymousAuthenticationFilter</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.web.util.matcher.AntPathRequestMatcher</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.web.util.matcher.NegatedRequestMatcher</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.web.util.matcher.OrRequestMatcher</span>
+<span class="k">import</span> <span class="nn">org.springframework.security.web.util.matcher.RequestMatcher</span>
+<span class="k">import</span> <span class="nn">org.springframework.stereotype.Component</span>
+<span class="k">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span>
+<span class="k">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestParam</span>
+<span class="k">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span>
+<span class="k">import</span> <span class="nn">java.util.*</span>
+<span class="k">import</span> <span class="nn">javax.annotation.Resource</span>
+<span class="k">import</span> <span class="nn">javax.servlet.FilterChain</span>
+<span class="k">import</span> <span class="nn">javax.servlet.ServletRequest</span>
+<span class="k">import</span> <span class="nn">javax.servlet.ServletResponse</span>
+<span class="k">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span>
+<span class="k">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span>
+<span class="k">import</span> <span class="nn">kotlin.collections.HashSet</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@RestController</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="nc">App</span> <span class="p">:</span> <span class="n">WebSecurityConfigurerAdapter</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">companion</span> <span class="kd">object</span> <span class="err">{</span>
+        <span class="c1">// 公开URL，不需要登录即可访问</span>
+        <span class="kd">val</span> <span class="nv">PUBLIC_URLS</span> <span class="o">=</span> <span class="n">arrayOf</span><span class="p">(</span><span class="s">&quot;/users/login&quot;</span><span class="p">,</span> <span class="s">&quot;/users/register&quot;</span><span class="p">,</span> <span class="s">&quot;/public/**&quot;</span><span class="p">)</span>
+
+        <span class="nd">@JvmStatic</span>
+        <span class="kd">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="kd">lateinit</span> <span class="kd">var</span> <span class="nv">tokenAuthenticationProvider</span><span class="p">:</span> <span class="n">TokenAuthenticationProvider</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="kd">lateinit</span> <span class="kd">var</span> <span class="nv">userService</span><span class="p">:</span> <span class="n">UserService</span>
+
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">configure</span><span class="p">(</span><span class="n">http</span><span class="p">:</span> <span class="n">HttpSecurity?)</span> <span class="p">{</span>
+        <span class="c1">// 公开URL取反，即为受保护的URL</span>
+        <span class="kd">val</span> <span class="nv">protectedUrls</span> <span class="o">=</span> <span class="n">NegatedRequestMatcher</span><span class="p">(</span><span class="n">OrRequestMatcher</span><span class="p">(</span><span class="n">PUBLIC_URLS</span><span class="p">.</span><span class="na">map</span> <span class="p">{</span> <span class="n">AntPathRequestMatcher</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span> <span class="p">}))</span>
+        <span class="c1">// 禁用会话</span>
+        <span class="n">http</span><span class="o">?.</span><span class="na">sessionManagement</span><span class="p">()</span><span class="o">?.</span><span class="na">sessionCreationPolicy</span><span class="p">(</span><span class="n">SessionCreationPolicy</span><span class="p">.</span><span class="na">STATELESS</span><span class="p">)</span>
+                <span class="c1">// 认证失败返401</span>
+                <span class="o">?.</span><span class="na">and</span><span class="p">()</span><span class="o">?.</span><span class="na">exceptionHandling</span><span class="p">()</span><span class="o">?.</span><span class="na">authenticationEntryPoint</span><span class="p">(</span><span class="n">BasicAuthenticationEntryPoint</span><span class="p">())</span>
+
+                <span class="c1">// 设置认证提供者</span>
+                <span class="o">?.</span><span class="na">and</span><span class="p">()</span><span class="o">?.</span><span class="na">authenticationProvider</span><span class="p">(</span><span class="n">tokenAuthenticationProvider</span><span class="p">)</span>
+                <span class="c1">// 添加过滤器</span>
+                <span class="o">?.</span><span class="na">addFilterBefore</span><span class="p">(</span><span class="n">TokenAuthenticationFilter</span><span class="p">(</span><span class="n">protectedUrls</span><span class="p">).</span><span class="na">apply</span> <span class="p">{</span>
+                    <span class="n">setAuthenticationManager</span><span class="p">(</span><span class="n">authenticationManager</span><span class="p">())</span>
+                    <span class="c1">// 认证成功不做跳转</span>
+                    <span class="n">setAuthenticationSuccessHandler</span><span class="p">(</span><span class="n">SimpleUrlAuthenticationSuccessHandler</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                        <span class="n">setRedirectStrategy</span> <span class="p">{</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="p">}</span>
+                    <span class="p">})</span>
+                <span class="p">},</span> <span class="n">AnonymousAuthenticationFilter</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">)</span>
+                <span class="c1">// 公开URL允许访问，其他URL先认证</span>
+                <span class="o">?.</span><span class="na">authorizeRequests</span><span class="p">()</span><span class="o">?.</span><span class="na">antMatchers</span><span class="p">(</span><span class="o">*</span><span class="n">PUBLIC_URLS</span><span class="p">)</span><span class="o">?.</span><span class="na">permitAll</span><span class="p">()</span><span class="o">?.</span><span class="na">anyRequest</span><span class="p">()</span><span class="o">?.</span><span class="na">authenticated</span><span class="p">()</span>
+
+                <span class="c1">// 禁用CSRF、表单登录、HTTPBasic认证、登出</span>
+                <span class="o">?.</span><span class="na">and</span><span class="p">()</span><span class="o">?.</span><span class="na">csrf</span><span class="p">()</span><span class="o">?.</span><span class="na">disable</span><span class="p">()</span><span class="o">?.</span><span class="na">formLogin</span><span class="p">()</span><span class="o">?.</span><span class="na">disable</span><span class="p">()</span><span class="o">?.</span><span class="na">httpBasic</span><span class="p">()</span><span class="o">?.</span><span class="na">disable</span><span class="p">()</span><span class="o">?.</span><span class="na">logout</span><span class="p">()</span><span class="o">?.</span><span class="na">disable</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">home</span><span class="p">(</span><span class="nd">@AuthenticationPrincipal</span> <span class="n">user</span><span class="p">:</span> <span class="n">User</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;Welcome my precious </span><span class="si">${</span><span class="n">user</span><span class="p">.</span><span class="na">username</span><span class="si">}${</span><span class="n">user</span><span class="p">.</span><span class="na">authorities</span><span class="si">}</span><span class="s">!&quot;</span>
+
+    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/users/register&quot;</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">register</span><span class="p">(</span><span class="nd">@RequestParam</span> <span class="n">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nd">@RequestParam</span> <span class="n">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">):</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="n">userService</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/users/login&quot;</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">login</span><span class="p">(</span><span class="nd">@RequestParam</span> <span class="n">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nd">@RequestParam</span> <span class="n">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">):</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="p">.</span><span class="na">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/users/logout&quot;</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">logout</span><span class="p">(</span><span class="nd">@AuthenticationPrincipal</span> <span class="n">user</span><span class="p">:</span> <span class="n">User</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">userService</span><span class="p">.</span><span class="na">logout</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/users/current&quot;</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">current</span><span class="p">(</span><span class="nd">@AuthenticationPrincipal</span> <span class="n">user</span><span class="p">:</span> <span class="n">User</span><span class="p">):</span> <span class="n">User</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">user</span>
+    <span class="p">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/public/home&quot;</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">publicHome</span><span class="p">()</span> <span class="o">=</span> <span class="s">&quot;I am public home&quot;</span>
+<span class="p">}</span>
+
+<span class="c1">// 令牌认证提供者</span>
+<span class="nd">@Component</span>
+<span class="kd">class</span> <span class="nc">TokenAuthenticationProvider</span> <span class="p">:</span> <span class="n">AbstractUserDetailsAuthenticationProvider</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="kd">lateinit</span> <span class="kd">var</span> <span class="nv">userService</span><span class="p">:</span> <span class="n">UserService</span>
+
+    <span class="c1">// 根据令牌获取用户</span>
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">retrieveUser</span><span class="p">(</span><span class="n">username</span><span class="p">:</span> <span class="kt">String?</span><span class="p">,</span> <span class="n">authentication</span><span class="p">:</span> <span class="n">UsernamePasswordAuthenticationToken?)</span><span class="p">:</span> <span class="n">UserDetails</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="nv">token</span> <span class="o">=</span> <span class="n">authentication</span><span class="o">?.</span><span class="na">credentials</span><span class="p">.</span><span class="na">toString</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">userService</span><span class="p">.</span><span class="na">findByToken</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 附加认证检测，不做处理</span>
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">additionalAuthenticationChecks</span><span class="p">(</span><span class="n">userDetails</span><span class="p">:</span> <span class="n">UserDetails?,</span> <span class="n">authentication</span><span class="p">:</span> <span class="n">UsernamePasswordAuthenticationToken?)</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="c1">// 令牌认证过滤器</span>
+<span class="kd">class</span> <span class="nc">TokenAuthenticationFilter</span><span class="p">(</span><span class="n">requiresAuthenticationRequestMatcher</span><span class="p">:</span> <span class="n">RequestMatcher?)</span> <span class="p">:</span> <span class="n">AbstractAuthenticationProcessingFilter</span><span class="p">(</span><span class="n">requiresAuthenticationRequestMatcher</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 从HTTP头提取令牌进行认证</span>
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">attemptAuthentication</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpServletRequest?,</span> <span class="n">response</span><span class="p">:</span> <span class="n">HttpServletResponse?)</span><span class="p">:</span> <span class="n">Authentication</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="nv">token</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">request</span><span class="o">?.</span><span class="na">getHeader</span><span class="p">(</span><span class="s">&quot;Authorization&quot;</span><span class="p">)).</span><span class="na">orElseThrow</span> <span class="p">{</span> <span class="n">BadCredentialsException</span><span class="p">(</span><span class="s">&quot;No token&quot;</span><span class="p">)</span> <span class="p">}</span>
+        <span class="k">return</span> <span class="n">authenticationManager</span><span class="p">.</span><span class="na">authenticate</span><span class="p">(</span><span class="n">UsernamePasswordAuthenticationToken</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">token</span><span class="p">))</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 认证成功后，继续过滤链</span>
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">successfulAuthentication</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpServletRequest?,</span> <span class="n">response</span><span class="p">:</span> <span class="n">HttpServletResponse?,</span> <span class="n">chain</span><span class="p">:</span> <span class="n">FilterChain?,</span> <span class="n">authResult</span><span class="p">:</span> <span class="n">Authentication?)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="na">successfulAuthentication</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">chain</span><span class="p">,</span> <span class="n">authResult</span><span class="p">)</span>
+        <span class="n">chain</span><span class="o">?.</span><span class="na">doFilter</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Spring碰到异常后会变身/error的请求继续进入此过滤器，将其跳过，否则就会对不需要验证的URL进行验证处理</span>
+    <span class="c1">// TODO 寻找优雅的解决方案</span>
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">doFilter</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">ServletRequest?,</span> <span class="n">res</span><span class="p">:</span> <span class="n">ServletResponse?,</span> <span class="n">chain</span><span class="p">:</span> <span class="n">FilterChain?)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">req</span> <span class="k">is</span> <span class="n">HttpServletRequest</span> <span class="o">&amp;&amp;</span> <span class="n">req</span><span class="p">.</span><span class="na">requestURI</span> <span class="o">==</span> <span class="s">&quot;/error&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">chain</span><span class="o">?.</span><span class="na">doFilter</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">super</span><span class="p">.</span><span class="na">doFilter</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">chain</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 用户服务，负责具体的登录注册等逻辑</span>
+<span class="nd">@Component</span>
+<span class="kd">class</span> <span class="nc">UserService</span> <span class="p">{</span>
+    <span class="c1">// 用户集合，模拟数据库</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">users</span> <span class="o">=</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="c1">// 字典(令牌=&gt;用户) 储存登录的用户</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">tokenToUser</span> <span class="o">=</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="n">User</span><span class="o">&gt;</span><span class="p">()</span>
+
+    <span class="c1">// 注册 创建用户</span>
+    <span class="kd">fun</span> <span class="nf">register</span><span class="p">(</span><span class="n">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">):</span> <span class="n">User</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">users</span><span class="p">.</span><span class="na">any</span> <span class="p">{</span> <span class="nb">it</span><span class="p">.</span><span class="na">username</span> <span class="o">==</span> <span class="n">username</span> <span class="p">})</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">RuntimeException</span><span class="p">(</span><span class="s">&quot;User has already been registered&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="kd">val</span> <span class="nv">roles</span> <span class="o">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">username</span> <span class="o">==</span> <span class="s">&quot;boss&quot;</span><span class="p">)</span> <span class="n">listOf</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;boss&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">listOf</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">)</span>
+        <span class="kd">val</span> <span class="nv">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">roles</span><span class="p">.</span><span class="na">map</span> <span class="p">{</span> <span class="n">SimpleGrantedAuthority</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span> <span class="p">})</span>
+        <span class="n">users</span> <span class="o">+=</span> <span class="n">user</span>
+        <span class="k">return</span> <span class="n">user</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 登录 创建令牌</span>
+    <span class="kd">fun</span> <span class="nf">login</span><span class="p">(</span><span class="n">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">):</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="n">tokenToUser</span><span class="p">.</span><span class="na">values</span><span class="p">.</span><span class="na">removeIf</span> <span class="p">{</span> <span class="nb">it</span><span class="p">.</span><span class="na">username</span> <span class="o">==</span> <span class="n">username</span> <span class="p">}</span>
+        <span class="kd">val</span> <span class="nv">user</span> <span class="o">=</span> <span class="n">users</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span> <span class="p">{</span> <span class="nb">it</span><span class="p">.</span><span class="na">username</span> <span class="o">==</span> <span class="n">username</span> <span class="p">}.</span><span class="na">findFirst</span><span class="p">().</span><span class="na">orElseThrow</span> <span class="p">{</span> <span class="n">RuntimeException</span><span class="p">(</span><span class="s">&quot;User not exist&quot;</span><span class="p">)</span> <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">password</span> <span class="o">!=</span> <span class="n">user</span><span class="p">.</span><span class="na">password</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">RuntimeException</span><span class="p">(</span><span class="s">&quot;Invalid password&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="kd">val</span> <span class="nv">token</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">()</span>
+        <span class="n">tokenToUser</span><span class="o">[</span><span class="n">token</span><span class="o">]</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="k">return</span> <span class="n">token</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 退出</span>
+    <span class="kd">fun</span> <span class="nf">logout</span><span class="p">(</span><span class="n">user</span><span class="p">:</span> <span class="n">User</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">tokenToUser</span><span class="p">.</span><span class="na">entries</span><span class="p">.</span><span class="na">removeIf</span> <span class="p">{</span> <span class="nb">it</span><span class="p">.</span><span class="na">value</span><span class="p">.</span><span class="na">username</span> <span class="o">==</span> <span class="n">user</span><span class="p">.</span><span class="na">username</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 用令牌查找用户</span>
+    <span class="kd">fun</span> <span class="nf">findByToken</span><span class="p">(</span><span class="n">token</span><span class="p">:</span> <span class="kt">String</span><span class="p">):</span> <span class="n">User</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">tokenToUser</span><span class="o">[</span><span class="n">token</span><span class="o">]</span><span class="p">).</span><span class="na">orElseThrow</span> <span class="p">{</span> <span class="n">RuntimeException</span><span class="p">(</span><span class="s">&quot;Token is invalid&quot;</span><span class="p">)</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>Token使用Jwt
+<strong>App.kt</strong></p>
+<div class="highlight"><pre><span></span>package bj
+
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.impl.crypto.MacProvider
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import org.springframework.security.web.util.matcher.NegatedRequestMatcher
+import org.springframework.security.web.util.matcher.OrRequestMatcher
+import org.springframework.security.web.util.matcher.RequestMatcher
+import org.springframework.stereotype.Component
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
+import java.util.*
+import javax.annotation.Resource
+import javax.servlet.FilterChain
+import javax.servlet.ServletRequest
+import javax.servlet.ServletResponse
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import kotlin.collections.HashSet
+
+@SpringBootApplication
+@RestController
+open class App : WebSecurityConfigurerAdapter() {
+    companion object {
+        // 公开URL，不需要登录即可访问
+        val PUBLIC_URLS = arrayOf(&quot;/users/login&quot;, &quot;/users/register&quot;, &quot;/public/**&quot;)
+
+        @JvmStatic
+        fun main(args: Array&lt;String&gt;) {
+            SpringApplication.run(App::class.java, *args)
+        }
+    }
+
+    @Resource
+    private lateinit var tokenAuthenticationProvider: TokenAuthenticationProvider
+
+    @Resource
+    private lateinit var userService: UserService
+
+    override fun configure(http: HttpSecurity?) {
+        // 公开URL取反，即为受保护的URL
+        val protectedUrls = NegatedRequestMatcher(OrRequestMatcher(PUBLIC_URLS.map { AntPathRequestMatcher(it) }))
+        // 禁用会话
+        http?.sessionManagement()?.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                // 认证失败返401
+                ?.and()?.exceptionHandling()?.authenticationEntryPoint(BasicAuthenticationEntryPoint())
+
+                // 设置认证提供者
+                ?.and()?.authenticationProvider(tokenAuthenticationProvider)
+                // 添加过滤器
+                ?.addFilterBefore(TokenAuthenticationFilter(protectedUrls).apply {
+                    setAuthenticationManager(authenticationManager())
+                    // 认证成功不做跳转
+                    setAuthenticationSuccessHandler(SimpleUrlAuthenticationSuccessHandler().apply {
+                        setRedirectStrategy { _, _, _ -&gt; }
+                    })
+                }, AnonymousAuthenticationFilter::class.java)
+                // 公开URL允许访问，其他URL先认证
+                ?.authorizeRequests()?.antMatchers(*PUBLIC_URLS)?.permitAll()?.anyRequest()?.authenticated()
+
+                // 禁用CSRF、表单登录、HTTPBasic认证、登出
+                ?.and()?.csrf()?.disable()?.formLogin()?.disable()?.httpBasic()?.disable()?.logout()?.disable()
+    }
+
+    @RequestMapping(&quot;/&quot;)
+    fun home(@AuthenticationPrincipal user: User) = &quot;Welcome my precious ${user.username}${user.authorities}!&quot;
+
+    @RequestMapping(&quot;/users/register&quot;)
+    fun register(@RequestParam username: String, @RequestParam password: String): String {
+        userService.register(username, password)
+        return login(username, password)
+    }
+
+    @RequestMapping(&quot;/users/login&quot;)
+    fun login(@RequestParam username: String, @RequestParam password: String): String {
+        return userService.login(username, password)
+    }
+
+    @RequestMapping(&quot;/users/logout&quot;)
+    fun logout(@AuthenticationPrincipal user: User) {
+        userService.logout(user)
+    }
+
+    @RequestMapping(&quot;/users/current&quot;)
+    fun current(@AuthenticationPrincipal user: User): User {
+        return user
+    }
+
+    @RequestMapping(&quot;/public/home&quot;)
+    fun publicHome() = &quot;I am public home&quot;
+}
+
+// 令牌认证提供者
+@Component
+class TokenAuthenticationProvider : AbstractUserDetailsAuthenticationProvider() {
+    @Resource
+    private lateinit var userService: UserService
+
+    // 根据令牌获取用户
+    override fun retrieveUser(username: String?, authentication: UsernamePasswordAuthenticationToken?): UserDetails {
+        val token = authentication?.credentials.toString()
+        return userService.findByToken(token)
+    }
+
+    // 附加认证检测，不做处理
+    override fun additionalAuthenticationChecks(userDetails: UserDetails?, authentication: UsernamePasswordAuthenticationToken?) {}
+}
+
+// 令牌认证过滤器
+class TokenAuthenticationFilter(requiresAuthenticationRequestMatcher: RequestMatcher?) : AbstractAuthenticationProcessingFilter(requiresAuthenticationRequestMatcher) {
+    // 从HTTP头提取令牌进行认证
+    override fun attemptAuthentication(request: HttpServletRequest?, response: HttpServletResponse?): Authentication {
+        val token = Optional.ofNullable(request?.getHeader(&quot;Authorization&quot;)).map { it.removePrefix(&quot;Bearer&quot;).trim() }.orElseThrow { BadCredentialsException(&quot;No token&quot;) }
+        return authenticationManager.authenticate(UsernamePasswordAuthenticationToken(token, token))
+    }
+
+    // 认证成功后，继续过滤链
+    override fun successfulAuthentication(request: HttpServletRequest?, response: HttpServletResponse?, chain: FilterChain?, authResult: Authentication?) {
+        super.successfulAuthentication(request, response, chain, authResult)
+        chain?.doFilter(request, response)
+    }
+
+    // Spring碰到异常后会变身/error的请求继续进入此过滤器，将其跳过，否则就会对不需要验证的URL进行验证处理
+    // TODO 寻找优雅的解决方案
+    override fun doFilter(req: ServletRequest?, res: ServletResponse?, chain: FilterChain?) {
+        if (req is HttpServletRequest &amp;&amp; req.requestURI == &quot;/error&quot;) {
+            chain?.doFilter(req, res)
+        } else {
+            super.doFilter(req, res, chain)
+        }
+    }
+}
+
+// 用户服务，负责具体的登录注册等逻辑
+@Component
+class UserService {
+    // 用户集合，模拟数据库
+    private val users = HashSet&lt;User&gt;()
+
+    // Jwt 密钥
+    private val key = MacProvider.generateKey()
+
+    // 注册 创建用户
+    fun register(username: String, password: String): User {
+        if (users.any { it.username == username }) {
+            throw RuntimeException(&quot;User has already been registered&quot;)
+        }
+
+        val roles = if (username == &quot;boss&quot;) listOf(&quot;user&quot;, &quot;boss&quot;) else listOf(&quot;user&quot;)
+        val user = User(username, password, roles.map { SimpleGrantedAuthority(it) })
+        users += user
+        return user
+    }
+
+    // 登录 创建令牌
+    fun login(username: String, password: String): String {
+        val user = users.stream().filter { it.username == username }.findFirst().orElseThrow { RuntimeException(&quot;User not exist&quot;) }
+        if (password != user.password) {
+            throw RuntimeException(&quot;Invalid password&quot;)
+        }
+        return Jwts.builder().setSubject(username).signWith(SignatureAlgorithm.HS256, key).compact()
+    }
+
+    // 退出
+    fun logout(user: User) {}
+
+    // 用令牌查找用户
+    fun findByToken(token: String): User {
+        val username = Jwts.parser().setSigningKey(key).parseClaimsJws(token).body.subject
+        return users.stream().filter { it.username == username }.findFirst().orElseThrow { RuntimeException(&quot;User $username not exist&quot;) }
+    }
+}
+</pre></div>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/10/04/spring-security/index.html";
+        this.page.identifier = "/2018/10/04/spring-security/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh_CN" style="width: 100%; height: 100%; font-size: 1.2em">
+<head>
+    <meta charset="UTF-8">
+    <title>数据表透视</title>
+    <style>
+        a, a:visited, a:hover, a:active {
+            color: inherit;
+        }
+    </style>
+</head>
+<body style="width: 100%; height: 100%; box-sizing: border-box; margin: 0; padding: 0.5em; display: flex; justify-content: start; flex-direction: column">
+
+<h1>表信息</h1>
+<table border="1" style="border-collapse: collapse">
+    <tbody>
+    <tr>
+        <td>Name</td>
+        <td>poem</td>
+    </tr>
+    <tr>
+        <td>Comment</td>
+        <td>诗歌</td>
+    </tr>
+    <tr>
+        <td>Rows</td>
+        <td>6565</td>
+    </tr>
+    <tr>
+        <td>Created At</td>
+        <td>2019-02-22 16:19:01</td>
+    </tr>
+    </tbody>
+</table>
+<h1>数据列</h1>
+<table border="1" style="border-collapse: collapse">
+    <thead></thead>
+    <tbody>
+    
+        <tr>
+            <td>poem_id</td>
+            <td>诗歌ID</td>
+            <td>int(11)</td>
+        </tr>
+    
+        <tr>
+            <td>dynasty</td>
+            <td>朝代</td>
+            <td>text</td>
+        </tr>
+    
+        <tr>
+            <td>author</td>
+            <td>诗人</td>
+            <td>text</td>
+        </tr>
+    
+        <tr>
+            <td>title</td>
+            <td>标题</td>
+            <td>text</td>
+        </tr>
+    
+        <tr>
+            <td>content</td>
+            <td>内容</td>
+            <td>text</td>
+        </tr>
+    
+    </tbody>
+</table>
+<h1>示例数据</h1>
+
+    <h2>示例数据 1</h2>
+    <table border="1" style="border-collapse: collapse">
+        <tbody>
+        
+            <tr>
+                <td>poem_id</td>
+                <td>诗歌ID</td>
+                <td style="word-break: break-all">5402</td>
+            </tr>
+        
+            <tr>
+                <td>dynasty</td>
+                <td>朝代</td>
+                <td style="word-break: break-all">唐代</td>
+            </tr>
+        
+            <tr>
+                <td>author</td>
+                <td>诗人</td>
+                <td style="word-break: break-all">虞世南</td>
+            </tr>
+        
+            <tr>
+                <td>title</td>
+                <td>标题</td>
+                <td style="word-break: break-all">蝉</td>
+            </tr>
+        
+            <tr>
+                <td>content</td>
+                <td>内容</td>
+                <td style="word-break: break-all">垂緌饮清露，流响出疏桐。
+居高声自远，非是藉秋风。</td>
+            </tr>
+        
+        </tbody>
+    </table>
+
+    <h2>示例数据 2</h2>
+    <table border="1" style="border-collapse: collapse">
+        <tbody>
+        
+            <tr>
+                <td>poem_id</td>
+                <td>诗歌ID</td>
+                <td style="word-break: break-all">6313</td>
+            </tr>
+        
+            <tr>
+                <td>dynasty</td>
+                <td>朝代</td>
+                <td style="word-break: break-all">五代</td>
+            </tr>
+        
+            <tr>
+                <td>author</td>
+                <td>诗人</td>
+                <td style="word-break: break-all">顾敻</td>
+            </tr>
+        
+            <tr>
+                <td>title</td>
+                <td>标题</td>
+                <td style="word-break: break-all">河传·棹举</td>
+            </tr>
+        
+            <tr>
+                <td>content</td>
+                <td>内容</td>
+                <td style="word-break: break-all">棹举，舟去，波光渺渺，不知何处？岸花汀草共依依，雨微，鹧鸪相逐飞。
+天涯离恨江声咽，啼猿切，此意向谁说？倚兰桡，独无聊，魂消，小炉香欲焦。</td>
+            </tr>
+        
+        </tbody>
+    </table>
+
+    <h2>示例数据 3</h2>
+    <table border="1" style="border-collapse: collapse">
+        <tbody>
+        
+            <tr>
+                <td>poem_id</td>
+                <td>诗歌ID</td>
+                <td style="word-break: break-all">2109</td>
+            </tr>
+        
+            <tr>
+                <td>dynasty</td>
+                <td>朝代</td>
+                <td style="word-break: break-all">明代</td>
+            </tr>
+        
+            <tr>
+                <td>author</td>
+                <td>诗人</td>
+                <td style="word-break: break-all">刘基</td>
+            </tr>
+        
+            <tr>
+                <td>title</td>
+                <td>标题</td>
+                <td style="word-break: break-all">眼儿媚·秋思</td>
+            </tr>
+        
+            <tr>
+                <td>content</td>
+                <td>内容</td>
+                <td style="word-break: break-all">萋萋芳草小楼西，云压雁声低。两行疏柳，一丝残照，万点鸦栖。
+春山碧树秋重绿，人在武陵溪。无情明月，有情归梦，同到幽闺。</td>
+            </tr>
+        
+        </tbody>
+    </table>
+
+    <h2>示例数据 4</h2>
+    <table border="1" style="border-collapse: collapse">
+        <tbody>
+        
+            <tr>
+                <td>poem_id</td>
+                <td>诗歌ID</td>
+                <td style="word-break: break-all">5819</td>
+            </tr>
+        
+            <tr>
+                <td>dynasty</td>
+                <td>朝代</td>
+                <td style="word-break: break-all">唐代</td>
+            </tr>
+        
+            <tr>
+                <td>author</td>
+                <td>诗人</td>
+                <td style="word-break: break-all">施肩吾</td>
+            </tr>
+        
+            <tr>
+                <td>title</td>
+                <td>标题</td>
+                <td style="word-break: break-all">瀑布</td>
+            </tr>
+        
+            <tr>
+                <td>content</td>
+                <td>内容</td>
+                <td style="word-break: break-all">豁开青冥颠，泻出万丈泉。
+如裁一条素，白日悬秋天。</td>
+            </tr>
+        
+        </tbody>
+    </table>
+
+    <h2>示例数据 5</h2>
+    <table border="1" style="border-collapse: collapse">
+        <tbody>
+        
+            <tr>
+                <td>poem_id</td>
+                <td>诗歌ID</td>
+                <td style="word-break: break-all">2871</td>
+            </tr>
+        
+            <tr>
+                <td>dynasty</td>
+                <td>朝代</td>
+                <td style="word-break: break-all">清代</td>
+            </tr>
+        
+            <tr>
+                <td>author</td>
+                <td>诗人</td>
+                <td style="word-break: break-all">纳兰性德</td>
+            </tr>
+        
+            <tr>
+                <td>title</td>
+                <td>标题</td>
+                <td style="word-break: break-all">采桑子·拨灯书尽红笺也</td>
+            </tr>
+        
+            <tr>
+                <td>content</td>
+                <td>内容</td>
+                <td style="word-break: break-all">拨灯书尽红笺也，依旧无聊。玉漏迢迢，梦里寒花隔玉箫。
+几竿修竹三更雨，叶叶萧萧。分付秋潮，莫误双鱼到谢桥。</td>
+            </tr>
+        
+        </tbody>
+    </table>
+
+</body>
+</html>

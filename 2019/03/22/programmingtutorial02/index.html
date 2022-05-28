@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>面向聪明小白的编程入门教程 利其器(Part 2) - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>面向聪明小白的编程入门教程 利其器(Part 2)</h1>
+    <p>编程的方式方法五花八门，在这个系列教程中，我会将我多年编程总结的最佳实践分享出来。</p>
+<h2>1. 约定由于配置</h2>
+<p>编程并不难，但是学好编程需要涉猎的面特别广。当涉猎的东西太多，很可能会搞不清重点，把自己搞得头重脚轻。编程的目的是写程序，也就是做软件。做出有价值的东西来，才是编程的意义所在。</p>
+<p>金无足赤，人无完人，程序也没有完美的程序。在追求完美的过程中，有时候也不得不对机器、对网络、对人做一些妥协，来达到完美的中庸（其实是个悖论，完美必不中庸，中庸必不完美^_^）。</p>
+<p>人的精力有限，应该把有限的精力放在无限的为人民服务上，不，是放在有意义的事情上。对于工具、方法和编码规范等这些支线任务，寻找最权威的解决方案即可。</p>
+<p>约定优于配置（convention over configuration），是我推崇的编程第一法则。通俗来讲，就是跟编程主线无关的需要做出选择的地方，随大流即可。不过我说的这个随大流主要是随国际大流，必要时可妥协为国内大流。一个好的程序，不可能是个程序孤岛，肯定要跟人有交互。跟自己交互，跟用户交互，跟代码阅读者交互。交互必然产生扯皮。碰到扯皮，就用CoC来KY之。</p>
+<h2>2. 工欲善其事，必先利其器</h2>
+<p>工欲善其事，必先利其器。学好编程需要接触一大堆工具。一大堆工具又有一大堆版本。这一大堆工具还可能存在依赖关系，一个工具的问题可能会影响到另一个工具。当你运行一段代码出现问题请教别人时，别人可能会表示这段代码在他机子上运行没有任何问题。同样的代码，在不同的环境运行，确实可能会产生不同的结果。</p>
+<p>为了减少不必要的扯皮，为了更精准地定位程序的bug，更为了更方便地安装与管理软件，一个软件包管理器必不可少。</p>
+<p>Windows上最权威的软件包管理器是<a href="https://chocolatey.org/">Chocolatey</a>。这是一个命令行工具。苹果电脑用户请绕道<a href="https://brew.sh/">Homebrew</a>自行触类旁通。</p>
+<h2>3. 虚拟终端</h2>
+<p>不会修电脑的程序员不是好画家。</p>
+<p>命令行，也叫控制台，也叫终端，也叫虚拟终端，在Windows上也叫<code>cmd</code>。个人电脑刚诞生的时候，还没有鼠标这个概念，人机交互完全是通过键盘输入指令进行的。比如用<code>Microsoft Word</code>打开文档<code>resume.doc</code>，可能需要在命令行上敲<code>word resume.doc</code>，然后回车，才能用古老的Word打开这个文档。再比如输入<code>shutdown</code>再回车，一般就代表关闭计算机。</p>
+<p>现代的计算机，基本都是图形用户界面，使用鼠标点击屏幕上的按钮完成交互操作。但是，古老的命令交互功能并没有被操作系统删除掉，而是由一个单独的App（Application，应用程序，软件）来模拟古老的终端界面。至于为什么叫终端，应该是因为很久以前电脑太贵，一台电脑配一堆显示器，大家通过不同的终端共享同一台主机吧（用终端解释终端，这种解释法也太GNU了吧）。</p>
+<p>在Windows上，官方的虚拟终端软件叫<code>命令提示符</code>，可以在开始菜单中找，也可以按下快捷键<code>Win+R</code>(Win指微软徽标键，R不区分大小写)，在弹出的<code>运行</code>窗口中输入<code>cmd</code>回车打开。在Windows 7下，虚拟终端默认的显示内容如下：</p>
+<div class="highlight"><pre><span></span>Microsoft Windows [版本 6.1.7601]
+版权所有 (c) 2009 Microsoft Corporation。保留所有权利。
+
+C:\Users\Administrator&gt;
+</pre></div>
+<p>除了官方的<code>cmd</code>，Windows上也可以使用第三方开发的虚拟终端。因为<code>Windows</code>是闭源操作系统，而且好多接口不开放，所以第三方的虚拟终端虽然交互体验好点，但是兼容性比较差，容易出问题（比如乱码）。</p>
+<p>之所以在<code>运行</code>窗口中输入<code>cmd</code>会启动虚拟终端，是因为这个虚拟终端软件被放在磁盘上的<code>C:\Windows\System32\cmd.exe</code>。输入<code>cmd</code>，系统会在<code>C:\Windows\System32\</code>目录（文件夹）下查找<code>cmd.exe</code>，找到的话会将其运行。</p>
+<p>事实上，这个查找逻辑并没有那么简单。在命令行下，输入<code>where cmd</code>再回车，可以让系统去查找名字为<code>cmd</code>的可执行文件。查找结果为<code>C:\Windows\System32\cmd.exe</code>。</p>
+<div class="highlight"><pre><span></span>Microsoft Windows [版本 6.1.7601]
+版权所有 (c) 2009 Microsoft Corporation。保留所有权利。
+
+C:\Users\Administrator&gt;where cmd
+C:\Windows\System32\cmd.exe
+
+C:\Users\Administrator&gt;
+</pre></div>
+<p>想知道具体的查找逻辑，可以在命令行下打<code>where</code>再回车，会显示<code>where</code>命令的帮助手册。微软对<code>where</code>命令的解释为<code>显示符合搜索模式的文件位置。在默认情况下，搜索是在当前目录和 PATH环境变量指定的路径中执行的。</code>。此处提到了一堆对小白来说非常陌生的名词，不过不用担心，我觉得很多工作五年甚至十年的程序员也不一定真正明白这句话是什么意思。</p>
+<h2>4. 环境变量</h2>
+<p>先说一下环境变量吧。环境变量是一种相对说法，相对的是程序的内部变量。程序运行在操作系统环境。有时候，我们想不修改程序代码，就能改变程序的一些行为。这时候，就可以用到环境变量了。变量，就是指一个可以改变的值，可以是一个数字，也可以是一串文本。软件是运行在系统环境下的，可以读取到系统环境中的一些变量，即<code>环境变量</code>。如果软件根据这个变量的值来控制程序逻辑的话，我们就实现了不修改程序代码，改变程序的运行行为。</p>
+<p>在<code>Windows</code>操作系统中，最重要的环境变量是<code>PATH</code>。这是一个最常用的依赖搜索路径。它的值是一串用分号分割的文件夹。当我们在<code>运行</code>窗口输入<code>cmd</code>再回车时，<code>Windows</code>会从这个文件夹列表中，从前往后，从一个个文件夹里面顺序搜索<code>cmd.exe</code>。搜到一个匹配的<code>cmd.exe</code>后，便终止搜索，然后运行这个<code>cmd.exe</code>。</p>
+<p>要想查看当前<code>PATH</code>环境变量的值，可以在命令行下打<code>echo %PATH%</code>，我的环境变量显示如下：</p>
+<div class="highlight"><pre><span></span>C:\Users\Administrator&gt;echo %PATH%
+C:\Python37\Scripts\;C:\Python37\;C:\Windows\system32;C:\Windows;C:\Windows\Syst
+em32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\ProgramData\chocolatey\
+bin;C:\Program Files\Git\cmd;C:\Program Files\Microsoft VS Code\bin;C:\Program F
+iles (x86)\vim\vim80;C:\Program Files\Calibre2\;C:\Program Files (x86)\Yarn\bin\
+;C:\Program Files\nodejs\;C:\Users\Administrator\AppData\Local\Pandoc\;C:\tools\
+Cmder;C:\Users\Administrator\AppData\Local\Yarn\bin;C:\Users\Administrator\AppDa
+ta\Roaming\npm
+</pre></div>
+<p>每个人的环境变量可能会不太一样。很正常，因为这是一个<code>变</code>量</p>
+<p>事实上，在<code>运行</code>窗口中打<code>cmd</code>，搜索的不一定是<code>cmd.exe</code>，也有<code>cmd.bat</code>、<code>cmd.js</code>等。<code>运行</code>窗口搜索的是可执行文件。除了<code>.exe</code>文件，我们下载软件时碰到的<code>.msi</code>文件也可以双击运行。可见，Windows的可执行文件不止有<code>.exe</code>这种格式。Windows可执行文件的格式，是通过<code>PATHEXT</code>环境变量来进行配置的。我的<code>PATHEXT</code>环境变量的配置是：</p>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\Users\Administrator</span><span class="c1">&gt;echo %PATHEXT%</span>
+.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW
+</pre></div>
+<p>可见，<code>.py</code>文件在我的操作系统上也是可执行文件格式。我可以通过双击Python脚本（后缀<code>.py</code>或<code>.pyw</code>）来执行它。</p>
+<p>除了这两个环境变量，Windows还有多个环境变量，也支持自行添加环境变量。Windows环境变量有单独的配置窗口。<code>Win+R</code>输入<code>SystemPropertiesAdvanced</code>回车，可以打开<code>系统属性窗口</code>。点击<code>高级</code>标签，再点击<code>环境变量</code>按钮，可以弹出环境变量编辑窗口。</p>
+<p>Windows的环境变量分为<code>系统变量</code>和<code>用户变量</code>。他们的变量名可以重名。如果<code>PATH</code>环境变量重名，Windows会把<code>PATH</code>对应的两个环境变量连接起来，其中，系统变量在前，用户变量在后。所以，在搜索可执行文件的时候，系统变量优先。Windows这么设计，应该是出于安全考虑，免得输入系统应用名称，执行的却是某些流氓软件。其他场景下的环境变量重名，我认为应该是用户变量优先。</p>
+<p>之所以会有用户变量，是因为Windows是个多用户操作系统，意思是可以多个用户（每个用户有各自的桌面、我的文档、开始菜单等）共同使用这台电脑。一般情况下，个人电脑都是单显示器单键鼠运行的，当然也可以连接多套输入输出设备。电脑被黑后，黑客也可以远程登录这台电脑上的另一个用户，跟你一块玩这台计算机。不同的用户相互隔离，也需要不同的配置，用户变量就是环境变量层面的用户隔离。</p>
+<h2>5. 安装Chocolatey</h2>
+<p>Windows操作系统一般用<a href="https://chocolatey.org/"><code>Chocolatey</code></a>做软件包管理。注意，这是一个第三方软件，不是微软出品。</p>
+<p>英语好的小白，可以直接查看官网教程进行安装。其他小白可以在命令行下执行以下命令进行安装：</p>
+<div class="highlight"><pre><span></span><span class="p">@</span><span class="s2">&quot;</span><span class="nv">%SystemRoot%</span><span class="s2">\System32\WindowsPowerShell\v1.0\powershell.exe&quot;</span> -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command <span class="s2">&quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot;</span> <span class="p">&amp;&amp;</span> <span class="k">SET</span> <span class="s2">&quot;PATH=</span><span class="nv">%PATH%</span><span class="s2">;</span><span class="nv">%ALLUSERSPROFILE%</span><span class="s2">\chocolatey\bin&quot;</span>
+</pre></div>
+<p>如果安装过程被各大管家卫士拦截，可以先退出这些管家卫士（建议有基本Windows安全常识的小白将其卸载）</p>
+<h2>6. 了解Chocolatey</h2>
+<p>在命令行下输入<code>choco</code>，如果显示如下内容，说明安装成功了。</p>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\Users\Administrator</span><span class="c1">&gt;choco</span>
+Chocolatey v0.10.11
+Please run &#39;choco -?&#39; or &#39;choco <span class="p">&lt;</span>command<span class="p">&gt;</span> -?&#39; for help menu.
+</pre></div>
+<p>命令告诉我们，当前<code>Chocolatey</code>版本号是<code>0.10.11</code>。输入<code>choco -?</code>可以查看帮助菜单。输入<code>choco install -?</code>可以查看<code>choco install</code>子命令的帮助菜单。</p>
+<p>执行命令<code>where choco</code>，输出如下：</p>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\Users\Administrator</span><span class="c1">&gt;where choco</span>
+C<span class="p">:</span><span class="nl">\ProgramData\chocolatey\bin\choco.exe</span>
+</pre></div>
+<p>可见，我们的<code>Chocolatey</code>被安装到了本地磁盘的C盘。有C盘洁癖的同学注意了，<code>Chocolatey</code>管理的其他工具也是要往C盘装的，<code>MKLINK /J</code>外加折腾几个小时，了解一下。</p>
+<h2>7. 了解命令行指令</h2>
+<p>使用<code>cd</code>(Change Directory)命令可以跳转到其他目录。使用<code>dir</code>(Directory)命令可以查看当前目录的信息和当前目录的所有文件。使用<code>explorer .</code>可以用资源管理器（俗称我的电脑）打开当前目录。</p>
+<p>不懂命令行，做不好程序员，附录二的命令走一遍。不过我的<code>Chocolatey</code>目录的文件数量应该比你多，因为我已经用Chocolatey装过了其他工具。</p>
+<h2>8. 使用Chocolatey查看已安装的软件</h2>
+<p>输入命令<code>choco list --local-only</code>，意思是列出软件包，只要本地（已安装）的。</p>
+<p>我的输出如下（新安装的应该只有chocolatey一个软件包）：</p>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\ProgramData\chocolatey\bin</span><span class="c1">&gt;choco list --local-only</span>
+Chocolatey v0.10.11
+7zip.install 18.6
+aria2 1.34.0.1
+blender 2.79.2
+calibre 3.39.1
+chocolatey 0.10.11
+chocolatey-core.extension 1.3.3
+Cmder 1.3.11
+DotNet4.5.2 4.5.2.20140902
+ffmpeg 4.1
+git 2.20.1
+git.install 2.20.1
+GoogleChrome 72.0.3626.109
+nodejs.install 11.9.0
+pandoc 2.6
+python 3.7.2
+python3 3.7.2
+vcredist2008 9.0.30729.6161
+vcredist2010 10.0.40219.2
+vim 8.0.604
+vscode 1.31.1
+yarn 1.13.0
+21 packages installed.
+</pre></div>
+<h2>9. 使用Chocolatey搜索软件包</h2>
+<p>以音乐播放器<code>Foobar2000</code>为例，在命令行输入<code>choco search foobar</code>。等待数秒（取决于网络状况）后，可看到如下输出：</p>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\ProgramData\chocolatey\bin</span><span class="c1">&gt;</span>
+C<span class="p">:</span><span class="nl">\ProgramData\chocolatey\bin</span><span class="c1">&gt;</span>
+C<span class="p">:</span><span class="nl">\ProgramData\chocolatey\bin</span><span class="c1">&gt;choco search foobar</span>
+Chocolatey v0.10.11
+foobar2000 1.4.3 [Approved]
+opencodecs 0.85.17777 [Approved]
+freeencoderpack 2018.10.19 [Approved]
+3 packages found.
+</pre></div>
+<p>Chocolatey以&quot;foobar&quot;为关键字搜到了三个软件包（package）。&quot;Approved&quot;应该是已审核之意。很显然，<code>foobar2000</code>这个软件包正是我们要找的。它在<code>Chocolatey</code>仓库中的最新版本是<code>1.4.3</code>。</p>
+<p>除了在命令行界面下搜索，Chocolatey也提供了<a href="https://chocolatey.org/packages?q=foobar">网页端的搜索</a>。</p>
+<h2>10. 使用Chocolatey查询软件包详情</h2>
+<p>打命令<code>choco info foobar2000</code>，输出如下：</p>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\ProgramData\chocolatey\bin</span><span class="c1">&gt;choco info foobar2000</span>
+Chocolatey v0.10.11
+foobar2000 1.4.3 [Approved]
+ <span class="k">Title</span>: foobar2000 <span class="p">|</span> Published: 2019/3/18
+ Package approved as a trusted package on 三月 18 2019 23:39:36.
+ Package testing status: Passing on 三月 18 2019 22:20:58.
+ Number of Downloads: 75964 <span class="p">|</span> Downloads for this version: 1134
+ Package url
+ Chocolatey Package Source: https://github.com/niks255/ChocolateyPackages
+ Package Checksum: &#39;J/RYGaUhQwaXVSoifyEsgfRowtPy7ifMb1Qq9RcX80bwxGSCkbMcx5Zdxama
+fQjOvXvebet5TzeTsGwUcyJQWw==&#39; (SHA512)
+ Tags: foobar2000 media player admin
+ Software Site: http://www.foobar2000.org/
+ Software License: http://www.foobar2000.org/?page=License
+ Summary: foobar2000
+ Description: foobar2000 is an advanced freeware audio player for the Windows pl
+atform. Some of the basic features include full unicode support, ReplayGain supp
+ort and native support for several popular audio formats.
+
+1 packages found.
+</pre></div>
+<p>软件详情提供了软件的官网。可见，这个<code>foobar2000</code>就是我们要找的<code>Foobar</code>。而且最新版本发布于<code>2019/3/18</code>，今天是<code>2019/3/22</code>，应该是官网最新版本。</p>
+<h2>11. 使用Chocolatey安装软件</h2>
+<p>打命令<code>choco install foobar2000</code>，下载安装包结束后，按<code>Y</code>同意执行安装脚本，最终输出如下：</p>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\Users\Administrator</span><span class="c1">&gt;choco install foobar2000</span>
+Chocolatey v0.10.11
+Installing the following packages:
+foobar2000
+By installing you accept licenses for the packages.
+Progress: Downloading foobar2000 1.4.3... 100%
+
+foobar2000 v1.4.3 [Approved]
+foobar2000 package files install completed. Performing other installation steps.
+
+The package foobar2000 wants to run &#39;chocolateyInstall.ps1&#39;.
+Note: If you don&#39;t run this script, the installation will fail.
+Note: To confirm automatically next time, use &#39;-y&#39; or consider:
+choco feature enable -n allowGlobalConfirmation
+Do you want to run the script?([Y]es/[N]o/[P]rint): y
+
+Installing foobar2000...
+foobar2000 has been installed.
+  foobar2000 may be able to be automatically uninstalled.
+ The install of foobar2000 was successful.
+  Software installed to &#39;C:\Program Files (x86)\foobar2000&#39;
+
+Chocolatey installed 1/1 packages.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+</pre></div>
+<p>可见，<code>Foobar2000</code>被安装到了<code>C:\Program Files (x86)\foobar2000</code>。此时，桌面上和开始菜单中应该都可以找到我们新安装的播放器。执行命令<code>choco list --local-only</code>应该也能看到变化。</p>
+<h2>12. Chocolatey的其他用法</h2>
+<ul>
+<li><code>choco uninstall foobar2000</code> 卸载Foobar2000</li>
+<li><code>choco upgrade foobar2000</code> 更新Foobar2000到最新版本</li>
+</ul>
+<h2>附录</h2>
+<h3>附录一 <code>where</code>命令帮助手册</h3>
+<div class="highlight"><pre><span></span>Microsoft Windows [版本 6.1.7601]
+版权所有 (c) 2009 Microsoft Corporation。保留所有权利。
+
+C<span class="p">:</span><span class="nl">\Users\Administrator</span><span class="c1">&gt;where</span>
+此命令的语法是:
+
+WHERE [/R dir] [/Q] [/F] [/T] pattern...
+
+描述:
+    显示符合搜索模式的文件位置。在默认情况下，搜索是在当前目录和 PATH
+    环境变量指定的路径中执行的。
+
+参数列表:
+    /R       从指定目录开始，递归性搜索并显示符合指定模式的文件。
+
+    /Q       只返回退出代码，不显示匹配文件列表。(安静模式)
+
+             匹配文件。(安静模式)
+
+    /F       显示所有相配文件并用双引号括上。
+
+    /T       显示所有相配文件的文件的文件。
+
+    pattern  指定要匹配的文件的搜索模式。通配符 * 和 ? 可以用在模式中。
+             也可以指定 <span class="s2">&quot;$env:pattern&quot;</span> 和 <span class="s2">&quot;path:pattern&quot;</span> 格式; 其中
+             <span class="s2">&quot;env&quot;</span> 是环境变量，搜索是在 <span class="s2">&quot;env&quot;</span> 变量的指定的路径中执行的。
+             这些格式不应该跟 /R 一起使用。此搜索也可以用将 PATHEXT 变
+             量扩展名附加于此模式的方式完成。
+
+     /?      显示此帮助消息。
+
+  注意: 如果搜索成功，此工具返回错误级别 0; 如果不成功，返回 1; 如果失
+        败或发生错误，返回 2。
+
+示例:
+    WHERE /?
+    WHERE myfilename1 myfile????.*
+    WHERE $windir:*.*
+    WHERE /R c:\windows *.exe *.dll *.bat
+    WHERE /Q ??.???
+    WHERE <span class="s2">&quot;c:\windows;c:\windows\system32:*.dll&quot;</span>
+    WHERE /F /T *.dll
+
+C<span class="p">:</span><span class="nl">\Users\Administrator</span><span class="c1">&gt;</span>
+</pre></div>
+<h3>附录二 Chocolatey目录结构</h3>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\Users\Administrator</span><span class="c1">&gt;cd C:\ProgramData\chocolatey\bin\</span>
+
+C<span class="p">:</span><span class="nl">\ProgramData\chocolatey\bin</span><span class="c1">&gt;dir</span>
+ 驱动器 C 中的卷是 mywin
+ 卷的序列号是 12FD-5B61
+
+ C:\ProgramData\chocolatey\bin 的目录
+
+2019/02/25  18:37    <span class="p">&lt;</span>DIR<span class="p">&gt;</span>          .
+2019/02/25  18:37    <span class="p">&lt;</span>DIR<span class="p">&gt;</span>          ..
+2019/02/14  14:42            25,600 7z.exe
+2019/02/14  13:42            26,112 aria2c.exe
+2018/05/04  18:09           143,496 choco.exe
+2018/05/04  18:09           143,496 chocolatey.exe
+2018/05/04  18:09           143,496 cinst.exe
+2018/05/04  18:09           143,496 clist.exe
+2018/05/04  18:09           143,496 cpack.exe
+2018/05/04  18:09           143,496 cpush.exe
+2018/05/04  18:09           143,496 cuninst.exe
+2018/05/04  18:09           143,496 cup.exe
+2018/05/04  18:09           143,496 cver.exe
+2019/02/25  18:37            26,112 ffmpeg.exe
+2019/02/25  18:37            26,112 ffplay.exe
+2019/02/25  18:37            26,112 ffprobe.exe
+2019/02/13  16:10           129,536 Git-2.20.1-32-bit.exe
+2018/05/04  18:09             2,283 RefreshEnv.cmd
+2018/12/16  12:31                21 _processed.txt
+              17 个文件      1,553,352 字节
+               2 个目录 18,996,658,176 可用字节
+
+C<span class="p">:</span><span class="nl">\ProgramData\chocolatey\bin</span><span class="c1">&gt;explorer .</span>
+
+C<span class="p">:</span><span class="nl">\ProgramData\chocolatey\bin</span><span class="c1">&gt;</span>
+</pre></div>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2019/03/22/programmingtutorial02/index.html";
+        this.page.identifier = "/2019/03/22/programmingtutorial02/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

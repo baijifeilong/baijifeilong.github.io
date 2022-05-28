@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>SpringCache大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>SpringCache大杂烩</h1>
+    <h1>SpringCache大杂烩</h1>
+<h2>示例代码</h2>
+<p><strong>App.java</strong></p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.WebApplicationType</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.builder.SpringApplicationBuilder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.context.event.ApplicationReadyEvent</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cache.annotation.Cacheable</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cache.annotation.EnableCaching</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.ApplicationListener</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableCaching</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">App</span> <span class="kd">implements</span> <span class="n">ApplicationListener</span><span class="o">&lt;</span><span class="n">ApplicationReadyEvent</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">new</span> <span class="n">SpringApplicationBuilder</span><span class="p">(</span><span class="n">App</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">web</span><span class="p">(</span><span class="n">WebApplicationType</span><span class="p">.</span><span class="na">NONE</span><span class="p">).</span><span class="na">run</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onApplicationEvent</span><span class="p">(</span><span class="n">ApplicationReadyEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">foo</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">foo</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">foo</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">barService</span><span class="p">.</span><span class="na">bar</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">barService</span><span class="p">.</span><span class="na">bar</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">barService</span><span class="p">.</span><span class="na">bar</span><span class="p">());</span>
+    <span class="p">}</span>
+
+
+    <span class="nd">@Cacheable</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;%s: I am foo&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+        <span class="k">return</span> <span class="s">&quot;FOO&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">BarService</span> <span class="n">barService</span><span class="p">;</span>
+
+    <span class="nd">@Service</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">BarService</span> <span class="p">{</span>
+        <span class="nd">@Cacheable</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">)</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">bar</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;%s: I am bar&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+            <span class="k">return</span> <span class="s">&quot;BAR&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><strong>输出</strong></p>
+<div class="highlight"><pre><span></span>bj.App$$EnhancerBySpringCGLIB$$cadd77f2@4df5bcb4: I am foo
+FOO
+bj.App$$EnhancerBySpringCGLIB$$cadd77f2@4df5bcb4: I am foo
+FOO
+bj.App$$EnhancerBySpringCGLIB$$cadd77f2@4df5bcb4: I am foo
+FOO
+bj.App$BarService@5c00384f: I am bar
+BAR
+BAR
+BAR
+</pre></div>
+<p>使用@EnableCaching开启Spring的缓存功能。在需要缓存的函数上注解@Cacheable(&quot;&lt;name&gt;&quot;)。</p>
+<p><code>App</code>类下的函数不能直接缓存。Controller下的函数需要有@RequestMapping才能缓存。缓存需要在@Cacheable中配置name，或者在class上注解@CacheConfig，让method使用同样的name</p>
+<h2>缓存失效</h2>
+<p><strong>App.kt</strong></p>
+<div class="highlight"><pre><span></span><span class="k">package</span> <span class="nn">bj</span>
+
+<span class="k">import</span> <span class="nn">org.springframework.boot.SpringApplication</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.context.event.ApplicationReadyEvent</span>
+<span class="k">import</span> <span class="nn">org.springframework.cache.annotation.CacheEvict</span>
+<span class="k">import</span> <span class="nn">org.springframework.cache.annotation.Cacheable</span>
+<span class="k">import</span> <span class="nn">org.springframework.cache.annotation.EnableCaching</span>
+<span class="k">import</span> <span class="nn">org.springframework.context.ApplicationListener</span>
+<span class="k">import</span> <span class="nn">org.springframework.scheduling.annotation.EnableScheduling</span>
+<span class="k">import</span> <span class="nn">org.springframework.scheduling.annotation.Scheduled</span>
+<span class="k">import</span> <span class="nn">org.springframework.stereotype.Component</span>
+<span class="k">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span>
+<span class="k">import</span> <span class="nn">java.util.concurrent.TimeUnit</span>
+<span class="k">import</span> <span class="nn">javax.annotation.Resource</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@RestController</span>
+<span class="nd">@EnableCaching</span>
+<span class="nd">@EnableScheduling</span>
+<span class="kd">class</span> <span class="nc">App</span> <span class="p">:</span> <span class="n">ApplicationListener</span><span class="o">&lt;</span><span class="n">ApplicationReadyEvent</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">onApplicationEvent</span><span class="p">(</span><span class="n">event</span><span class="p">:</span> <span class="n">ApplicationReadyEvent?)</span> <span class="p">{</span>
+        <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="m">400</span><span class="p">)</span>
+        <span class="n">sky</span><span class="p">.</span><span class="na">hello</span><span class="p">()</span>
+        <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="m">400</span><span class="p">)</span>
+        <span class="n">sky</span><span class="p">.</span><span class="na">hello</span><span class="p">()</span>
+        <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="m">400</span><span class="p">)</span>
+        <span class="n">sky</span><span class="p">.</span><span class="na">hello</span><span class="p">()</span>
+        <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="m">400</span><span class="p">)</span>
+        <span class="n">sky</span><span class="p">.</span><span class="na">hello</span><span class="p">()</span>
+        <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="m">400</span><span class="p">)</span>
+        <span class="n">sky</span><span class="p">.</span><span class="na">hello</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="kd">lateinit</span> <span class="kd">var</span> <span class="nv">sky</span><span class="p">:</span> <span class="n">Sky</span><span class="p">;</span>
+
+    <span class="kd">companion</span> <span class="kd">object</span> <span class="err">{</span>
+        <span class="nd">@JvmStatic</span>
+        <span class="kd">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="nd">@Component</span>
+<span class="kd">class</span> <span class="nc">Sky</span> <span class="p">{</span>
+    <span class="nd">@Cacheable</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nd">@CacheEvict</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+    <span class="nd">@Scheduled</span><span class="p">(</span><span class="n">fixedDelay</span> <span class="o">=</span> <span class="m">1000</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">evictHello</span><span class="p">()</span> <span class="o">=</span> <span class="n">println</span><span class="p">(</span><span class="s">&quot;Clearing cache for hello&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+<h2>使用其他的缓存实现</h2>
+<p>SpringBoot默认的缓存实现是<code>org.springframework.cache.concurrent.ConcurrentMapCacheManager</code>。这是个内存缓存，而且不支持超时设定。换用其他缓存实现有两种方法:</p>
+<h3>方法一 Spring自动配置</h3>
+<p>引入<code>SpringBootStarterCache</code>和其他缓存实现后，SpringBoot会自动寻找并配置相应的缓存实现</p>
+<p>例:</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-cache<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.github.ben-manes.caffeine<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>caffeine<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<h3>方法二 自定义CacheManager</h3>
+<p>例(使用CaffeineCache并设置1秒的生存时间):</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj.cache</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.github.benmanes.caffeine.cache.CaffeineSpec</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.vavr.control.Try</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.context.event.ApplicationReadyEvent</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cache.CacheManager</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cache.annotation.Cacheable</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cache.annotation.EnableCaching</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.cache.caffeine.CaffeineCacheManager</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.ApplicationListener</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 2018/12/11 下午8:41</span>
+<span class="cm"> */</span>
+<span class="nd">@SpringBootApplication</span><span class="p">(</span><span class="n">exclude</span> <span class="o">=</span> <span class="n">DataSourceAutoConfiguration</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="nd">@EnableCaching</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CacheApp</span> <span class="kd">implements</span> <span class="n">ApplicationListener</span><span class="o">&lt;</span><span class="n">ApplicationReadyEvent</span><span class="o">&gt;</span> <span class="p">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">CacheApp</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">Inner</span> <span class="n">inner</span><span class="p">;</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">CacheManager</span> <span class="n">cacheManager</span><span class="p">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onApplicationEvent</span><span class="p">(</span><span class="n">ApplicationReadyEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;CacheManager: &quot;</span> <span class="o">+</span> <span class="n">cacheManager</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getSuperclass</span><span class="p">());</span>
+
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;First fetching...&quot;</span><span class="p">);</span>
+        <span class="n">inner</span><span class="p">.</span><span class="na">hi</span><span class="p">();</span>
+        <span class="n">Try</span><span class="p">.</span><span class="na">run</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Second fetching after 1000 millis...&quot;</span><span class="p">);</span>
+        <span class="n">inner</span><span class="p">.</span><span class="na">hi</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Third fetching...&quot;</span><span class="p">);</span>
+        <span class="n">inner</span><span class="p">.</span><span class="na">hi</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Component</span>
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Inner</span> <span class="p">{</span>
+        <span class="nd">@Cacheable</span><span class="p">(</span><span class="s">&quot;hi&quot;</span><span class="p">)</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">hi</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;hi&quot;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="s">&quot;hi&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">CacheManager</span> <span class="nf">cacheManager</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">CaffeineCacheManager</span><span class="p">()</span> <span class="p">{{</span>
+            <span class="k">this</span><span class="p">.</span><span class="na">setCaffeineSpec</span><span class="p">(</span><span class="n">CaffeineSpec</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&quot;expireAfterWrite=1s&quot;</span><span class="p">));</span>
+        <span class="p">}};</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>控制台输出:</p>
+<div class="highlight"><pre><span></span>.   ____          _            __ _ _
+ /\\ / ___&#39;_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | &#39;_ | &#39;_| | &#39;_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  &#39;  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.0.RELEASE)
+
+2018-12-11 21:40:04.930  INFO 28595 --- [           main] bj.cache.CacheApp                        : Starting CacheApp on MacBook-Air-2.local with PID 28595 (/Users/yuchao/temp/java/hellomaven/target/classes started by yuchao in /Users/yuchao/temp/java/hellomaven)
+2018-12-11 21:40:04.940  INFO 28595 --- [           main] bj.cache.CacheApp                        : No active profile set, falling back to default profiles: default
+2018-12-11 21:40:08.261  WARN 28595 --- [           main] reactor.netty.tcp.TcpResources           : [http] resources will use the default LoopResources: DefaultLoopResources {prefix=reactor-http, daemon=true, selectCount=4, workerCount=4}
+2018-12-11 21:40:08.263  WARN 28595 --- [           main] reactor.netty.tcp.TcpResources           : [http] resources will use the default ConnectionProvider: PooledConnectionProvider {name=http, poolFactory=reactor.netty.resources.ConnectionProvider$$Lambda$287/1238994373@22d6cac2}
+2018-12-11 21:40:08.445  INFO 28595 --- [           main] bj.cache.CacheApp                        : Started CacheApp in 4.751 seconds (JVM running for 6.37)
+CacheManager: class org.springframework.cache.caffeine.CaffeineCacheManager
+First fetching...
+hi
+Second fetching after 1000 millis...
+hi
+Third fetching...
+</pre></div>
+<h2>不同的Cache设置不同的超时时间</h2>
+<p>需要使用<code>SimpleCacheManager</code>的<code>setCaches</code>方法</p>
+<div class="highlight"><pre><span></span><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">CacheManager</span> <span class="nf">cacheManager</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">CaffeineCache</span><span class="o">&gt;</span> <span class="n">cacheList</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
+            <span class="n">Triple</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+            <span class="n">Triple</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;hi&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="p">).</span><span class="na">map</span><span class="p">(</span><span class="n">$</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">CaffeineCache</span><span class="p">(</span><span class="n">$</span><span class="p">.</span><span class="na">getLeft</span><span class="p">(),</span> <span class="n">Caffeine</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">recordStats</span><span class="p">()</span>
+            <span class="p">.</span><span class="na">expireAfterWrite</span><span class="p">(</span><span class="n">$</span><span class="p">.</span><span class="na">getMiddle</span><span class="p">(),</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">).</span><span class="na">maximumSize</span><span class="p">(</span><span class="n">$</span><span class="p">.</span><span class="na">getRight</span><span class="p">()).</span><span class="na">build</span><span class="p">()))</span>
+            <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">SimpleCacheManager</span><span class="p">()</span> <span class="p">{{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">setCaches</span><span class="p">(</span><span class="n">cacheList</span><span class="p">);</span>
+    <span class="p">}};</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/10/04/spring-cache/index.html";
+        this.page.identifier = "/2018/10/04/spring-cache/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

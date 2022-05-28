@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>面向聪明小白的编程入门教程 深入Qt(Part 6) - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>面向聪明小白的编程入门教程 深入Qt(Part 6)</h1>
+    <p>经过上一节的学习，我们熟悉了Qt的一些基本用法。本节继续深入。</p>
+<h2>1. 消息框</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QMessageBox</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;明月几时有？&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;MyButton&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;#MyButton { color: magenta }&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="n">btn</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;明月 </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())[:</span><span class="mi">19</span><span class="p">]</span><span class="si">}</span><span class="s2"> 有&quot;</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>执行这段代码，点击按钮，会弹出一个对话框，显示系统的当前时间。</p>
+<p>Qt内置了多种对话框，供开发者直接调用。最常用的对话框是消息对话框，通过<code>QMessageBox.information</code>调用。此函数接收至少三个参数，第一个参数是父控件，第二个参数是对话框标题，第三个参数是对话框正文。除了<code>information</code>消息对话框外，还可以使用<code>warning</code>弹出报警对话框，使用<code>critical</code>弹出错误对话框。</p>
+<p>对于对话框来说，它会居中于父控件显示。如果父控件为空，它会居中于屏幕显示。</p>
+<p>在这段代码中，我们接触到到了很多新知识。其中:</p>
+<ol>
+<li>datetime是Python内置的日期时间处理模块。<code>datetime.datetime</code>是日期时间(日期+时间)类。从<code>datetime</code>导入<code>datetime</code>，模块名和类名相同。由于Python是一门草根语言，难免会有部分命名匪夷所思，以后就见怪不怪了。</li>
+<li><code>datetime.now()</code>获取当前的日期时间，返回一个日期时间(datetime)对象。</li>
+<li>我们需要获取日期时间的字符串形式，所以调用了方法<code>str</code>。<code>str</code>可以将对象转换为字符串。比如日期时间对象，转换为字符串的格式类似于<code>2019-03-23 19:50:26.439716</code>。</li>
+<li>由于我们不需要微秒部分，所以需要把多余的部分截取掉。语法<code>[0:19]</code>可以截取字符串的前19位。在大多数编程语言中，索引(序号)都是从0开始的，区间范围一般都是左闭右开，<code>[0:19]</code>即<code>[0,19)</code>，即从索引0到索引18，共19个字符。<code>[0:19]</code>可以简写为<code>[:19]</code>。除了从前往后索引外，我们还可以从后往前索引。对于<code>datetime</code>字符串，<code>[0:19]</code>于<code>[0:-7]</code>截取的结果一致。 <code>[0:-7]</code>表示从索引0截取到索引-7(不包括)。负数的索引不是从0开始，而是从1开始。索引-7即表示倒数第七个字符。<code>[0:-7]</code>也可以简写为<code>[:-7]</code>。</li>
+<li><code>information</code>方法的第三个参数是一个字符串，因此我们需要做字符串拼接。字符串的拼接可以使用<code>+</code>符号，也可以用<code>f</code>语法。如果字符串前缀以<code>f</code>字符，字符串里<code>{}</code>里面的文本就会当作<code>Python</code>代码运算。</li>
+</ol>
+<h2>2. 动态更新窗体标题</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QWidget</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;明月几时有？&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;MyButton&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;#MyButton { color: magenta }&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">btn</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;明月 </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())[:</span><span class="o">-</span><span class="mi">7</span><span class="p">]</span><span class="si">}</span><span class="s2"> 有&quot;</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>执行这段代码，每次点击按钮，都会将当前的系统时间更新到窗口的标题栏。</p>
+<h2>3. 使用状态栏</h2>
+<p>普通的按钮只是一个简单的控件，不可能内嵌一个状态栏。为了简化开发，<code>Qt</code>提供了一个通用的主窗体类<code>QMainWindow</code>。这个窗体内置了菜单栏、工具栏和状态栏，省却了程序员自己布局。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QMainWindow</span><span class="p">,</span>
+    <span class="n">QStatusBar</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">wnd</span> <span class="o">=</span> <span class="n">QMainWindow</span><span class="p">()</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">sb</span><span class="p">:</span> <span class="n">QStatusBar</span> <span class="o">=</span> <span class="n">wnd</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span>
+<span class="n">sb</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Aria&quot;</span><span class="p">,</span> <span class="mi">27</span><span class="p">))</span>
+<span class="n">sb</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: green&quot;</span><span class="p">)</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;明月几时有？&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;MyButton&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;#MyButton { color: magenta }&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">sb</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;明月 </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span><span class="si">}</span><span class="s2"> 有&quot;</span><span class="p">))</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>执行以上代码，每次点击按钮，都会把当前日期时间更新到状态栏。要点：</p>
+<ol>
+<li><code>QMainWindow.setCentralWidget</code>用来设置窗体的中心控件，也就是主控件。这个中心控件的大小会自动适应窗体大小。所以，在中心控件上调用<code>resize</code>没有效果，需要<code>resize</code>的是主窗体<code>wnd</code>。</li>
+<li><code>QMainWindow.statusBar</code>方法可以获取窗体的状态栏</li>
+<li><code>QStatusBar.showMessage</code>方法可以更新状态栏</li>
+<li><code>QFont('Aria', 27)</code>构造函数会生成大小为27个像素点(1K分辨率的屏幕有200万个像素点)的Aria字体</li>
+<li>主窗体是根控件，应该调用主窗体的<code>show</code>方法来显示窗体。</li>
+<li>由于<code>PyQt5</code>的代码不够完善，IDE无法推导<code>QMainWindow.statusBar</code>方法返回的数据类型。<code>sb: QStatusBar</code>这种语法用来做类型提示，在执行代码时不起作用，但是可以告知IDE当前变量的类型，帮助IDE做代码分析与提示</li>
+</ol>
+<h2>4. 初识布局</h2>
+<p>由于<code>Qt</code>的状态栏在苹果系统上显示得挺丑，我们决定使用自定义的布局来显示当前时间。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QWidget</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QVBoxLayout</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;-style=Macintosh&#39;</span><span class="p">])</span>
+<span class="n">wnd</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Ready.&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: lime; font-size: 108px; background: teal&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;明月几时有？&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: magenta&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">lbl</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%X</span><span class="s1">&#39;</span><span class="p">)))</span>
+<span class="n">box</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lbl</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>执行以上代码，可以看到窗体中从上到下排列了两个控件。上面的是一个文本框，下面的是一个按钮。拖动窗体边框来拉伸窗体，会发现按钮只能左右伸缩，而文本标签会同时进行水平伸缩和垂直伸缩来填充剩余空间。说明这两个控件有不同的布局策略。</p>
+<p>这段代码引入的新知识：</p>
+<ul>
+<li><code>QApplication</code> 构造函数列表的第二个参数可以用来设置显示主题。Qt支持Windows主题(Windows)和macOS主题(Macintosh)</li>
+<li><code>datetime.strftime</code> 可以按照指定的格式来格式化日期时间，'%X'只显示时分秒。</li>
+<li><code>QVBoxLayout</code> 是一种垂直布局，子控件按照<code>QVBoxLayout.addWidget</code>的执行顺序依次排列各子组件</li>
+</ul>
+<h2>5. 均分布局</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QWidget</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QVBoxLayout</span><span class="p">,</span>
+    <span class="n">QSizePolicy</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;-style=Macintosh&#39;</span><span class="p">])</span>
+<span class="n">wnd</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Ready.&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: lime; font-size: 108px; background: teal&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;明月几时有？&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: magenta&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">lbl</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%X</span><span class="s1">&#39;</span><span class="p">)))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Preferred</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Preferred</span><span class="p">)</span>
+<span class="n">box</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lbl</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>要点：</p>
+<ul>
+<li><code>QSizePolicy</code> 类表示控件的缩放策略。<code>QSizePolicy.Preferred</code>表示这个控件可以被缩放</li>
+<li><code>QPushButton</code>是<code>QWidget</code>的子类，<code>QPushButton</code>可以调用<code>QWidget</code>提供的任何方法</li>
+<li><code>QWidget.setSizePolicy</code> 可以用来设置控件的缩放策略，两个参数分别代表水平方向和垂直方向的缩放策略</li>
+</ul>
+<h2>6. 按比例均分布局</h2>
+<p>接下来的例子中，我们将演示如何按比例来均分布局。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QWidget</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QVBoxLayout</span><span class="p">,</span>
+    <span class="n">QSizePolicy</span><span class="p">,</span>
+    <span class="n">QToolButton</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;-style=Macintosh&#39;</span><span class="p">])</span>
+<span class="n">wnd</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Ready.&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: lime; font-size: 108px; background: teal&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">()</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;明月几时有？&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton { color: magenta; border: none }&quot;</span>
+                  <span class="s2">&quot;QPushButton:pressed { background: lightcyan }&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">lbl</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%X</span><span class="s1">&#39;</span><span class="p">)))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">box</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+<span class="n">box</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lbl</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>运行以上代码，缩放窗口，会发现两个控件的高度始终保持<code>2:1</code>。这段代码要点如下：</p>
+<ol>
+<li><code>QVBoxLayout.addWidget</code>函数的第二个参数是拉伸因子，表示填充布局剩余空间的能力的比重</li>
+<li><code>QSizePolicy.Ignored</code>也支持自动缩放，但是最小大小是0，意思是可以缩小到消失</li>
+<li><code>QVBoxLayout.setSpacing</code>设置布局子控件的间距</li>
+<li><code>QVBoxLayout.setContentMargins</code>设置布局的边距，四个参数分别表示左、上、右、下</li>
+<li><code>border: none</code>可以隐藏按钮的边框，但是也会丢失掉默认的点击动画</li>
+<li><code>QPushButton:pressed</code>可以用来设置按钮在按下时的样式，用来实现点击动画</li>
+<li><code>Python</code>会自动将两个相邻的字符串合并为一个字符串</li>
+</ol>
+<h2>7. 布局嵌套</h2>
+<p>布局可以互相嵌套。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QWidget</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QVBoxLayout</span><span class="p">,</span>
+    <span class="n">QSizePolicy</span><span class="p">,</span>
+    <span class="n">QToolButton</span><span class="p">,</span>
+    <span class="n">QHBoxLayout</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;-style=Macintosh&#39;</span><span class="p">])</span>
+<span class="n">wnd</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">666</span><span class="p">,</span> <span class="mi">666</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;经海底问无由&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: lime; font-size: 108px; background: teal&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;明月几时有&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton { color: aqua; border: none; background: seagreen }&quot;</span>
+                  <span class="s2">&quot;QPushButton:pressed { background: olive }&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">lbl</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())[</span><span class="mi">11</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">bye</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;休休&quot;</span><span class="p">)</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">btn</span><span class="o">.</span><span class="n">font</span><span class="p">())</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton { color: aqua; border: none; background: darkgoldenrod }&quot;</span>
+                  <span class="s2">&quot;QPushButton:pressed { background: olive }&quot;</span><span class="p">)</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QApplication</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span>
+<span class="n">btm</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+<span class="n">btm</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">btm</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">bye</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">box</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+<span class="n">box</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lbl</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">btm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>执行以上代码，可以看到窗体同时使用了水平布局和垂直布局。要点：</p>
+<ul>
+<li><code>QHBoxLayout</code>表示水平布局</li>
+<li><code>QBoxLayout.addLayout</code>可以添加子布局</li>
+</ul>
+<h2>8. 全屏切换</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QWidget</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QVBoxLayout</span><span class="p">,</span>
+    <span class="n">QSizePolicy</span><span class="p">,</span>
+    <span class="n">QToolButton</span><span class="p">,</span>
+    <span class="n">QHBoxLayout</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;-style=Macintosh&#39;</span><span class="p">])</span>
+<span class="n">wnd</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">999</span><span class="p">,</span> <span class="mi">999</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;经海底问无由&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: lime; font-size: 108px; background: teal&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;明月几时有&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton { color: aqua; border: none; background: seagreen }&quot;</span>
+                  <span class="s2">&quot;QPushButton:pressed { background: olive }&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">lbl</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;经海底问无由</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())[</span><span class="mi">11</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">big</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;画屏幽&quot;</span><span class="p">)</span>
+<span class="n">big</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">btn</span><span class="o">.</span><span class="n">font</span><span class="p">())</span>
+<span class="n">big</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton { color: aqua; border: none; background: steelblue }&quot;</span>
+                  <span class="s2">&quot;QPushButton:pressed { background: olive }&quot;</span><span class="p">)</span>
+<span class="n">big</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">big</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">wnd</span><span class="o">.</span><span class="n">showNormal</span><span class="p">()</span> <span class="k">if</span> <span class="n">wnd</span><span class="o">.</span><span class="n">isFullScreen</span><span class="p">()</span> <span class="k">else</span> <span class="n">wnd</span><span class="o">.</span><span class="n">showFullScreen</span><span class="p">())</span>
+<span class="n">bye</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;休休&quot;</span><span class="p">)</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">btn</span><span class="o">.</span><span class="n">font</span><span class="p">())</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton { color: aqua; border: none; background: forestgreen }&quot;</span>
+                  <span class="s2">&quot;QPushButton:pressed { background: olive }&quot;</span><span class="p">)</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QApplication</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span>
+<span class="n">btm</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+<span class="n">btm</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">btm</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">big</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">btm</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">bye</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">box</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+<span class="n">box</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lbl</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">btm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>要点：</p>
+<ul>
+<li><code>QWidget.showFullScreen()</code> 进入全屏模式</li>
+<li><code>QWidget.showNormal()</code> 退出全屏模式</li>
+<li><code>QWidget.isFullScreen()</code> 判断控件是否全屏，返回值是布尔值(只有True和False两种情况)</li>
+<li><code>吃饭 if 饿了 else 减肥</code> 这种语法中<code>if</code>要倒装</li>
+<li>字符串中以<code>\</code>开头的字符有特殊意义，比如<code>\n</code>表示换行</li>
+</ul>
+<h2>9. 移除窗体边框</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.Qt</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QApplication</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+    <span class="n">QFont</span><span class="p">,</span>
+    <span class="n">QWidget</span><span class="p">,</span>
+    <span class="n">QLabel</span><span class="p">,</span>
+    <span class="n">QVBoxLayout</span><span class="p">,</span>
+    <span class="n">QSizePolicy</span><span class="p">,</span>
+    <span class="n">QHBoxLayout</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;-style=Macintosh&#39;</span><span class="p">])</span>
+<span class="n">wnd</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;白云千载空悠悠&quot;</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">999</span><span class="p">,</span> <span class="mi">999</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">lbl</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;经海底问无由&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;color: lime; font-size: 108px; background: teal&quot;</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+<span class="n">lbl</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;明月几时有&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton { color: aqua; border: none; background: seagreen }&quot;</span>
+                  <span class="s2">&quot;QPushButton:pressed { background: olive }&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">lbl</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;经海底问无由</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())[</span><span class="mi">11</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]))</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">big</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;画屏幽&quot;</span><span class="p">)</span>
+<span class="n">big</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">btn</span><span class="o">.</span><span class="n">font</span><span class="p">())</span>
+<span class="n">big</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton { color: aqua; border: none; background: steelblue }&quot;</span>
+                  <span class="s2">&quot;QPushButton:pressed { background: olive }&quot;</span><span class="p">)</span>
+<span class="n">big</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">big</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">wnd</span><span class="o">.</span><span class="n">showNormal</span><span class="p">()</span> <span class="k">if</span> <span class="n">wnd</span><span class="o">.</span><span class="n">isFullScreen</span><span class="p">()</span> <span class="k">else</span> <span class="n">wnd</span><span class="o">.</span><span class="n">showFullScreen</span><span class="p">())</span>
+<span class="n">bye</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;休休&quot;</span><span class="p">)</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">btn</span><span class="o">.</span><span class="n">font</span><span class="p">())</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton { color: aqua; border: none; background: forestgreen }&quot;</span>
+                  <span class="s2">&quot;QPushButton:pressed { background: olive }&quot;</span><span class="p">)</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Ignored</span><span class="p">)</span>
+<span class="n">bye</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QApplication</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span>
+<span class="n">btm</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+<span class="n">btm</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">btm</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">big</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">btm</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">bye</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">box</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+<span class="n">box</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lbl</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">box</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">btm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">FramelessWindowHint</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p><code>QWidget.setWindowFlags(Qt.FramelessWindowHint)</code>可以移除窗体边框。</p>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2019/03/23/programmingtutorial06/index.html";
+        this.page.identifier = "/2019/03/23/programmingtutorial06/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

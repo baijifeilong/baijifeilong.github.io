@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>面向聪明小白的编程入门教程 照猫画猫(Part 3) - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>面向聪明小白的编程入门教程 照猫画猫(Part 3)</h1>
+    <p>编程是一种自我挑战。挑战需要的是激情，激情需要的是能看到点滴的进步。大学四年，没学会怎么做一个能显示“Hello World”的空窗体出来，日复一日地在命令行下研究算法、数据结构、操作系统、编译原理，到头来还是一脸蒙逼。独木舟还没造出来，就去研究航母的核子发动机，连纸上谈兵的赵括都笑了。</p>
+<p>我们的第一课，就是做一个有具体功能的，有一定实用性的Windows窗体应用程序出来，并且可以打包成<code>.exe</code>可执行文件给别人使用。有时候，囫囵吞枣，也不一定是贬义词。</p>
+<p>这个要做的软件，我们称之为“麦多文档转换器”。具体的介绍、截图和源代码见<a href="https://github.com/baijifeilong/my-doctor">Github项目主页</a>。Github是全球最大的开源软件集散中心。</p>
+<p>此软件是我在业余时间，花了七八个小时开发而成。之所以要花这么长时间，是因为好多东西不熟或者忘了，我也是现学现卖。</p>
+<h2>1. 源码窥探</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">label</span><span class="p">:</span> <span class="n">QLabel</span>
+<span class="n">wnd</span><span class="p">:</span> <span class="n">QMainWindow</span>
+<span class="n">currentFilename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">dlg</span><span class="p">:</span> <span class="n">QProgressDialog</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">loadFile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">global</span> <span class="n">currentFilename</span>
+    <span class="n">currentFilename</span> <span class="o">=</span> <span class="n">filename</span>
+    <span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;当前文件: &quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="n">wnd</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;文件载入成功: &quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Converter</span><span class="p">(</span><span class="n">QThread</span><span class="p">):</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmt</span> <span class="o">=</span> <span class="n">fmt</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt</span>
+        <span class="n">fromFilename</span> <span class="o">=</span> <span class="n">currentFilename</span>
+        <span class="n">toFilename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fromFilename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">fmt</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pandoc&quot;</span><span class="p">,</span> <span class="n">fromFilename</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;pdf&quot;</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;--pdf-engine&quot;</span><span class="p">,</span> <span class="s2">&quot;wkhtmltopdf&quot;</span><span class="p">])</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">toFilename</span><span class="p">])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">STARTUPINFO</span><span class="p">,</span> <span class="n">STARTF_USESHOWWINDOW</span>
+            <span class="n">startupinfo</span> <span class="o">=</span> <span class="n">STARTUPINFO</span><span class="p">()</span>
+            <span class="n">startupinfo</span><span class="o">.</span><span class="n">dwFlags</span> <span class="o">|=</span> <span class="n">STARTF_USESHOWWINDOW</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">startupinfo</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">startupinfo</span><span class="o">=</span><span class="n">startupinfo</span><span class="p">)</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">returncode</span>
+        <span class="n">wnd</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">((</span><span class="s2">&quot;转换成功: &quot;</span> <span class="o">+</span> <span class="n">toFilename</span><span class="p">)</span> <span class="k">if</span> <span class="n">code</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;转换失败: &quot;</span> <span class="o">+</span> <span class="n">err</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">convertFile</span><span class="p">(</span><span class="n">fmt</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">currentFilename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">global</span> <span class="n">dlg</span>
+    <span class="n">dlg</span> <span class="o">=</span> <span class="n">QProgressDialog</span><span class="p">(</span><span class="n">wnd</span><span class="p">)</span>
+    <span class="n">dlg</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;转换中...&quot;</span><span class="p">)</span>
+    <span class="n">dlg</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">dlg</span><span class="o">.</span><span class="n">setCancelButton</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">dlg</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Window</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">WindowTitleHint</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">CustomizeWindowHint</span><span class="p">)</span>
+    <span class="n">dlg</span><span class="o">.</span><span class="n">setWindowModality</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowModal</span><span class="p">)</span>
+    <span class="n">dlg</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">wnd</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;转换中...&quot;</span><span class="p">)</span>
+    <span class="k">global</span> <span class="n">converter</span>
+    <span class="n">converter</span> <span class="o">=</span> <span class="n">Converter</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+    <span class="n">converter</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dlg</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
+    <span class="n">converter</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">wnd</span> <span class="o">=</span> <span class="n">QMainWindow</span><span class="p">()</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">400</span> <span class="o">*</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setAcceptDrops</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">dragEnterEvent</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">dropEvent</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">mimeData</span><span class="p">()</span><span class="o">.</span><span class="n">urls</span><span class="p">())</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">dropEvent</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">loadFile</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">path</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">mimeData</span><span class="p">()</span><span class="o">.</span><span class="n">urls</span><span class="p">()]),</span> <span class="kc">None</span><span class="p">))</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;就绪.&quot;</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;请拖入文件.转换后会自动覆盖同名文件,请谨慎使用&quot;</span><span class="p">)</span>
+
+<span class="n">buttons</span> <span class="o">=</span> <span class="n">QGridLayout</span><span class="p">()</span>
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">QSignalMapper</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">docx</span><span class="o">=</span><span class="s2">&quot;Word&quot;</span><span class="p">,</span> <span class="n">pdf</span><span class="o">=</span><span class="s2">&quot;PDF&quot;</span><span class="p">,</span> <span class="n">pptx</span><span class="o">=</span><span class="s2">&quot;PowerPoint&quot;</span><span class="p">,</span> <span class="n">html</span><span class="o">=</span><span class="s2">&quot;HTML&quot;</span><span class="p">,</span> <span class="n">mobi</span><span class="o">=</span><span class="s2">&quot;Mobi&quot;</span><span class="p">,</span> <span class="n">epub</span><span class="o">=</span><span class="s2">&quot;EPUB&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="n">button</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span>
+    <span class="n">mapper</span><span class="o">.</span><span class="n">setMapping</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+    <span class="n">button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">mapper</span><span class="o">.</span><span class="n">map</span><span class="p">)</span>
+    <span class="n">buttons</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">idx</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">mapper</span><span class="o">.</span><span class="n">mapped</span><span class="p">[</span><span class="s2">&quot;QString&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">convertFile</span><span class="p">)</span>
+
+<span class="n">layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+<span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+<span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">buttons</span><span class="p">)</span>
+<span class="n">payload</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;麦多文档转换器&quot;</span><span class="p">)</span>
+<span class="n">wnd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">font</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">font</span><span class="p">()</span>
+<span class="n">font</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="n">font</span><span class="o">.</span><span class="n">pointSize</span><span class="p">()</span> <span class="o">/</span> <span class="mf">0.618</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</pre></div>
+<p>一共区区104行代码，就完成了整个软件需要的全部功能。可见，编程并没有想象中的那么复杂，至少，不需要想象中那样多的代码。</p>
+<h2>2. 下载源代码</h2>
+<p>源代码的<a href="https://raw.githubusercontent.com/baijifeilong/my-doctor/master/app.py">下载链接</a>。由于源代码是个文本文件，浏览器应该不会弹出下载提示框，需要我们按下<code>Ctrl+S</code>，将此文件保存到本地。保存位置放到桌面。保存类型选择<code>所有文件(*.*)</code>。</p>
+<p>下载完成后，桌面上会出现一个Python（一种编程语言）源码文件<code>app.py</code>，请确保它的名字不是<code>app.py.txt</code>。</p>
+<p>鼠标右键点击这个<code>app.py</code>，选择“用记事本打开”，即可查看源代码。如果没有此右键菜单，打开记事本，将文件拖拽进记事本窗口即可。</p>
+<h2>3. 选择文本编辑器</h2>
+<p>程序代码可以用记事本编写，但是记事本不显示代码行号，也没有代码高亮，更没有代码智能提示等高级功能。所以，一般情况很少用记事本做开发（软件开发，即编程）。</p>
+<p>除了记事本，很多文本编辑器都支持代码高亮，比如来自湾湾的<code>Notepad++</code>和来自微软的<code>Visual Studio Code</code>。<code>Notepad++</code>主打小巧快捷方便，<code>Visual Studio Code</code>主打功能丰富，插件众多，开箱即用，迷你IDE。建议两者都安装上，进行比较选择。</p>
+<p>这两个编辑器的安装方法：</p>
+<ul>
+<li>Notepad ++ : <code>choco install notepadplusplus</code></li>
+<li>Visual Studio Code : <code>choco install vscode</code></li>
+</ul>
+<p>安装完成后，可以将代码文件<code>app.py</code>分别拖进<code>Notepad++</code>和<code>Visual Studio Code</code>，看哪个更顺眼就选用哪个。注意，以后的编码并不会用这两个软件，而是要用真·宇宙第一的IDE：PyCharm。当然，这是后话了。</p>
+<h2>4. 安装Python</h2>
+<p>麦多文档转换器是用<code>Python</code>编程语言编写的。Python是一个比较流行的高级编程语言，作者来自荷兰。</p>
+<p>Python有2和3两个版本，而且他们之间的兼容性非常差。现在，新版的Python3已经普及了，一般情况下是没有必要再学Python2了。但是，在网上搜索相关资料的时候，要注意这个版本。</p>
+<p>在命令行下安装Python: <code>choco install python</code>。这个过程可能会特别慢，此时可以穿墙重新执行命令，或者直接官网下载安装包运行。</p>
+<p>Python安装完成后，在命令行下执行<code>python</code>，验证是否安装成功。如果<code>Chocolatey</code>提示Python已安装成功，但是执行<code>python</code>命令可能会报错：&quot;'python' 不是内部或外部命令，也不是可运行的程序或批处理文件。&quot;。注意，此时报错才正常。因为当前的<code>PATH</code>环境变量里，没有Python可执行文件所在的目录。虽然<code>Chocolatey</code>已经将Python需要的<code>PATH</code>环境变量改好了，但我们的虚拟终端<code>cmd</code>还没有意识到，它开始运行时加载的环境变量并不会自动更新。此时，在同一个终端（不同终端的环境相互独立，修改一个终端的环境变量，不会影响到其他已经开启的终端）下执行命令<code>refreshenv</code>，即可刷新当前环境，让虚拟终端更新保存的环境变量。</p>
+<h2>5. Python交互式环境</h2>
+<p>如果一切正常，此时执行命令，应该可以看到如下的Python交互(输入一句执行一句)环境。</p>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\Users\Administrator</span><span class="c1">&gt;python</span>
+Python 3.7.2 (tags/v3.7.2:9a3ffc0492, Dec 23 2018, 23:09:28) [MSC v.1916 64 bit
+<span class="p">(</span>AMD64<span class="p">)</span>] on win32
+<span class="k">Type</span> <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> for more information.
+<span class="p">&gt;&gt;</span>&gt;
+</pre></div>
+<p>输入<code>2 ** 10</code>，回车，应该能看到输出为<code>1024</code>。此处，<code>**</code>是求幂运算符。可见，Python可以直接当一个命令行下的计算器使用。</p>
+<div class="highlight"><pre><span></span><span class="p">&gt;&gt;</span>&gt; 2 ** 10
+1024
+<span class="p">&gt;&gt;</span>&gt;
+</pre></div>
+<p>再输入<code>exit()</code>，回车，即可退出Python控制台。注意，括号要输入英文半角，因为Python是一门国际化的编程语言，不可能迁就这边14亿的玻璃心。</p>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\Users\Administrator</span><span class="c1">&gt;python</span>
+Python 3.7.2 (tags/v3.7.2:9a3ffc0492, Dec 23 2018, 23:09:28) [MSC v.1916 64 bit
+<span class="p">(</span>AMD64<span class="p">)</span>] on win32
+<span class="k">Type</span> <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> for more information.
+<span class="p">&gt;&gt;</span>&gt; 2 ** 10
+1024
+<span class="p">&gt;&gt;</span>&gt; <span class="k">exit</span>()
+
+C<span class="p">:</span><span class="nl">\Users\Administrator</span><span class="c1">&gt;</span>
+</pre></div>
+<h2>6. 执行我们的Python程序</h2>
+<p>如果我们的Python程序安装得完全正常的话，应该可以双击运行。但是，如果程序有异常，很可能会只有一个黑屏一闪而过，不知道发生了什么。所以，我们需要换种执行方法。</p>
+<p>在桌面上按住<code>Shift</code>键右击鼠标，选择<code>在此处打开命令窗口</code>，会打开一个控制台窗口，并且这个控制台下的当前目录（专业术语叫当前工作目录）就是桌面（桌面也是Windows系统的一个文件夹）。确保当前命令提示符为<code>C:\Users\Administrator\Desktop&gt;</code>，这样<code>Python</code>才能找到我们要执行的文件。</p>
+<p>在这个命令行下键入<code>python app.py</code>，回车，应该会报出如下异常(错误信息):</p>
+<div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\Users\Administrator\Desktop</span><span class="c1">&gt;python app.py</span>
+Traceback (most recent call last):
+  File <span class="s2">&quot;app.py&quot;</span>, line 7, in <span class="p">&lt;</span>module&gt;
+    from PyQt5.QtCore import *
+ModuleNotFoundError: No module named &#39;PyQt5&#39;
+</pre></div>
+<p>注意，异常不一定是坏事，异常有时候正是程序员所期望的。比如，以上的异常完全正常，因为我们的程序的运行环境还缺少一些必要的东西。</p>
+<h2>7. 关于模块</h2>
+<p>一个好的程序员，肯定擅长在合适的场景选择使用合适的工具。我们要写的程序是一个图形界面程序，然而，Windows只对（也只能对）C语言和汇编语言开放了图形界面的相关接口。因此，一个Python程序是不能直接调用系统接口的。Python提供了Windows接口调用的相关模块，但是这些模块只能用于Windows操作系统。为了照顾苹果用户，我们需要让我们的应用程序可以跨操作系统（跨平台）运行。</p>
+<p>理论上，我们可以分别调用Windows和macOS的底层API，写一个通用的程序出来。但是，这个工作量太大，不是一般人更不是小白能Hold住的。因此，我们选用第三方开发的图形界面模块来进行我们的界面开发。在这里，我们选择的是来自前诺基亚公司的<code>PyQt5</code>模块。</p>
+<p>除了图形界面模块，Python中还有用于处理文件、网络等功能的各种模块。除了官方的模块，还有第三方开发的模块（任何人都可以开发并发布Python模块 ）。使用模块，可以屏蔽掉那些我们不关心的底层实现细节，快速开发我们需要的功能。</p>
+<p>在Windows上，我们可以用<code>Chocolatey</code>管理软件包。在Python中，我们需要用<code>PIP</code>来管理Python模块。<code>PIP</code>不仅能安装我们需要的模块，也能自动处理模块间的依赖关系。</p>
+<p>在命令行下执行<code>pip install PyQt5</code>，即可自动安装我们需要的图形模块PyQt5。同理于<code>Chocolatey</code>，我们也可以使用命令<code>pip search pyqt</code>搜索相关的模块。</p>
+<p><code>PyQt5</code>安装好后，继续运行命令<code>python app.py</code>。此时，应该可以看到应用窗体。这个窗体已经做好了自适应布局，可以随意拉伸缩放。拖入一个Word文档，点击<code>PDF</code>，将这个Word文档转为PDF格式。此时，程序应该会奔溃，界面应该会消失。</p>
+<p>这次的程序奔溃非常正常，因为我们的应用的运行环境还缺少一些必要的依赖。我们做的应用是一个文档转格式应用。文档转格式，是一个很有技术含量，同时又十分枯燥的任务。所以，我们选择使用第三方的工具在后台帮我们转。</p>
+<p>我选择使用<code>pandoc</code>来转换文档格式。<code>pandoc</code>转HTML格式没问题，但是转<code>PDF</code>的话，它本身并不会，需要依赖其他的转PDF工具。我配置的是一个比较小巧的<code>wkhtmltopdf</code>。<code>pandoc</code>和<code>wkhtmltopdf</code>都可以通过<code>Chocolatey</code>安装：</p>
+<ul>
+<li><code>choco install pandoc</code></li>
+<li><code>choco install wkhtmltopdf</code></li>
+</ul>
+<p>安装完成后，再执行文档转换，应该会提示转换成功，并在当前目录下生成转换好的文件。</p>
+<h2>8. 自用开发好的软件</h2>
+<p>我们开发好的软件，不可能每次使用的时候都到命令行下打命令吧。好在正常安装了Python之后，<code>.py</code>文件就是可执行文件了，会自动调用Python来执行我们的程序。但是，直接运行<code>.py</code>文件，会带出一个控制台窗口，用以显示程序日志。这个控制台窗口非常扎眼，将<code>.py</code>文件重命名为<code>.pyw</code>(w表示Window)后，双击<code>.pyw</code>文件，就不会再拖出这个命令行窗口了。</p>
+<h2>9. 打包开发好的软件</h2>
+<p>独乐乐不如众乐乐。做好的程序能在我们电脑上运行，但是到别人电脑上是不能直接跑的。我们不能要求别人去安装Python、安装PyQt5、安装pandoc、安装wkhtmltopdf，尤其是这个别人是客户的时候。所以，我们需要把程序代码和全部的依赖打包到一个可执行文件里面。这样，只需要把这个<code>.exe</code>发送给别人，别人就可以直接双击运行了。</p>
+<p>Python是一门脚本语言，用它写的程序不能直接运行，需要Python解释器来一行代码一行代码地顺序解释执行。打包应用，至少要把Python解释器打包到<code>.exe</code>里面。</p>
+<p>Python官方不提供打包工具，因此，我们需要用到第三方的模块<code>PyInstaller</code>。打命令<code>pip install pyinstaller</code>安装。这是一个可执行模块，可以直接运行。</p>
+<p>PyInstaller安装完成后，执行命令<code>pyinstaller --onefile app.py</code>，即可将<code>app.py</code>打包到<code>dist\app.exe</code>。</p>
+<p>此时，双击这个<code>.exe</code>，程序正常运行，功能也没问题。但是，这个软件在别的电脑上还是没法正常工作的。因为<code>pandoc</code>和<code>wkhtmltopdf</code>还没有打包进去。不过，我也不清楚怎么打包外部的<code>.exe</code>，姑且先把<code>pandoc.exe</code>和<code>wkhtmltopdf.exe</code>放到<code>app.exe</code>目录下，将整个目录打包成一个压缩包吧。至少用户解包后，执行<code>app.exe</code>，还是能找到这两个依赖的。</p>
+<p><code>pandoc</code>和<code>wkhtmltopdf</code>的安装位置：</p>
+<ul>
+<li>C:\Users\Administrator\AppData\Local\Pandoc\pandoc.exe</li>
+<li>C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe</li>
+</ul>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2019/03/22/programmingtutorial03/index.html";
+        this.page.identifier = "/2019/03/22/programmingtutorial03/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
