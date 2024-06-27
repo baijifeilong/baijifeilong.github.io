@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>程序员视角看是非 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>程序员视角看是非</h1>
+    <p>世上最简单的事是判断是非，依靠常识就能给出答案。世上最难的事也是判断是非，多少人把自己的傲慢与偏见带进了棺材。</p>
+<p>昨天看到一篇义正言辞的IT博文，让我感慨良多。</p>
+<p>博文标题叫<strong>对不起，因为之前的代码写的烂，所以我也只能继续烂</strong>。正话反说，洋溢着满满的正能量。</p>
+<p>主要的故事情节摘录如下:</p>
+<p><strong>############################## 起始标记 ##############################</strong></p>
+<p>上周四，我团队里的某技术经理在一次代码评审会上跟一位开发同学发生了争吵，而事情的起因是某段看似合理，却存在明显性能问题的代码片段。</p>
+<p>图1. 利用时间格式生成一个数据主键</p>
+<p>图2. 在调用方法之前，先随机休眠</p>
+<p>我先来做下简要说明，图1的代码是一位离职员工写的，而图2的代码是这位开发同学写的，把这两段代码拼凑起来，基本可以得出这样一个程序逻辑：</p>
+<p>1、执行 getDataId() 会返回一串格式为 “当日日期+时间+毫秒+随机0-9” 的编号。</p>
+<p>2、调用 getDataId() 之前，为了防止由于线程争抢或并发而导致的 “编号重复问题”，在调用之前，故意让当前执行线程随机休眠一段时间。</p>
+<p>听到这，相信写过代码的同学都会产生一个质疑：“为什么要随机休眠？”</p>
+<p>是的，这就是他们俩争论的原因。</p>
+<p>先别急着吐槽，如果只站在 “执行通过” 的角度，你觉得这代码有问题吗？</p>
+<p>粗糙的说，这代码不但能运行，而且作为一个企业内部系统，只要并发不达到一定规模的情况下，是绝不会出现异常的。</p>
+<p>既然如此，那为什么还要争吵？下面我来还原一下他们俩的对话内容。</p>
+<p>……</p>
+<p>技术经理问开发：“调用之前为什么要增加随机休眠？这样做，你难道不考虑性能问题吗？”</p>
+<p>开发说：“不是，我有考虑过。”</p>
+<p>技术经理提高了嗓门：“考虑过干嘛还这么做？为什么不用同步（线程间互斥）来处理呢？”</p>
+<p>开发听完反而来劲了，说：“我有提出过这个方案，但可能是涉及到的改动点比较多，大家都没理我，所以我也就没有坚持。”</p>
+<p>技术经理反问：“什么叫没有坚持？你为什么不跟我来说？或者直接做一个新方法，甚至是把这个方法改了也可以呀。”</p>
+<p>开发有些委屈，说：“不是啊，你给我的任务时间就一天呀，如果重构，除非搞个通宵，否则时间肯定来不及。再说了，公共方法又不是我负责的范畴，而且getDataId也是离职的人搞得。他们把代码写成那逼样，我有什么办法，又不是我弄得。”</p>
+<p>开发耸了耸肩，继续说：“一个内部系统能有几个人用？怎么会有性能问题？没必要那么认真吧。接手那么烂的代码，我能把逻辑跑通就已经很不错了。”</p>
+<p>技术经理明显被这一堆歪理激怒了，瞪大了眼睛说：“你这叫什么歪理？如果你觉得前任做的东西够烂，那你应该去想办法改善他们啊。“</p>
+<p>“按你的逻辑，因为之前的代码写的烂，所以你也只能继续烂，是这意思吗？”</p>
+<p>开发愣了一下，看了一眼技术经理，可能是顾及自己的KPI，从牙缝里挤出几个字：“那好吧，就按照你说的方式改吧...”</p>
+<p>……</p>
+<p>他们对话的时候，正巧我从会议室门口路过。</p>
+<p>整个过程听的比较完整，但我并没有说话，更没有试图带着 “乌纱帽” 去对谁进行训斥，只是略微的缓和了一下两人之间的尴尬氛围，随后便各忙各的去了。</p>
+<p>话虽如此，我慢慢地走回到自己的办公桌前，努力想让自己的内心平复下来，可是却无法平息内心的那股不爽。</p>
+<p>我真不敢相信，这一番歪理居然是从一个年轻人嘴里说出来的。</p>
+<p><strong>############################## 结束标记 ##############################</strong></p>
+<p>图一对应的代码抄录如下:</p>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * 生成数据主键</span>
+<span class="cm"> *     时间(15): yyMMddHHmmssSSS</span>
+<span class="cm"> *     机器(): xxx</span>
+<span class="cm"> *     随机: 1</span>
+<span class="cm"> * @return</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">long</span> <span class="nf">getDataId</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">SimpleDateFormat</span> <span class="n">dateFormat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;yyMMddHHmmssSSS&quot;</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">idStr</span> <span class="o">=</span> <span class="n">dateFormat</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">())</span><span class="o">+</span><span class="s">&quot;&quot;</span><span class="o">+</span><span class="n">ipAddress</span><span class="o">+</span><span class="s">&quot;&quot;</span><span class="o">+</span><span class="n">getintRandom</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
+    <span class="kt">long</span> <span class="n">id</span> <span class="o">=</span> <span class="n">NumberUtils</span><span class="p">.</span><span class="na">toLong</span><span class="p">(</span><span class="n">idStr</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">id</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>图二对应的代码抄录如下:</p>
+<div class="highlight"><pre><span></span><span class="c1">// 读取</span>
+<span class="n">FileReader</span> <span class="n">fr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileReader</span><span class="p">(</span><span class="n">destFile</span><span class="p">);</span>
+<span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="p">(</span><span class="n">fr</span><span class="p">);</span>
+<span class="n">String</span> <span class="n">line</span><span class="p">;</span>
+<span class="k">while</span><span class="p">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">br</span><span class="p">.</span><span class="na">readLine</span><span class="p">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="s">&quot;&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">line</span><span class="p">.</span><span class="na">trim</span><span class="p">()))</span> <span class="p">{</span>
+        <span class="n">detailDto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CcaDetailDto</span><span class="p">();</span>
+        <span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">1L</span><span class="p">);</span>
+        <span class="n">datailDto</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="n">GenerateUtil</span><span class="p">.</span><span class="na">getDataId</span><span class="p">());</span>
+        <span class="n">detailDto</span><span class="p">.</span><span class="na">setLogId</span><span class="p">(</span><span class="n">logId</span><span class="p">);</span>
+        <span class="n">detailDto</span><span class="p">.</span><span class="na">setLogContent</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
+        <span class="n">detailDto</span><span class="p">.</span><span class="na">setCreateUser</span><span class="p">(</span><span class="n">userName</span><span class="p">);</span>
+        <span class="n">detailDto</span><span class="p">.</span><span class="na">setCreateTime</span><span class="p">(</span><span class="n">currTime</span><span class="p">);</span>
+        <span class="n">detailDto</span><span class="p">.</span><span class="na">setUpdateUser</span><span class="p">(</span><span class="n">userName</span><span class="p">);</span>
+        <span class="n">detailDto</span><span class="p">.</span><span class="na">setUpdateTime</span><span class="p">(</span><span class="n">currTime</span><span class="p">);</span>
+        <span class="n">detailDto</span><span class="p">.</span><span class="na">setStamp</span><span class="p">(</span><span class="mi">0</span><span class="n">L</span><span class="p">);</span>
+
+        <span class="n">detailDtoList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">detailDto</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>乍一看，技术经理尽职尽责，精益求精，开发小兵得过且过，当一天和尚撞一天钟。</p>
+<p>但事实真是如此吗？判断是非的标准又是什么？</p>
+<p>套用一句俗语，脱离情境去讨论是非就是耍流氓。</p>
+<p>举个浅显的例子。</p>
+<p>某员工上班时间天天打瞌睡，每天能打瞌睡十次左右。</p>
+<p>看到这里，几乎所有人都会认为这位员工工作态度有问题。</p>
+<p>但是如果我告诉你，这位员工每次打瞌睡的时间都只有一秒，还会有人这么认为吗？反而会觉得他是典型的称职模范好员工吧。</p>
+<p>放在程序中也是一样的道理。</p>
+<p>程序在运行时去睡觉(线程休眠)，必然会延长程序执行时长(影响性能)。但是每次只延长1毫秒，也就是千分之一秒，真的会对系统造成什么负面影响吗？</p>
+<p>程序设计出来是为人服务的，程序的好赖也应该以对人的影响作为衡量标准。</p>
+<p>百度有上亿用户，日搜索量应该不下百亿次吧。</p>
+<p>如果百度搜索的速度比原来慢了千分之一秒，你会感知到百度搜索的用户体验比原来差了吗？</p>
+<p>相反，如果搜索速度慢了100毫秒，但同时添加了个酷炫的搜索动画，这样用户体验反而会更好吧？</p>
+<p>相比于百度庞大的业务量，这个所谓内部系统的负载应该不到百度的九牛一毛，公司的发展真的会被这千分之一秒的延迟所羁绊吗？</p>
+<p>煞费苦心搞出日期+时间+IP地址+随机数作为ID，按正常逻辑来思考，应该是用作业务单号吧？</p>
+<p>做一单业务还纠结千分之一秒的延迟，这家单位的业务怕是遍布银河系吧？</p>
+<p>退一亿万步讲，假如这家公司的业务真的遍布整个宇宙，这位技术经理的“线程互斥”方法真的可以避免重复ID吗？</p>
+<p>“线程互斥”方案是规避掉了一段代码同一时刻被多次执行的问题，但是先后执行呢？先后执行就真的不会产生一样的ID吗？</p>
+<p>代码规避重复ID，使用的是系统毫秒数，但是你能确保先后执行的两坨代码，不是执行在同一个毫秒内吗？</p>
+<p>你或许会说，这是业务代码，逻辑复杂，况且还是在套壳的Java虚拟机里，执行哪有那么快，怎么着也得几十个毫秒吧？</p>
+<p>姑且当你说的没毛病。就假设这段代码执行完成至少需要十个毫秒。</p>
+<p>但是你有考虑过将来会发生什么吗？</p>
+<p>举个不是不可能发生的例子。</p>
+<p>假如某一天，公司的IT部和采购部想捞点油水，采购了十倍性能的计算机做服务器，导致原本10个毫秒才能执行完成的代码，现在只要1个毫秒就够。</p>
+<p>换了十倍性能的服务器，原本稳定运行的业务却因此发生故障，想必不是公司老板想看到的结果吧？</p>
+<p>你可能会说，你们公司不可能这么腐败，计算机更新换代也不可能那么快。</p>
+<p>但是，你能保证Java程序获取到的系统时间就是正确的吗？就是没有误差的吗？就是持续增长的吗？</p>
+<p>你知道Java里最常用的获取系统毫秒数的方法<code>System.currentTimeMillis()</code>可能有几十个毫秒的误差吗？</p>
+<p>就算Java没有误差，Java的时间也是从操作系统取的，你能保证操作系统没有误差？</p>
+<p>操作系统时间是问CPU要的，你能确保CPU不会出故障？</p>
+<p>CPU时间是从主板取的，你能确保主板不会出故障？</p>
+<p>主板的时间要靠纽扣电池供电来保持，你能确保这颗纽扣电池电量永远用不完？</p>
+<p>就算主板用不坏，你能保证公司不会突然更新换代换个主板？或者换个服务器？</p>
+<p>就算以上情况都不发生，您能保证服务器运维管理员不会有事没事给系统校个时？</p>
+<p>“线程互斥”这个看似标准的答案，放在这里其实漏洞百出。</p>
+<p>就像防止瘟疫上身一样，只有一天二十四小时住在无菌室，才能真正万无一失。</p>
+<p>从中级程序员晋升到高级程序员，“线程互斥”的技术应该是必备考点。</p>
+<p>这位技术经理勤学苦练摸爬滚打上来，拿着锤子看什么都是钉子，想必才是发生这个故事的缘由所在。</p>
+<p>但是他们讨论的这个问题真的就有那么难吗？真的有必要搞那么复杂吗？</p>
+<p>对于这个业务场景来说，在数据入库的时候拦截掉重复ID，就是直接了当的解决方案。在数据库做个唯一约束，直接规避此问题。</p>
+<p>但是很显然，这样做真等到极端情况发生，可能会导致程序奔溃。</p>
+<p>解决方案是什么？不解决。</p>
+<p>客户端奔溃就客户端重启，服务端奔溃就服务端重启，网络请求失败就重新请求。你要是能保证这套系统在这个地方奔溃的概率比所有其他地方加起来都大，想必比尔盖茨很乐意一百亿年薪邀请你去开发<code>Windows 11</code>。</p>
+<p>技术是为人服务的。代码的好赖要归结到代码对用户的切身影响上来。</p>
+<p>代码的用户有两类人，接触此代码的程序员和使用最终产品的客户。</p>
+<p>所以，代码的好赖，本质上是对这两个群体影响的好赖。</p>
+<p>站在客户的角度，能按照合同百分百达成，使用上也不会碰到由于疏忽而没有出现在合同里的问题的产品，就是合格的产品。</p>
+<p>如果客户对刷新网页延迟一毫秒没有感知，这段代码对于客户来说就是合格的代码。</p>
+<p>但是站在程序员的角度，一段代码是否合格很难有评判标准。毕竟能服务好平庸的客户是本事，能服务好平庸的程序员，只能靠拉低自己，让自己够平庸。</p>
+<p>所以，对于代码的好赖，不能吹毛求疵，抓住重点就行。</p>
+<p>一段代码的好赖，重点在哪里？我觉得是这段代码的影响范围。</p>
+<p>这行所谓的垃圾代码<code>Thread.sleep(1L)</code>，只是调用系统函数，让代码小睡了一毫秒而已。就算脱离上下文，任何Java程序员都知道这行代码是什么意思。</p>
+<p>这行代码单独来看，没有任何歧义。</p>
+<p>但是放在这个上下文里，确实让人不明所以。虽然人畜无害，但没事睡个一毫秒干啥？</p>
+<p>其他程序员或许会搞不明白这行代码的用途，但是不管这行代码是烂或是不烂，它的影响范围也仅限于这十来行代码块，不会将影响放射到其他代码。</p>
+<p>与动辄影响成千上万行代码的垃圾代码来对比，这样的所谓“垃圾代码”简直不值一提。</p>
+<p>这位技术经理要是够闲，应该去关注关注这块代码真正烂的，影响整个系统的垃圾代码。</p>
+<p>先是<code>&quot;&quot;.equlas(line.trim())</code>。明明是判断一段文本是不是等于空白，为什么非要写成判断空白是不是等于这段文本？判断我的支付宝余额是不是零，为什么非要写成零是不是我的支付宝余额？脑子没事拐这么一个弯真的有意思吗？</p>
+<p>再是<code>detailDto.setCreateUser(userName)</code>。你的业务单真的创建了一个用户吗？为什么要弄个<code>createUser</code>的属性？</p>
+<p><code>createUser</code>这个字段真的是表示用户吗？表示的不过是用户名罢了，用<code>User</code>后缀真的不会造成歧义？不会影响以后的扩展？以后真要表示这个用户的时候你要叫<code>createUserObject</code>吗?</p>
+<p><code>userName</code>有必要写成两个单词吗？<code>username</code>已经是用户名的国际通用惯例了吧？就算这词不合理，用的太多了也录入牛津剑桥词典了吧？用<code>username</code>、<code>firstName</code>、<code>lastName</code>、<code>fullName</code>表示各自本意，国际通用不造成任何歧义，少绕绕脑子不好吗？</p>
+<p>改成<code>detailDto.setCreatorUsername</code>还会存在歧义吗？</p>
+<p><code>detailDto.setUpdateUser</code>也是一样的道理。你的单子没有更新用户，就不要这么写。</p>
+<p>再是<code>detailDto.setCreateTime(currTime)</code>。你的单子创建了时间吗？上帝都只能创造光，创造不了时间，你这单子的大能超越上帝了吧？</p>
+<p>再说<code>currTime</code>，把<code>currentTime</code>简写成了<code>currTime</code>。既然在用<code>Java</code>，就应该按<code>Java</code>惯例来编码。<code>Java</code>标准库的代码不到万不得已不会使用单词简写的吧？</p>
+<p>真正追求极致代码的话，改成<code>currentTimeMillis</code>符合<code>Java</code>惯例，带上单位又避免了歧义的产生。</p>
+<p><code>detailDto.setUpdateTime</code>也是一样的道理。你的单子没有更新宇宙时间的能力，就不该这么写。</p>
+<p>最后说<code>detailDto.setStamp(0L)</code>。<code>current</code>缩写成<code>curr</code>不会有多少歧义，<code>timestamp</code>(时间)缩写成<code>stamp</code>(邮票)就不好了吧？</p>
+<p><code>0</code>后面跟个毫无用处的<code>L</code>，不知道一个整数从4个字节塞到8个字节里，转换过程不可能溢出不可能失真吗？就像将一小碗饭放进一个大碗里，有任何难度任何风险吗？</p>
+<p>这些虽然都是一些细节问题，但管中窥豹一叶知秋，这个系统想必处处充斥着这样的代码。每天每次跟这些乱糟糟的代码斗争完后，程序员能剩多长时间来写真正有用的代码？</p>
+<p>长篇大论这么多掰回来的是非就是真正的是非吗？</p>
+<p>保护环境是好事。但是假如从明天开始，十几亿中国人都不再乱扔垃圾，自己的垃圾自己处理。用不了多久，上百万清洁系统的人就得下岗，多少家庭会因此揭不开锅？想必闹出的人命都不在少数。</p>
+<p>表面上在保护环境，实际上却断了人的生路。</p>
+<p>放在IT界也一样。假如所有程序员都跟格雷厄姆一样，写代码直截了当，直击灵魂，直接就会导致全球上亿人的失业。</p>
+<p>再放长远点来看，假如IT界由于效率太高发展太快，不出几年，全世界理论上可以被程序化的工作几乎全部都会被机器取代，地球上百分之九十九以上的人失业是在所难免。就算你有幸生活在一个非零福利国家，没有工作的日子过久了也会让人发狂。假如人类再碰到一个像希特勒那样太讲究实用主义的大独裁者，地球上史无前例的种族灭绝怕是也会被排上日程。</p>
+<p>所以你表面上追求的是高质量的代码，本质上可能是在葬送人类的未来。</p>
+<p>管子曰：“道在天地之间也，其大无外，其小无内。”站在不同的高度，看到的真理也不一样，真正真的真理应该也是没有尽头。在尊重真实的前提下，保持良善，保持宽容，永远保有敬畏之心，这样才能在追寻真理的道路上越走越开阔吧。</p>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2021/05/08/right-or-wrong/index.html";
+        this.page.identifier = "/2021/05/08/right-or-wrong/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

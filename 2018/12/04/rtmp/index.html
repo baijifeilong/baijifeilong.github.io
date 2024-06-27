@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>RTMP大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>RTMP大杂烩</h1>
+    <h2>RTMP是什么</h2>
+<p>RTMP(Real Time Messaging protocol)实时消息协议，是Adobe公司主导的半开放流媒体协议，被设计用于FlashPlayer与服务端的交互，比如直播、点播、聊天。</p>
+<p>RTMP在Web端需要Flash插件支持，在其他端需要模拟FlashPlayer，解析RTMP协议，进行推流拉流</p>
+<h2>RTMP协议URL解析</h2>
+<p>以<code>rtmp://rtmp.open.ys7.com:1935/openlive/f01018a141094b7fa138b9d0b856507b.hd</code>为例，一个RTMP协议的URL主要包括以下几个部分:</p>
+<ol>
+<li><code>rtmp</code> 协议(protocol)</li>
+<li><code>rtmp.open.ys7.com</code> 服务器地址(server)</li>
+<li><code>1935</code> 服务器端口(port)</li>
+<li><code>openlive</code> RTMP应用名(application)</li>
+<li><code>f01018a141094b7fa138b9d0b856507b.hd</code> 流名称(stream)</li>
+</ol>
+<h2>Java拉取RTMP流</h2>
+<p>在桌面端，Java的RTMP第三方库主要用<code>Red5</code>，它提供了搭建RTMP服务器、客户端推流、客户端拉流等功能。</p>
+<p>注意: 如果服务端提供的流只有视频没有声音，那拉取到的流和下载的视频文件也将没有音轨</p>
+<p><strong>Java拉流示例</strong></p>
+<h3>Maven依赖</h3>
+<p>RTMP拉流主要依赖<code>red5-client</code>和<code>red5-server</code>。之所以有<code>red5-server</code>，是因为它提供了FLV解析库，这里用它将拉取的流保存为本地<code>flv</code>文件</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.red5<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>red5-client<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0.9-RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.red5<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>red5-server<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0.9-RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<h3>主程序</h3>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.Level</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.Logger</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.encoder.PatternLayoutEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.core.ConsoleAppender</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.core.Context</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.vavr.control.Try</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.mina.core.buffer.IoBuffer</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.red5.client.net.rtmp.RTMPClient</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.red5.io.ITag</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.red5.io.ITagWriter</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.red5.io.flv.impl.Tag</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.red5.server.api.stream.IStreamPacket</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.red5.server.net.rtmp.event.AudioData</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.red5.server.net.rtmp.event.IRTMPEvent</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.red5.server.net.rtmp.event.VideoData</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.red5.server.service.flv.impl.FLVService</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.red5.server.stream.IStreamData</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.File</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 2018/12/1 下午5:23</span>
+<span class="cm"> */</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RtmpTest</span> <span class="p">{</span>
+
+    <span class="c1">// 下载结束标志</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">done</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="c1">// 下载结束消息</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Object</span> <span class="n">doneMessage</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="p">();</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 拉取远程RTMP流, 并写入本地文件</span>
+<span class="cm">     *</span>
+<span class="cm">     * @throws IOException          .</span>
+<span class="cm">     * @throws InterruptedException .</span>
+<span class="cm">     */</span>
+    <span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&quot;unchecked&quot;</span><span class="p">)</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAlpha</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">InterruptedException</span> <span class="p">{</span>
+        <span class="c1">// Logback配置日志级别为INFO</span>
+        <span class="p">((</span><span class="n">Logger</span><span class="p">)</span> <span class="p">(</span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">.</span><span class="na">ROOT_LOGGER_NAME</span><span class="p">))).</span><span class="na">setLevel</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">DEBUG</span><span class="p">);</span>
+        <span class="c1">// 自定义控制台日志格式</span>
+        <span class="p">((</span><span class="n">ConsoleAppender</span><span class="p">)</span> <span class="p">((</span><span class="n">Logger</span><span class="p">)</span> <span class="p">(</span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">.</span><span class="na">ROOT_LOGGER_NAME</span><span class="p">))).</span><span class="na">getAppender</span><span class="p">(</span><span class="s">&quot;console&quot;</span><span class="p">)).</span><span class="na">setEncoder</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternLayoutEncoder</span><span class="p">()</span> <span class="p">{</span>
+            <span class="p">{</span>
+                <span class="n">setContext</span><span class="p">((</span><span class="n">Context</span><span class="p">)</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getILoggerFactory</span><span class="p">());</span>
+                <span class="n">setPattern</span><span class="p">(</span><span class="s">&quot;[%date] %highlight([%level]) [%logger{10} %file:%line] [%thread] %msg%n&quot;</span><span class="p">);</span>
+                <span class="n">start</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+
+        <span class="c1">/// 配置流信息 URL: rtmp://rtmp.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.hd</span>
+        <span class="c1">// 服务器地址</span>
+        <span class="n">String</span> <span class="n">server</span> <span class="o">=</span> <span class="s">&quot;rtmp.open.ys7.com&quot;</span><span class="p">;</span>
+        <span class="c1">// 服务器RTMP拉流端口</span>
+        <span class="kt">int</span> <span class="n">port</span> <span class="o">=</span> <span class="mi">1935</span><span class="p">;</span>
+        <span class="c1">// 服务器RTMP应用名称</span>
+        <span class="n">String</span> <span class="n">application</span> <span class="o">=</span> <span class="s">&quot;openlive&quot;</span><span class="p">;</span>
+        <span class="c1">// 服务器RTMP流名称</span>
+        <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;f01018a141094b7fa138b9d0b856507b.hd&quot;</span><span class="p">;</span>
+
+        <span class="c1">// 本机下载视频的位置</span>
+        <span class="n">String</span> <span class="n">localName</span> <span class="o">=</span> <span class="s">&quot;hello.flv&quot;</span><span class="p">;</span>
+
+        <span class="c1">/// 使用Red5提供的FLVService下载流媒体</span>
+        <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">localName</span><span class="p">);</span>
+        <span class="n">FLVService</span> <span class="n">flvService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FLVService</span><span class="p">();</span>
+        <span class="n">flvService</span><span class="p">.</span><span class="na">setGenerateMetadata</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+        <span class="n">ITagWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">flvService</span><span class="p">.</span><span class="na">getStreamableFile</span><span class="p">(</span><span class="n">file</span><span class="p">).</span><span class="na">getWriter</span><span class="p">();</span>
+
+        <span class="c1">// 创建RTMP客户端</span>
+        <span class="n">RTMPClient</span> <span class="n">rtmpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RTMPClient</span><span class="p">();</span>
+
+        <span class="c1">// 设置客户端连接关闭的回调</span>
+        <span class="n">rtmpClient</span><span class="p">.</span><span class="na">setConnectionClosedHandler</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">{</span>
+            <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;[ACTION] onConnectionClosed&quot;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">done</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">done</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// 防止多次进入回调报异常</span>
+                <span class="n">writer</span><span class="p">.</span><span class="na">close</span><span class="p">();</span> <span class="c1">// 关闭本地文件的Writer，将缓存刷入文件，否则此文件始终是个空文件</span>
+                <span class="c1">// 通知主线程下载结束</span>
+                <span class="kd">synchronized</span> <span class="p">(</span><span class="n">doneMessage</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">doneMessage</span><span class="p">.</span><span class="na">notify</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+
+        <span class="c1">// 监听流事件</span>
+        <span class="n">rtmpClient</span><span class="p">.</span><span class="na">setStreamEventDispatcher</span><span class="p">(</span><span class="n">event</span> <span class="o">-&gt;</span> <span class="p">{</span>
+            <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;[EVENT] {} - {}&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">.</span><span class="na">getType</span><span class="p">(),</span> <span class="n">event</span><span class="p">);</span>
+
+            <span class="c1">// 只关注视频数据、音频数据事件</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">event</span> <span class="k">instanceof</span> <span class="n">VideoData</span> <span class="o">||</span> <span class="n">event</span> <span class="k">instanceof</span> <span class="n">AudioData</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="c1">// 此处只下载5秒的视频，超出5秒则断开连接</span>
+                <span class="k">if</span> <span class="p">(((</span><span class="n">IStreamPacket</span><span class="p">)</span> <span class="n">event</span><span class="p">).</span><span class="na">getTimestamp</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">5000</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">rtmpClient</span><span class="p">.</span><span class="na">getConnection</span><span class="p">().</span><span class="na">close</span><span class="p">();</span>
+                    <span class="k">return</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="c1">// 创建流片段</span>
+                <span class="n">ITag</span> <span class="n">tag</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Tag</span><span class="p">();</span>
+                <span class="c1">// 流片段设置数据类型</span>
+                <span class="n">tag</span><span class="p">.</span><span class="na">setDataType</span><span class="p">(((</span><span class="n">IRTMPEvent</span><span class="p">)</span> <span class="n">event</span><span class="p">).</span><span class="na">getDataType</span><span class="p">());</span>
+                <span class="n">tag</span><span class="p">.</span><span class="na">setTimestamp</span><span class="p">(((</span><span class="n">IStreamPacket</span><span class="p">)</span> <span class="n">event</span><span class="p">).</span><span class="na">getTimestamp</span><span class="p">());</span>
+
+                <span class="c1">// 获取流缓冲</span>
+                <span class="n">IoBuffer</span> <span class="n">ioBuffer</span> <span class="o">=</span> <span class="p">((</span><span class="n">IStreamData</span><span class="p">)</span> <span class="n">event</span><span class="p">).</span><span class="na">getData</span><span class="p">().</span><span class="na">asReadOnlyBuffer</span><span class="p">();</span>
+
+                <span class="c1">// 流片段设置数据体</span>
+                <span class="n">tag</span><span class="p">.</span><span class="na">setBody</span><span class="p">(</span><span class="n">ioBuffer</span><span class="p">);</span>
+                <span class="c1">// 流片段设置数据体的大小</span>
+                <span class="n">tag</span><span class="p">.</span><span class="na">setBodySize</span><span class="p">(</span><span class="n">ioBuffer</span><span class="p">.</span><span class="na">limit</span><span class="p">());</span>
+
+                <span class="c1">// 将流片段写入文件</span>
+                <span class="n">Try</span><span class="p">.</span><span class="na">run</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">writer</span><span class="p">.</span><span class="na">writeTag</span><span class="p">(</span><span class="n">tag</span><span class="p">)).</span><span class="na">get</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+
+        <span class="c1">// RTMP客户端连接服务器</span>
+        <span class="n">rtmpClient</span><span class="p">.</span><span class="na">connect</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">application</span><span class="p">,</span> <span class="n">connMsg</span> <span class="o">-&gt;</span> <span class="p">{</span>
+            <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;[CONNECTION] [RECEIVED] {}&quot;</span><span class="p">,</span> <span class="n">connMsg</span><span class="p">);</span>
+
+            <span class="c1">// 连接成功后创建流频道</span>
+            <span class="n">rtmpClient</span><span class="p">.</span><span class="na">createStream</span><span class="p">(</span><span class="n">msg</span> <span class="o">-&gt;</span> <span class="p">{</span>
+                <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;[STREAM] [RECEIVED] {}&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+                <span class="n">Number</span> <span class="n">streamId</span> <span class="o">=</span> <span class="p">(</span><span class="n">Number</span><span class="p">)</span> <span class="n">msg</span><span class="p">.</span><span class="na">getResult</span><span class="p">();</span>
+
+                <span class="c1">// 以创建的流频道播放指定名称的流媒体(拉流)</span>
+                <span class="n">rtmpClient</span><span class="p">.</span><span class="na">play</span><span class="p">(</span><span class="n">streamId</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">);</span>
+            <span class="p">});</span>
+        <span class="p">});</span>
+
+        <span class="c1">// 等待下载任务结束</span>
+        <span class="kd">synchronized</span> <span class="p">(</span><span class="n">doneMessage</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">doneMessage</span><span class="p">.</span><span class="na">wait</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>控制台输出</h3>
+<div class="highlight"><pre><span></span>[2018-12-04 16:54:36,944] [INFO] [o.r.c.n.r.BaseRTMPClientHandler BaseRTMPClientHandler.java:281] [main] rtmp://rtmp.open.ys7.com:1935/openlive
+[2018-12-04 16:54:40,227] [INFO] [o.r.c.n.r.BaseRTMPClientHandler BaseRTMPClientHandler.java:356] [NioProcessor-2] ChunkSize is not fully implemented: ChunkSize: 8192
+[2018-12-04 16:54:40,227] [INFO] [b.RtmpTest RtmpTest.java:127] [NioProcessor-2] [CONNECTION] [RECEIVED] Service: null Method: connect No params
+[2018-12-04 16:54:40,340] [INFO] [b.RtmpTest RtmpTest.java:131] [NioProcessor-2] [STREAM] [RECEIVED] Service: null Method: createStream No params
+[2018-12-04 16:54:40,496] [INFO] [o.r.s.n.r.c.RTMPProtocolDecoder RTMPProtocolDecoder.java:947] [NioProcessor-2] Stream send: |RtmpSampleAccess
+[2018-12-04 16:54:40,502] [INFO] [o.r.c.n.r.BaseRTMPClientHandler BaseRTMPClientHandler.java:826] [NioProcessor-2] No service provider / method for: onStatus; to handle calls like onBWCheck, add a service provider
+[2018-12-04 16:54:40,504] [INFO] [o.r.c.n.r.BaseRTMPClientHandler BaseRTMPClientHandler.java:826] [NioProcessor-2] No service provider / method for: onStatus; to handle calls like onBWCheck, add a service provider
+[2018-12-04 16:54:40,505] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Notify action: |RtmpSampleAccess
+[2018-12-04 16:54:40,509] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 0 length: 36
+[2018-12-04 16:54:40,649] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 0 length: 122102
+[2018-12-04 16:54:40,654] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 40 length: 7147
+[2018-12-04 16:54:40,656] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 80 length: 7354
+[2018-12-04 16:54:40,674] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 120 length: 7363
+[2018-12-04 16:54:40,681] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 160 length: 7159
+[2018-12-04 16:54:40,683] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 200 length: 7240
+[2018-12-04 16:54:40,685] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 240 length: 7571
+[2018-12-04 16:54:40,687] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 280 length: 7323
+[2018-12-04 16:54:40,690] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 320 length: 7323
+[2018-12-04 16:54:40,693] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 360 length: 7415
+[2018-12-04 16:54:40,695] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 400 length: 7202
+[2018-12-04 16:54:40,697] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 440 length: 7045
+[2018-12-04 16:54:40,698] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 480 length: 7146
+[2018-12-04 16:54:40,702] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 520 length: 7209
+[2018-12-04 16:54:40,704] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 560 length: 7090
+[2018-12-04 16:54:40,714] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 600 length: 7058
+[2018-12-04 16:54:40,716] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 640 length: 7400
+[2018-12-04 16:54:40,718] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 680 length: 6850
+[2018-12-04 16:54:40,729] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 720 length: 7057
+[2018-12-04 16:54:40,730] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 760 length: 7142
+[2018-12-04 16:54:40,731] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 800 length: 7251
+[2018-12-04 16:54:40,732] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 840 length: 7379
+[2018-12-04 16:54:40,734] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 880 length: 7312
+[2018-12-04 16:54:40,736] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 920 length: 7546
+[2018-12-04 16:54:40,738] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 960 length: 7214
+[2018-12-04 16:54:40,739] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 999 length: 7682
+[2018-12-04 16:54:40,740] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1040 length: 7360
+[2018-12-04 16:54:40,744] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1120 length: 7276
+[2018-12-04 16:54:40,746] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1159 length: 7454
+[2018-12-04 16:54:40,747] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1199 length: 6947
+[2018-12-04 16:54:40,748] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1239 length: 7046
+[2018-12-04 16:54:40,750] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1279 length: 7034
+[2018-12-04 16:54:40,755] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1319 length: 6824
+[2018-12-04 16:54:40,756] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1359 length: 6623
+[2018-12-04 16:54:40,758] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1399 length: 6329
+[2018-12-04 16:54:40,760] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1439 length: 6850
+[2018-12-04 16:54:40,761] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1479 length: 6560
+[2018-12-04 16:54:40,766] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1519 length: 6467
+[2018-12-04 16:54:40,767] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1559 length: 6638
+[2018-12-04 16:54:40,769] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1599 length: 6581
+[2018-12-04 16:54:40,772] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1639 length: 6842
+[2018-12-04 16:54:40,774] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1679 length: 6535
+[2018-12-04 16:54:40,776] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1719 length: 6493
+[2018-12-04 16:54:40,778] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1759 length: 6064
+[2018-12-04 16:54:40,779] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1799 length: 6362
+[2018-12-04 16:54:40,780] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1839 length: 6250
+[2018-12-04 16:54:40,783] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1879 length: 6393
+[2018-12-04 16:54:40,784] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1919 length: 6424
+[2018-12-04 16:54:40,786] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1959 length: 6348
+[2018-12-04 16:54:40,787] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 1999 length: 6216
+[2018-12-04 16:54:40,789] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2039 length: 6069
+[2018-12-04 16:54:40,822] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2079 length: 6678
+[2018-12-04 16:54:40,824] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2119 length: 6532
+[2018-12-04 16:54:40,825] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2159 length: 6052
+[2018-12-04 16:54:40,826] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2199 length: 6523
+[2018-12-04 16:54:40,830] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2239 length: 6249
+[2018-12-04 16:54:40,831] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2278 length: 6467
+[2018-12-04 16:54:40,845] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2319 length: 6382
+[2018-12-04 16:54:40,846] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2358 length: 6846
+[2018-12-04 16:54:40,847] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2399 length: 6456
+[2018-12-04 16:54:40,848] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2438 length: 6697
+[2018-12-04 16:54:40,850] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2478 length: 6218
+[2018-12-04 16:54:40,852] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2518 length: 6625
+[2018-12-04 16:54:40,854] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2558 length: 6366
+[2018-12-04 16:54:40,855] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2598 length: 6334
+[2018-12-04 16:54:40,858] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2638 length: 6499
+[2018-12-04 16:54:40,861] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2678 length: 6285
+[2018-12-04 16:54:40,862] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2719 length: 6329
+[2018-12-04 16:54:40,865] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2758 length: 6273
+[2018-12-04 16:54:40,866] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2798 length: 6542
+[2018-12-04 16:54:40,867] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2838 length: 6452
+[2018-12-04 16:54:40,868] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2878 length: 6577
+[2018-12-04 16:54:40,870] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2918 length: 6420
+[2018-12-04 16:54:40,871] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2958 length: 6325
+[2018-12-04 16:54:40,872] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 2998 length: 6582
+[2018-12-04 16:54:40,874] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3038 length: 6789
+[2018-12-04 16:54:40,875] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3078 length: 6437
+[2018-12-04 16:54:40,877] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3118 length: 6443
+[2018-12-04 16:54:40,879] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3158 length: 8333
+[2018-12-04 16:54:40,880] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3198 length: 6578
+[2018-12-04 16:54:40,902] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3238 length: 7680
+[2018-12-04 16:54:40,931] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3278 length: 7255
+[2018-12-04 16:54:40,985] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3318 length: 7481
+[2018-12-04 16:54:41,046] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3358 length: 7245
+[2018-12-04 16:54:41,048] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3398 length: 7385
+[2018-12-04 16:54:41,116] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3438 length: 7500
+[2018-12-04 16:54:41,147] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3478 length: 6416
+[2018-12-04 16:54:41,187] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3518 length: 8056
+[2018-12-04 16:54:41,216] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3558 length: 6473
+[2018-12-04 16:54:41,247] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3598 length: 7742
+[2018-12-04 16:54:41,287] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3638 length: 7459
+[2018-12-04 16:54:41,337] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3678 length: 7342
+[2018-12-04 16:54:41,368] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3717 length: 6661
+[2018-12-04 16:54:41,405] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3757 length: 7555
+[2018-12-04 16:54:41,466] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3797 length: 7333
+[2018-12-04 16:54:41,523] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3837 length: 7202
+[2018-12-04 16:54:41,589] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3877 length: 7147
+[2018-12-04 16:54:41,594] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3917 length: 7286
+[2018-12-04 16:54:41,651] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3957 length: 6585
+[2018-12-04 16:54:41,857] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 3998 length: 118350
+[2018-12-04 16:54:41,861] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4037 length: 7388
+[2018-12-04 16:54:41,863] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4077 length: 7185
+[2018-12-04 16:54:41,885] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4117 length: 7647
+[2018-12-04 16:54:41,886] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4157 length: 7511
+[2018-12-04 16:54:41,890] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4197 length: 7155
+[2018-12-04 16:54:41,916] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4237 length: 7523
+[2018-12-04 16:54:41,946] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4277 length: 7472
+[2018-12-04 16:54:41,983] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4317 length: 7440
+[2018-12-04 16:54:42,045] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4357 length: 7253
+[2018-12-04 16:54:42,080] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4397 length: 7317
+[2018-12-04 16:54:42,104] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4437 length: 6918
+[2018-12-04 16:54:42,152] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4477 length: 7340
+[2018-12-04 16:54:42,184] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4517 length: 6890
+[2018-12-04 16:54:42,215] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4557 length: 7553
+[2018-12-04 16:54:42,245] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4597 length: 7079
+[2018-12-04 16:54:42,281] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4637 length: 6584
+[2018-12-04 16:54:42,313] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4677 length: 6819
+[2018-12-04 16:54:42,379] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4717 length: 6918
+[2018-12-04 16:54:42,406] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4757 length: 6717
+[2018-12-04 16:54:42,497] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4797 length: 6544
+[2018-12-04 16:54:42,528] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4837 length: 6917
+[2018-12-04 16:54:42,558] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4877 length: 6905
+[2018-12-04 16:54:42,590] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4917 length: 6465
+[2018-12-04 16:54:42,621] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4957 length: 6916
+[2018-12-04 16:54:42,653] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 4997 length: 6912
+[2018-12-04 16:54:42,684] [INFO] [b.RtmpTest RtmpTest.java:95] [NioProcessor-2] [EVENT] STREAM_DATA - Video - ts: 5037 length: 6656
+[2018-12-04 16:54:42,700] [INFO] [b.RtmpTest RtmpTest.java:82] [Thread-2] [ACTION] onConnectionClosed
+</pre></div>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/12/04/rtmp/index.html";
+        this.page.identifier = "/2018/12/04/rtmp/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>MySQL大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>MySQL大杂烩</h1>
+    <h2>1. 触发器</h2>
+<p>举个栗子：数据表<code>person</code>中有个字段叫<code>updated</code>，记录更新次数。初始为0，每次更新数据都加1</p>
+<div class="highlight"><pre><span></span><span class="k">DROP</span> <span class="k">TRIGGER</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">my_trigger</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">my_trigger</span>
+  <span class="k">BEFORE</span> <span class="k">UPDATE</span>
+  <span class="k">ON</span> <span class="n">person</span>
+  <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">ROW</span>
+  <span class="k">BEGIN</span>
+    <span class="k">SET</span> <span class="k">NEW</span><span class="p">.</span><span class="n">updated</span> <span class="o">=</span> <span class="k">OLD</span><span class="p">.</span><span class="n">updated</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">END</span><span class="p">;</span>
+</pre></div>
+<p>OLD保存旧数据，NEW保存新数据</p>
+<p>注意：更新NEW只能使用BEFORE触发器</p>
+<h2>2. 允许多查询</h2>
+<p>通过MySQl驱动执行SQL时，有时需要一次执行多条SQL。默认情况是不支持的，需要手动开启。以JDBC为例：</p>
+<p><code>jdbc:mysql://localhost:3306/foo?allowMultiQueries=true</code></p>
+<p>这里的多查询，不是特指<code>SELECT</code>。任意语句都可。</p>
+<h2>3. 日期格式化</h2>
+<p><code>SELECT DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%S')</code></p>
+<p>结果</p>
+<p><code>2018-06-28 11:40:10</code></p>
+<h2>4. 存储过程示例</h2>
+<div class="highlight"><pre><span></span><span class="n">USE</span> <span class="n">foo</span><span class="p">;</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">tmp</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">tmp</span> <span class="p">(</span>
+  <span class="n">id</span>         <span class="nb">INT</span> <span class="n">UNSIGNED</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="n">school_id</span>  <span class="nb">CHAR</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">student_id</span> <span class="nb">CHAR</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="k">INDEX</span> <span class="n">school_id</span><span class="p">(</span><span class="n">school_id</span><span class="p">),</span>
+  <span class="k">INDEX</span> <span class="n">student_id</span><span class="p">(</span><span class="n">student_id</span><span class="p">),</span>
+  <span class="k">INDEX</span> <span class="n">school_id_and_student_id</span><span class="p">(</span><span class="n">school_id</span><span class="p">,</span> <span class="n">student_id</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="k">DROP</span> <span class="k">PROCEDURE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">tmpproc</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="n">tmpproc</span><span class="p">()</span> <span class="k">BEGIN</span>
+  <span class="k">DECLARE</span> <span class="n">i</span> <span class="nb">INT</span> <span class="n">UNSIGNED</span> <span class="k">DEFAULT</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">WHILE</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000000</span> <span class="k">DO</span>
+    <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tmp</span> <span class="p">(</span><span class="n">school_id</span><span class="p">,</span> <span class="n">student_id</span><span class="p">)</span>
+    <span class="k">VALUES</span> <span class="p">(</span><span class="n">SUBSTR</span><span class="p">(</span><span class="n">MD5</span><span class="p">(</span><span class="n">RAND</span><span class="p">())</span> <span class="k">FROM</span> <span class="mi">1</span> <span class="k">FOR</span> <span class="mi">4</span><span class="p">),</span> <span class="n">SUBSTR</span><span class="p">(</span><span class="n">MD5</span><span class="p">(</span><span class="n">RAND</span><span class="p">())</span> <span class="k">FROM</span> <span class="mi">1</span> <span class="k">FOR</span> <span class="mi">6</span><span class="p">));</span>
+    <span class="k">SET</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">END</span> <span class="n">WHILE</span><span class="p">;</span>
+<span class="k">END</span><span class="p">;</span>
+<span class="k">CALL</span> <span class="n">tmpproc</span><span class="p">();</span>
+</pre></div>
+<h2>5. 透视表结构</h2>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="k">COLUMN_NAME</span>                 <span class="k">AS</span> <span class="err">字段</span><span class="p">,</span>
+       <span class="k">UPPER</span><span class="p">(</span><span class="n">COLUMN_TYPE</span><span class="p">)</span>          <span class="k">AS</span> <span class="err">类型</span><span class="p">,</span>
+       <span class="n">IFNULL</span><span class="p">(</span><span class="n">COLUMN_DEFAULT</span><span class="p">,</span> <span class="s1">&#39;无&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="err">默认值</span><span class="p">,</span>
+       <span class="k">CASE</span> <span class="n">COLUMN_KEY</span>
+         <span class="k">WHEN</span> <span class="s1">&#39;PRI&#39;</span> <span class="k">THEN</span> <span class="s1">&#39;主键索引&#39;</span>
+         <span class="k">WHEN</span> <span class="s1">&#39;UNI&#39;</span> <span class="k">THEN</span> <span class="s1">&#39;唯一索引&#39;</span>
+         <span class="k">WHEN</span> <span class="s1">&#39;MUL&#39;</span> <span class="k">THEN</span> <span class="s1">&#39;普通索引&#39;</span>
+         <span class="k">ELSE</span> <span class="s1">&#39;无&#39;</span> <span class="k">END</span>              <span class="k">AS</span> <span class="err">索引</span><span class="p">,</span>
+       <span class="n">COLUMN_COMMENT</span>              <span class="k">AS</span> <span class="err">注释</span>
+<span class="k">FROM</span> <span class="n">information_schema</span><span class="p">.</span><span class="n">COLUMNS</span>
+<span class="k">WHERE</span> <span class="k">TABLE_NAME</span> <span class="o">=</span> <span class="s1">&#39;wb_sensor_message&#39;</span><span class="p">;</span>
+</pre></div>
+<h2>6. 查询缓存</h2>
+<ul>
+<li>查看查询缓存是否开启: <code>SHOW VARIABLES LIKE 'query_cache_type'</code></li>
+<li>不带缓存进行查询: <code>SELECT SQL_NO_CACHE * FROM tmp</code></li>
+</ul>
+<p>MySQL的查询缓存很鸡肋，一般没什么命中率。默认是关闭状态，MySQL8中直接废除了查询缓存。</p>
+<h2>7. 查询透视</h2>
+<p><code>EXPLAIN SELECT * FROM tmp;</code> 或 <code>DESCRIBE SELECT * FROM tmp;</code></p>
+<h2>8. SELECT then INSERT</h2>
+<div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">lorem</span> <span class="p">(</span> <span class="n">id</span> <span class="nb">INT</span> <span class="p">);</span> 
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">lorem</span> <span class="k">SELECT</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+<h2>9. 查询日志</h2>
+<ul>
+<li>获取查询日志状态 <code>SHOW variables LIKE 'general_log'</code></li>
+<li>开启查询日志 <code>SET GLOBAL general_log = 'ON';</code></li>
+</ul>
+<h2>10. 查询InnoDB表的索引大小</h2>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">stat_value</span><span class="p">)</span> <span class="o">*</span> <span class="o">@@</span><span class="n">innodb_page_size</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="n">SizeMB</span>
+<span class="k">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="n">innodb_index_stats</span>
+<span class="k">WHERE</span> <span class="k">table_name</span> <span class="o">=</span> <span class="s1">&#39;tmp&#39;</span>
+  <span class="k">AND</span> <span class="n">stat_name</span> <span class="o">=</span> <span class="s1">&#39;size&#39;</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">index_name</span><span class="p">;</span>
+</pre></div>
+<p>示例结果:</p>
+<p>&lt;table border=&quot;1&quot; style=&quot;border-collapse:collapse&quot;&gt;
+&lt;tr&gt;&lt;th&gt;index_name&lt;/th&gt;&lt;th&gt;SizeMB&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;PRIMARY&lt;/td&gt;&lt;td&gt;312.80&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;school_id&lt;/td&gt;&lt;td&gt;196.77&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;school_id_and_student_id&lt;/td&gt;&lt;td&gt;294.00&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;student_id&lt;/td&gt;&lt;td&gt;264.00&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</p>
+<h2>11. InnoDB表按表大小排序</h2>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="n">innodb_table_stats</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">n_rows</span> <span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+<h2>12. MySQL窗口函数</h2>
+<p>MySQL在版本8之后新增了窗口函数，方便处理分组排序的问题</p>
+<h3>查询结果添加行号</h3>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span><span class="p">(),</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">action</span> <span class="k">FROM</span> <span class="n">log</span><span class="p">;</span>
+</pre></div>
+<p>&lt;table border=&quot;1&quot; style=&quot;border-collapse:collapse&quot;&gt;
+&lt;tr&gt;&lt;th&gt;ROW_NUMBER() OVER()&lt;/th&gt;&lt;th&gt;user_id&lt;/th&gt;&lt;th&gt;action&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;LOGIN&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;LOGOUT&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;LOGOUT&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;LOGIN&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</p>
+<h3>分组排序示例</h3>
+<div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">log</span> <span class="p">(</span>
+  <span class="n">user_id</span> <span class="nb">INT</span><span class="p">,</span>
+  <span class="n">action</span>  <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">log</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;LOGIN&#39;</span><span class="p">),</span>
+       <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;LOGOUT&#39;</span><span class="p">),</span>
+       <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;LOGOUT&#39;</span><span class="p">),</span>
+       <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;LOGIN&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">action</span>
+<span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span><span class="p">(</span><span class="n">PARTITION</span> <span class="k">BY</span> <span class="n">user_id</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">action</span><span class="p">),</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">action</span> <span class="k">FROM</span> <span class="n">log</span><span class="p">)</span><span class="err">$</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">user_id</span><span class="p">;</span>
+</pre></div>
+<p>&lt;table border=&quot;1&quot; style=&quot;border-collapse:collapse&quot;&gt;
+&lt;tr&gt;&lt;th&gt;user_id&lt;/th&gt;&lt;th&gt;action&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;LOGIN&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;LOGIN&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</p>
+<h2>MySQL获取随机行</h2>
+<h3>方式一 <code>ORDER BY RAND()</code></h3>
+<p>示例:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">foo</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">RAND</span><span class="p">()</span> <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+<p>优点: 简单, 缺点: 慢</p>
+<h3>方式二 <code>JOIN</code>随机数</h3>
+<p>示例:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">foo</span><span class="p">.</span><span class="o">*</span>
+<span class="k">FROM</span> <span class="n">foo</span>
+       <span class="k">JOIN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">RAND</span><span class="p">()</span> <span class="o">*</span> <span class="k">MAX</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">id</span> <span class="k">FROM</span> <span class="n">foo</span><span class="p">)</span> <span class="k">AS</span> <span class="n">random</span> <span class="k">ON</span> <span class="n">foo</span> <span class="o">&gt;</span> <span class="n">random</span><span class="p">.</span><span class="n">id</span>
+<span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+<p>优点: 快, 缺点: 不够直观，不够随机，一次只能获取一行</p>
+<h2>MySQL备份</h2>
+<p>例: <code>mysqldump -h localhost -u foo -p'foo' foo -B user | pv &gt; user.sql</code></p>
+<ul>
+<li><code>-h</code> 指定MySQL服务器</li>
+<li><code>-u</code> 指定用户名</li>
+<li><code>-p</code> 指定密码，中间没空格，可加引号</li>
+<li><code>-B</code> 指定数据库名</li>
+<li><code>pv</code> 显示进度条</li>
+<li><code>&gt; user.sql</code> 保存到文件</li>
+</ul>
+<h2>Java执行MySQL脚本</h2>
+<p>iBatis提供了SqlRunner类，可以用来执行SQL脚本。</p>
+<p>为了不引入外部依赖，可以使用单独的SqlRunner</p>
+<h3>Maven配置</h3>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.github.baijifeilong<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>ScriptRunner<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>master<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+
+
+<span class="nt">&lt;repositories&gt;</span>
+    <span class="nt">&lt;repository&gt;</span>
+        <span class="nt">&lt;id&gt;</span>jitpack<span class="nt">&lt;/id&gt;</span>
+        <span class="nt">&lt;url&gt;</span>https://jitpack.io<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;/repository&gt;</span>
+<span class="nt">&lt;/repositories&gt;</span>
+</pre></div>
+<h3>Java示例代码</h3>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj.sqlrunner</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.zaxxer.hikari.HikariDataSource</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">lombok.SneakyThrows</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ibatis.jdbc.ScriptRunner</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.JdbcTemplate</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.sql.DataSource</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.FileReader</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Paths</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 2018/12/25 下午4:03</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">App</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SQL</span> <span class="o">=</span> <span class="s">&quot;DROP TABLE IF EXISTS user;\n&quot;</span> <span class="o">+</span>
+            <span class="s">&quot;CREATE TABLE user (\n&quot;</span> <span class="o">+</span>
+            <span class="s">&quot;  id                 INT PRIMARY KEY AUTO_INCREMENT,\n&quot;</span> <span class="o">+</span>
+            <span class="s">&quot;  mobile             CHAR(11)    NOT NULL,\n&quot;</span> <span class="o">+</span>
+            <span class="s">&quot;  encrypted_password VARCHAR(64) NOT NULL\n&quot;</span> <span class="o">+</span>
+            <span class="s">&quot;);&quot;</span><span class="p">;</span>
+
+    <span class="nd">@SneakyThrows</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">String</span> <span class="n">resourceRoot</span> <span class="o">=</span> <span class="n">ClassLoader</span><span class="p">.</span><span class="na">getSystemResource</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">).</span><span class="na">getFile</span><span class="p">();</span>
+        <span class="n">String</span> <span class="n">sqlFilename</span> <span class="o">=</span> <span class="n">resourceRoot</span> <span class="o">+</span> <span class="s">&quot;/user.sql&quot;</span><span class="p">;</span>
+        <span class="n">Files</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">sqlFilename</span><span class="p">),</span> <span class="n">SQL</span><span class="p">.</span><span class="na">getBytes</span><span class="p">());</span>
+
+        <span class="n">DataSource</span> <span class="n">dataSource</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HikariDataSource</span><span class="p">()</span> <span class="p">{{</span>
+            <span class="n">setJdbcUrl</span><span class="p">(</span><span class="s">&quot;jdbc:mysql://localhost/foo&quot;</span><span class="p">);</span>
+            <span class="n">setUsername</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+            <span class="n">setPassword</span><span class="p">(</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+        <span class="p">}};</span>
+
+        <span class="k">new</span> <span class="n">ScriptRunner</span><span class="p">(</span><span class="n">dataSource</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()).</span><span class="na">runScript</span><span class="p">(</span><span class="k">new</span> <span class="n">FileReader</span><span class="p">(</span><span class="n">sqlFilename</span><span class="p">));</span>
+
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Created table has columns:&quot;</span><span class="p">);</span>
+        <span class="k">new</span> <span class="n">JdbcTemplate</span><span class="p">(</span><span class="n">dataSource</span><span class="p">).</span><span class="na">queryForList</span><span class="p">(</span>
+                <span class="s">&quot;SELECT COLUMN_NAME, COLUMN_TYPE FROM information_schema.COLUMNS &quot;</span> <span class="o">+</span>
+                        <span class="s">&quot;WHERE TABLE_SCHEMA = &#39;foo&#39; AND TABLE_NAME = &#39;user&#39;&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>控制台输出</h3>
+<div class="highlight"><pre><span></span>Created table has columns:
+{COLUMN_NAME=id, COLUMN_TYPE=int(11)}
+{COLUMN_NAME=mobile, COLUMN_TYPE=char(11)}
+{COLUMN_NAME=encrypted_password, COLUMN_TYPE=varchar(64)}
+</pre></div>
+<h3>注意</h3>
+<ul>
+<li>为了方便演示，没有准备文件，直接创建了一个新文件</li>
+</ul>
+<h2>MySQL的一些特殊设置</h2>
+<ul>
+<li><code>set @@SQL_SELECT_LIMIT=10</code> 设置全局Limit(仅限查询结果，不限子查询)</li>
+</ul>
+<h2>MySQL的一些特殊用法</h2>
+<ul>
+<li>当计算器使用 <code>SELECT 8 * 8</code></li>
+<li>查看当前日期时间 <code>SELECT CURRENT_TIMESTAMP</code></li>
+<li>计算三角函数 <code>SELECT SIN(30 / 180 * PI())</code></li>
+<li>计算MD5 <code>SELECT MD5('password')</code></li>
+<li>生成UUID <code>SELECT UUID()</code></li>
+<li>查ASCII码 <code>SELECT ASCII('A')</code></li>
+<li>查二进制 <code>SELECT BIN(1024)</code></li>
+<li>查十六进制 <code>SELECT HEX(1024)</code></li>
+<li>获取随机数 <code>SELECT RAND()</code></li>
+<li>日期计算 <code>SELECT ADDDATE(NOW(), INTERVAL -18 YEAR)</code></li>
+<li>分支 <code>SELECT CASE 12345 WHEN 1 THEN 'ONE' ELSE 'NOT ONE' END</code></li>
+<li>赌大小 <code>SELECT IF(random.number &gt; 0.5, 'BIG', 'SMALL') FROM (SELECT RAND() AS number) AS random</code> 或 <code>SELECT IF(RAND() &gt; 0.5, 'BIG', 'SMALL');</code></li>
+</ul>
+<h2>使用MySQL注意事项</h2>
+<ul>
+<li>MySQL数据库默认不存Unicode，得显式设置表或列的编码(CHARSET utf8)</li>
+<li>MySQL连接默认不走Unicode，得显式设置(characterEncoding=utf8)。useUnicode=true不用设置</li>
+<li><code>useSSL=false</code>可以禁用SSL警告</li>
+</ul>
+<p>文章首发: <a href="https://baijifeilong.github.io/2018/10/04/mysql">https://baijifeilong.github.io/2018/10/04/mysql</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/10/04/mysql/index.html";
+        this.page.identifier = "/2018/10/04/mysql/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

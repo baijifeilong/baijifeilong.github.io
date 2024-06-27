@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>萤石云接口分析 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>萤石云接口分析</h1>
+    <h2>萤石云拉流接口</h2>
+<p>萤石云拉流接口主要支持以下四种协议:</p>
+<ol>
+<li>苹果公司的HLS协议 延迟较高 支持Web端</li>
+<li>Adobe公司的RTMP协议 延迟适中 Web端需要启用Flash插件 Java拉流端没有可靠的RTMP解析库</li>
+<li>萤石自由的EZOPEN协议 延迟较低 支持回放 官方完全不支持Web端 名字带<code>Open</code>，不是指协议是开放的，指的是(萤石云)开放平台的协议。实际上除了对协议URL的定义外，找不到任何资料</li>
+<li>萤石私有协议。看完文档后，估计这是一个不存在的协议，实际上指的应该是对EZOPEN的DLL的二次包装，即各平台的SDK</li>
+</ol>
+<h2>EZOPEN协议对各平台的支持情况</h2>
+<ul>
+<li>Web 完全不支持</li>
+<li>Android 通过JNI动态链接32位的ARM库</li>
+<li>iOS 提供静态链接库</li>
+<li>Linux 提供动态链接库</li>
+<li>Windows(C/C++) 提供动态链接库</li>
+<li>Windows(C#) 提供Demo调用动态链接库</li>
+<li>Windows(ActiveX) 提供ocx动态链接库</li>
+</ul>
+<h2>萤石云所用各协议对时间戳的支持情况</h2>
+<ul>
+<li>HLS 没有时间戳。每一小节视频只有一个相对起始播放时间的偏移量</li>
+<li>RTMP 有服务器时间戳。但是服务器时间戳跟视频实际录制时间也会有误差</li>
+<li>EZOPEN 可以根据时间戳获取指定时间段的历史回放</li>
+</ul>
+<h2>服务端获取指定时间段录像的几种方式:</h2>
+<ol>
+<li>提前录制视频，然后根据起止时间截取视频。但是录制的视频不带有原始录制的时间戳，会有数秒的误差。萤石云录制的视频右下角都有时间戳水印，如果可以使用OCR识别，可以将视频的时间误差减少到一秒以内。 缺点: 无法进行失败重试</li>
+<li>使用EZOPEN的Linux版的DLL，在Linux服务器上向萤石云服务器拉取指定时间段的视频。但是此方案可能存在几个问题: 1. 只有Linux版的动态链接库，开发平台难以测试; 2. 这是用于客户端的动态链接库，稳定性与可靠性都不能保证; 3. 官方文档没有提到支持Linux，只是在下载区提供了Linux平台的Demo，不确定能否跑得起来，而且提取到的视频很可能已经被萤石云二次加密解不了码 缺点: 此方案必定费事费力，而且不一定能成功</li>
+<li>萤石云的App提供了历史回放功能，所以摄像头录制的视频在萤石云上肯定有历史存档。如果萤石云能开放相关接口，就可以方便准确地获取某一时间段的历史回放。缺点: 需要萤石云的支持</li>
+</ol>
+<p>萤石云的工单系统挺醉人的，我提交了两个工单，大意都是问EZOPEN协议支不支持Java，一个工单的回复是JavaScript马上就支持了，另一个工单的回复是C++支持。</p>
+<h2>萤石云HTTP接口</h2>
+<p>萤石云的HTTP接口主要用于摄像头的控制与帐号的管理</p>
+<p>部分接口调用示例:</p>
+<div class="highlight"><pre><span></span>### 获取令牌
+
+POST https://open.ys7.com/api/lapp/token/get
+Content-Type: application/x-www-form-urlencoded
+
+appKey=xxx&amp;appSecret=yyy
+
+&gt; {%
+client.assert(response.body[&quot;code&quot;] === &quot;200&quot;, &quot;Failed&quot;);
+client.global.set(&quot;token&quot;, response.body[&quot;data&quot;][&quot;accessToken&quot;]);
+ %}
+
+### 获取直播列表
+
+POST https://open.ys7.com/api/lapp/live/video/list
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}
+
+### 获取临时直播地址
+
+POST https://open.ys7.com/api/lapp/live/address/limited
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827&amp;channelNo=1&amp;expireTime=300
+
+### 启用直播
+
+POST https://open.ys7.com/api/lapp/live/video/open
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;source=C58828827:1
+
+### 禁用直播
+
+POST https://open.ys7.com/api/lapp/live/video/close
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;source=C58828827:1
+
+### 获取直播地址
+
+POST https://open.ys7.com/api/lapp/live/address/get
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;source=C58828827:1
+
+### 获取直播地址(ws格式)
+
+POST https://open.ys7.com/api/lapp/live/ws/address/get
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;source=C58828827:1
+
+### 获取用户流量消耗
+
+POST https://open.ys7.com/api/lapp/traffic/user/total
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}
+
+### 抓拍图片
+
+POST https://open.ys7.com/api/lapp/device/capture
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827&amp;channelNo=1
+
+### 获取设备列表
+
+POST https://open.ys7.com/api/lapp/device/list
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}
+
+### 获取摄像头列表
+
+POST https://open.ys7.com/api/lapp/camera/list
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}
+
+### 获取好友列表
+
+POST https://open.ys7.com/api/lapp/friend/list
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}
+
+### 获取共享列表
+
+POST https://open.ys7.com/api/lapp/share/list
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}
+
+### 获取设备状态
+
+POST https://open.ys7.com/api/lapp/device/status/get
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827
+
+### 获取设备信息
+
+POST https://open.ys7.com/api/lapp/device/info
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827
+
+### 获取设备功能列表
+
+POST https://open.ys7.com/api/lapp/device/capacity
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827
+
+### 遮蔽镜头
+
+POST https://open.ys7.com/api/lapp/device/scene/switch/set
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827&amp;enable=0
+
+### 云台上移
+
+POST https://open.ys7.com/api/lapp/device/ptz/start
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827&amp;channelNo=1&amp;direction=0&amp;speed=1
+
+### 云台下移
+
+POST https://open.ys7.com/api/lapp/device/ptz/start
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827&amp;channelNo=1&amp;direction=1&amp;speed=0
+
+### 云台左移
+
+POST https://open.ys7.com/api/lapp/device/ptz/start
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827&amp;channelNo=1&amp;direction=2&amp;speed=2
+
+### 云台右移
+
+POST https://open.ys7.com/api/lapp/device/ptz/start
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827&amp;channelNo=1&amp;direction=3&amp;speed=2
+
+### 获取设备报警信息列表
+
+POST https://open.ys7.com/api/lapp/alarm/list
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827
+
+### 获取云存储服务状态与信息
+
+POST https://open.ys7.com/api/lapp/cloud/storage/device/info
+Content-Type: application/x-www-form-urlencoded
+
+accessToken={{token}}&amp;deviceSerial=C58828827
+</pre></div>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/12/03/ezviz/index.html";
+        this.page.identifier = "/2018/12/03/ezviz/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

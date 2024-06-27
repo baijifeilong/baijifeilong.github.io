@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>谷国搜索</title>
+    <style>
+        html {
+            height: 100%;
+            font-size: 1.5em;
+        }
+
+        body {
+            margin: 0;
+            height: 100%;
+        }
+
+        #controls {
+            position: fixed;
+            width: 100%;
+            height: 50px;
+            background: #FFFFFFF0;
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px dashed #8a2be255;
+            z-index: 1;
+        }
+
+        #search {
+            margin-left: 0.5em;
+        }
+
+        #frames {
+            position: fixed;
+            top: -60px;
+            bottom: -100px;
+            flex: 1 0 auto;
+            display: flex;
+            width: 100%;
+        }
+
+        #frames > * {
+            flex: 1 1 auto;
+            border-width: 0;
+        }
+
+        #frames > *:first-child {
+            flex: 1 0 auto;
+            display: flex;
+            border-right: 1px dashed #8a2be255;
+        }
+    </style>
+</head>
+<body>
+<div id="frames">
+    <iframe id="google-china" src="https://www.google.com/search?q=google&lr=lang_zh-CN"></iframe>
+    <iframe id="google-world" src="https://www.google.com/search?q=google&lr=lang_en-US"></iframe>
+</div>
+<div id="controls">
+    <input id="input" title="keyword" style="font-size: 1rem">
+    <button id="search" type="button" style="font-size: 1rem; background: inherit;">Googuo</button>
+</div>
+</body>
+<script>
+    let loaded = false;
+    window.addEventListener("load", function () {
+        loaded = true;
+    });
+    setInterval(function () {
+        if (!loaded) {
+            document.getElementById("input").focus();
+        }
+    }, 50);
+    document.getElementById("search").addEventListener("click", function () {
+        const keyword = document.getElementById("input").value;
+        if (!keyword) return;
+        document.getElementById("google-china").src = "https://www.google.com/search?lr=lang_zh-CN&q=" + keyword;
+        document.getElementById("google-world").src = "https://www.google.com/search?lr=lang_en-US&q=" + keyword;
+        document.getElementById("input").blur();
+    });
+    document.getElementById("input").addEventListener("keyup", function (ev) {
+        console.log("ev", ev);
+        if (!(ev.key === "Enter")) return;
+        document.getElementById("search").click();
+    });
+</script>
+</html>

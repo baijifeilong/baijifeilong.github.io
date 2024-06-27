@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>美利达一生黑——和平西桥美利达趟坑记 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>美利达一生黑——和平西桥美利达趟坑记</h1>
+    <p>美利达自行车我骑了很多年，除了变速刹车出过几次小毛病外，大的质量问题没出现过，因此我对美利达这个品牌比较信赖。但是，上周六我去美利达专卖店修车换车，被狠狠坑了一笔。店员满嘴瞎话，哄得我团团转，跌破了我的眼镜，刷新了我对美利达的认知。</p>
+<p>我骑了5年的美利达公爵300前刹坏了，断了一只弹簧。骑到和平西桥美利达店维修，店员要收我100块钱的维修费。这点小毛病，我的心理价位是50元，超过这个价的话，不如换新车，骑了5年的车子，磨损毕竟严重，我早有换车的打算。美利达全国统一价，在哪买都一样，所以就顺便物色一下下一辆车。</p>
+<p>店员告诉我，这家店就要关门了，今天是最后一天营业，所有车型8折处理。</p>
+<p>我还以为运气不错，一辆车打八折的话可以省下比较可观的钱。</p>
+<p>这家店剩余的车型已经不多，两三千价位17寸的主流型号山地车，就剩下了一辆公爵700。</p>
+<p>公爵700这种不太主流的型号，我这种庸俗的人平时压根不会考虑，本身就挺贵，加几百就能上挑三这种名声相当好的车型。</p>
+<p>我问店员这车子是哪年款的，毕竟美利达一年出一款我还是知道的。店员犹豫了一下，说应该是18款。今年是19年，去年的库存车，怪不得可以打八折。</p>
+<p>应该是18款，我肯定不接受这种模棱两可的答案，万一是库存五六年的老车，我不赔大发了。</p>
+<p>我问店员，从车架上能不能看到是哪年款的，店员毫不犹豫说不能。我让店员确认一下到底是哪年的，店员想了想，说确实是18款。</p>
+<p>吊牌价2798，打完折后是2238。这车子本身型号非主流，性价比低，还不是最新款，所以就算打八折我也是比较犹豫要不要买。</p>
+<p>在店里头犹豫不好，我就出去想了想。毕竟急需换车，这里刚好有打折，而且仅此一天，我犹豫一会儿决定还是买了吧，毕竟早买晚买都得买，而且美利达大品牌放在那，不至于会被坑吧。</p>
+<p>店员给我把车子装好脚蹬，其他什么没给装。我主动要了个铃铛他才帮我装上。梁包要了我20，水壶架码表都没给装，连护链器都不给。不过这些都是小事，不送配件也无所谓。</p>
+<p>我试了一下变速，发现3x9上不去，店员竟然跟我说这是正常情况，不是所有档位都能用的。我不太相信，毕竟27速的车上不了27速，那做成27速的意义何在？</p>
+<p>我坚持要他给我把3x9调好，结果2x6又上不去了，店员折腾好一会儿都不行。说2x6和3x9只能二选一。我说2x6和3x9我都要要，上坡2x6，下坡3x9。</p>
+<p>店员解释说2x6这种组合不合适，2要带5。他去喜玛诺接受过专业培训，3带高档，2带中档，1带低档。我问他9速的车，6应该是中档吧，他说6不是，5才是。自行车知识我很不专业，都是凭感觉，当时居然就信了他的鬼话。</p>
+<p>我说爬坡2x6不能用那用多少，他说爬坡前面都是要用1档的。实在是美利达和喜玛诺这俩光环都太大，我居然又信了。</p>
+<p>我不死心，毕竟2x6骑了多少年了。感觉美利达这变速器也做得太差劲了吧。质问店员是不是原装变速器，店员毫不犹豫说是原装。</p>
+<p>我感叹道，这美利达真是越做越差了，我5年前买的24速车，前后变速所有搭配都能完美使用。</p>
+<p>我还是有点感觉他调车不够认真，就让他再给我调调，不然我不太想要这车。他前后调了差不多半个小时，最后告诉我美利达这款车设计如此。正好跟他的变速理论匹配。naive的我又信了。让他给我调到3x9顺畅的档。</p>
+<p>我个业余骑行者，美利达我还能怀疑吗？</p>
+<p>店员又推荐我买锁，说现在锁六折。问了下原价，他说400。240买一个锁，车子也太金贵了吧。店员又软磨硬泡，说是他这锁超级安全，买他这款锁的人从来没有丢过车。我笑笑，说再好的锁被贼扛走也没辙，店员又扯什么要锁到固定的建筑物上啥的。</p>
+<p>由于我是骑车过来的，当时周六正好需要加班，新车没买锁，我需要把旧车骑回去，再把新车骑走锁到一起。所以，就押了两百块钱给他，去公司骑了个共享单车过来。</p>
+<p>检查了车子没啥明显刮痕，准备骑走。骑走之前我还是抱着谨慎的态度跟店员确认了一下车子的出厂年份。店员打包票说是18年的，我就放心地骑走了。</p>
+<p>然后发现刹车不太好使，就骑回去调了几次。立着车子的时候，车子竟然摔了，店员又跟我解释说这是因为车子在店里被人压的，给我掰了一下，也不是很稳，感觉风一吹就倒，店员忙解释道我停车姿势不对，不能带惯性力。我只能一次次感觉这美利达真是一年不如一年了，偷工减料到撑子都不好好做了。</p>
+<p>由于急着上班，我没太仔细检查就把车骑回去了。</p>
+<p>由于买了新车比较兴奋，第二天就去骑车，发现这变速被店员调了半小时还没调好，好多档位有异响，还有些档位换挡不畅，心想这店员也太不负责了。我是看他给我调了好久，感觉差不多没毛病才没仔细检查的。</p>
+<p>骑到半路，感觉脚踏有异响。用手一拨，脚踏完全不转。而且骑车老蹭脚。我还以为这几年的骑行姿势不够标准呢。所以就尽量适应了一下。</p>
+<p>回家路上，感觉前变速好像缺个挡板，就想问问那个美利达店员，是不是给我忘装了。之前留了个心眼，加了店员的微信，毕竟出问题可以咨询一下。</p>
+<p>刚把图片一发，一个红色的感叹号就出来了。前脚收了我的钱，后脚就把我拉黑了，真是气死我了。</p>
+<p>回来顺便去了趟天通苑美利达，查查是不是缺了挡板。</p>
+<p>刚停下车，老板就把我脚蹬上快要掉下来的一条反光条给我塞回去。垃圾脚踏非原装无疑。天通苑美利达的老板比较热心，说是美利达有些款式的车确实没挡板，还带我看了看。</p>
+<p>当时发现被拉黑，就感觉有猫腻了。这次一定要确认一下是不是18款车。</p>
+<p>没等我开口，老板就问我这车是不是两千块钱买的，当时就感觉被坑了。老板说公爵700已经绝版了，这辆公爵700绝对是老车。店员从车架编码上，帮我确认了是17款车。</p>
+<p>和平西桥美利达的店员居然睁着眼睛说瞎话，车架上除了编码，还有二维码可以看车子的出厂年份，非说车架上查不到年份，看来这家伙是铁了心要骗最后一单生意。最后给的保修小票，也没写车子年份，不知道是不是心虚。</p>
+<p>当时就把我气炸了，美利达竟然有这种丧心病狂把顾客当猴儿耍的骗子店。那个店员还是骑行圈的，微信昵称叫骑公路的小菜鸟，真给这圈子丢人。</p>
+<p>骗了归骗了，一时半会儿找不着人，车子还是得修。老板把我的变速器调到3x9可用，可是2x6，2x5，2x4往下都不能用了。之前没仔细检查，还以为是2x6往上不能用，没想到是往下，又被和平西桥店员给忽悠了。严重怀疑变速器不是原装。</p>
+<p>天通苑美利达老板告诉我，车子胎压不够，需要打到60左右，现在只有40。我说呢，昨天在和平西桥，就感觉轮胎太软，那店员还信誓旦旦地跟我说他是按标准气压打的，绝对没问题。我还以为打了这么多年的气，全部都打过了。黑了我钱还不够，还怕我爬坡不费劲，半路不扎胎，心肠歹毒到匪夷所思！</p>
+<p>骑了一天车，除了变速不好使，还有那铃铛装的位置真扯淡，需要大拇指伸老远去拨，紧急需要按铃铛的时候，根本来不及按。这铃铛设计来应该是用食指拨的，我把铃铛拆下来换了个方向，就能完美使用了。这么装铃铛，是想送我上西天吧？</p>
+<p>车子组装好后，我是拍了照片的。翻出照片一看，吓我一跳，照片上的脚踏板是铝合金的。我回趟公司的功夫，脚踏板就从铝合金变成了塑料的，一对几十块钱脚踏板的钱都要绞尽脑汁坑掉，地球上也没几个人能干出这种事吧，说他小肚鸡肠都是在侮辱鸡，我真是服服服。</p>
+<p>作为美利达店员，连个最最简单的铃铛都不会装，可想而知技术有多么差劲，还居然敢漫天要价，修个刹车要100，还跟我解释说是配件清仓打折半价，不然需要200块钱 ，天通苑美利达表示换个弹簧十几块钱就能修。</p>
+<p>吃了这么大的亏，当然不能善罢甘休。就算损失寻不回来，也不能让这满嘴扯谎的骗子继续得瑟。</p>
+<p>第二天，我在百度地图上搜到了和平西桥美利达的电话，准备向这家美利达的老板讨要一个说法。结果找到的是这家店的前老板，两年前就不干了，他建议我去找阜成门北京总店。</p>
+<p>电话打到阜成门北京总店，他们表示处理不了，给了我美利达公司的电话。美利达公司把和平西桥美利达的电话给了我。</p>
+<p>终于找到了这家美利达的老板，名叫吴树正，老板说是那天他不在，搞清楚后再给我回电话。估计是脑子里的瞎话编得差不多了，过了50分钟，终于给我回了电话。</p>
+<p>果然是一丘之貉。这个店主直接把关店打八折的故事改版成旧车打八折，说是店员跟我明确说是17年旧车打8折才卖给我的。说到那个破脚踏，非说是美利达原装就是这样，一天4个反光条掉三个也是美利达原装。还说美利达原装就是塑料的，真不知道这吴树正的脸皮是用什么特殊材质做出来的，凡是对他不利的东西不过脑子先否认再说。我问他这问题到底怎么解决，他说可以退货，但要折旧处理。问他怎么折旧，说是六折，惊得我差点破口大骂。骗我一遭还不够，还要他妈继续坑我八九百块钱。</p>
+<p>除了不断狡辩，这老板还反复向我灌输17款18款车都一样。服了，按你这个差一年都一样逻辑推算下去，17款跟20款也没区别啊。我说17款27速，18款是30速，老板连这都不承认。</p>
+<p>一门心思坑人，怪不得在这么优越的位置店都开不下去。平生最见不得骗子恶棍逍遥法外，这次一定要把这伙渣子曝光于天下，教教他们什么叫软柿子，什么叫恶有恶报，什么叫得不偿失，同时让大家也多长个心眼。</p>
+<ul>
+<li>黑店老板 吴树正 电话13661018066 微信 wushuzheng007 豆瓣号 <a href="https://www.douban.com/people/7053065/">leonphoto</a> 签名: 静坐常思己过，闲谈莫论人非。</li>
+<li>黑店店员 杨某 微信号 CAINIAO1881991 昵称 骑公路的小菜鸟</li>
+</ul>
+<p>希望大家多多人肉，广而告之，避免骑行圈或其他行业不幸碰到这俩骗子的人提高警惕，避免上当。</p>
+<p>后续：</p>
+<p>美利达北京公司叫我去美利达北京官方店-阜成门店换脚蹬子。去了后，老板先是说脚蹬子没问题，我说这脚蹬子骑起来蹭脚，他竟然说是我的鞋有问题(这双鞋骑了一个夏天了)。我执意要换，他们说是只有一种脚蹬子，问我换不换。这脚蹬子看着挺怪，但怎么着也比之前那个强吧，只能换上了。</p>
+<p>换了脚蹬子后，我让店员帮我调一下变速。调了一会儿，还是有档位上不去。他问我常用哪些档位，我说上坡用2x2，下坡用3x9，他表示可以调整到前后所有档位搭配都没问题。结果折腾了十来分钟，还是有些档位上不去，叫来了老板调了半天也没调好。</p>
+<p>然后，他们就表示我骑车姿势不对，前后档位不是所有搭配都可以。前面高速带后面高速，前面中速带后面中速，前面低速带后面低速。于是，我提了一个最最最低的要求，前面三个轮盘各带后面三个轮盘。就这低到令人发指的要求，调了一上午都没给我调好。</p>
+<p>老板又表示自己技术不行，让我去其他店去调。</p>
+<p>打电话跟美利达公司联系，公司先是表示我这个档次的车子的变速只能变到这个地步。美利达公司公然表示2800价位的美利达穷屌丝车子活该变速不能用！美利达牛逼！</p>
+<p>服了，三家店四个师傅都调不好，就是不承认车子有问题。还说如果我执意要修的话，只能返厂，而且车子必选放在店里，等返厂回来，而且老板表示返厂回来估计也还是这样。这下只能自认倒霉了。</p>
+<p>轮到脚撑子的问题了，美利达老板坚决表示脚撑子没毛病，不给换，非说调一下就好。结果掰了一下，反而到了吹口气就倒的地步。只能给美利达公司打电话了，在电话里，这老板还厚颜无耻地表示吹口气车子就倒的脚撑子没毛病不给换。磨叽半天，总算答应给我换了，还是换最便宜的脚撑子。给美利达公司打电话，交涉无果，只能换上了这个非原装的最便宜的脚撑子，总算把车子搞得正常一点了。</p>
+<p>在店里转了一圈，发现美利达山地车系列全部都是带齿的脚蹬子，而不是给我装的平面脚蹬子。软磨硬泡冷嘲热讽半天，说是店里只有那种平面脚蹬子的老板终于给我换上了山地车该用的脚蹬子。脚蹬子不搭配，关键时刻闹人命的，这美利达老板的心眼可不白。</p>
+<p>再说我在和平西桥店买的正新外胎，回去才发现胎纹严重不对称，接缝处胎纹高度差了一毫米不止，而且胎身比原装胎薄了软了太多，冒牌无疑。</p>
+<p>经过这么几轮折腾，我从此算是美利达一生黑了。美利达公司出了问题各种推诿各种不承认各种解决不了各种冷嘲热讽，美利达直营店各种敷衍各种逃避各种一毛不拔，美利达加盟店各种坑蒙拐骗各种假货横行各种漫天要价。既然三家美利达都拒不承认变速器不是原装，那美利达的品控也问题不小。不知道是橘生淮北还是本来如此，反正各位已经入坑的朋友自求多福，尚未入坑的朋友谨慎而行吧。</p>
+<p><img src="https://raw.githubusercontent.com/baijifeilong/resources/master/merida/1.jpg" alt="付款前,注意脚蹬子" />
+<img src="https://raw.githubusercontent.com/baijifeilong/resources/master/merida/2.jpg" alt="买回去,注意脚蹬子" />
+<img src="https://raw.githubusercontent.com/baijifeilong/resources/master/merida/3.jpg" alt="美利达收据" />
+<img src="https://raw.githubusercontent.com/baijifeilong/resources/master/merida/4.png" alt="美利达奸店员杨某" />
+<img src="https://raw.githubusercontent.com/baijifeilong/resources/master/merida/5.png" alt="美利达奸商吴树正" /></p>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2019/09/02/merida/index.html";
+        this.page.identifier = "/2019/09/02/merida/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

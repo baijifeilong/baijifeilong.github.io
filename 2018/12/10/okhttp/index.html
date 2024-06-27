@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>OKHttp - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>OKHttp</h1>
+    <p>OKHttp是一个Java的HTTP客户端，兼容性比Spring提供的<code>RestTemplate</code>要好(RestTemplate对于畸形HTTP头直接抛异常)</p>
+<h2>示例代码</h2>
+<div class="highlight"><pre><span></span><span class="k">package</span> <span class="nn">bj</span>
+
+<span class="k">import</span> <span class="nn">ch.qos.logback.classic.Level</span>
+<span class="k">import</span> <span class="nn">ch.qos.logback.classic.Logger</span>
+<span class="k">import</span> <span class="nn">ch.qos.logback.classic.encoder.PatternLayoutEncoder</span>
+<span class="k">import</span> <span class="nn">ch.qos.logback.core.ConsoleAppender</span>
+<span class="k">import</span> <span class="nn">ch.qos.logback.core.Context</span>
+<span class="k">import</span> <span class="nn">okhttp3.HttpUrl</span>
+<span class="k">import</span> <span class="nn">okhttp3.OkHttpClient</span>
+<span class="k">import</span> <span class="nn">okhttp3.Request</span>
+<span class="k">import</span> <span class="nn">org.assertj.core.api.Assertions.assertThat</span>
+<span class="k">import</span> <span class="nn">org.glassfish.json.JsonUtil</span>
+<span class="k">import</span> <span class="nn">org.joda.time.DateTime</span>
+<span class="k">import</span> <span class="nn">org.joda.time.Duration</span>
+<span class="k">import</span> <span class="nn">org.slf4j.LoggerFactory</span>
+<span class="k">import</span> <span class="nn">tornadofx.*</span>
+<span class="k">import</span> <span class="nn">java.net.InetSocketAddress</span>
+<span class="k">import</span> <span class="nn">java.net.Proxy</span>
+<span class="k">import</span> <span class="nn">javax.json.JsonArray</span>
+<span class="k">import</span> <span class="nn">javax.json.JsonObject</span>
+<span class="k">import</span> <span class="nn">javax.json.JsonValue</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 18-9-28 下午2:13</span>
+<span class="cm"> */</span>
+
+<span class="kd">class</span> <span class="nc">MyHttpClient</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">okHttpClient</span> <span class="o">=</span> <span class="n">OkHttpClient</span><span class="p">.</span><span class="na">Builder</span><span class="p">().</span><span class="na">proxy</span><span class="p">(</span><span class="n">Proxy</span><span class="p">(</span><span class="n">Proxy</span><span class="p">.</span><span class="na">Type</span><span class="p">.</span><span class="na">SOCKS</span><span class="p">,</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="m">1080</span><span class="p">))).</span><span class="na">build</span><span class="p">()</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">logger</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">javaClass</span><span class="p">)</span>
+
+    <span class="kd">fun</span> <span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">mapOf</span><span class="p">()):</span> <span class="n">JsonValue</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="nv">httpUrl</span> <span class="o">=</span> <span class="n">HttpUrl</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+            <span class="n">params</span><span class="p">.</span><span class="na">forEach</span> <span class="p">{</span> <span class="n">t</span><span class="p">,</span> <span class="n">u</span> <span class="o">-&gt;</span> <span class="k">this</span><span class="p">.</span><span class="na">addQueryParameter</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="p">}</span>
+        <span class="p">}.</span><span class="na">build</span><span class="p">()</span>
+        <span class="kd">val</span> <span class="nv">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">.</span><span class="na">Builder</span><span class="p">().</span><span class="na">url</span><span class="p">(</span><span class="n">httpUrl</span><span class="p">).</span><span class="na">build</span><span class="p">()</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&gt;&gt;&gt; GET </span><span class="si">$</span><span class="n">url</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="kd">val</span> <span class="nv">response</span> <span class="o">=</span> <span class="n">okHttpClient</span><span class="p">.</span><span class="na">newCall</span><span class="p">(</span><span class="n">request</span><span class="p">).</span><span class="na">execute</span><span class="p">()</span>
+        <span class="n">assertThat</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">code</span><span class="p">()).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="m">200</span><span class="p">)</span>
+        <span class="kd">val</span> <span class="nv">text</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">body</span><span class="p">()</span><span class="o">!!</span><span class="p">.</span><span class="na">string</span><span class="p">()</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&lt;&lt;&lt; </span><span class="si">${</span><span class="s">&quot;</span><span class="o">%</span><span class="p">.</span><span class="m">100</span><span class="n">s</span><span class="si">${</span><span class="k">if</span> <span class="p">(</span><span class="n">text</span><span class="p">.</span><span class="na">length</span> <span class="o">&gt;</span> <span class="m">100</span><span class="p">)</span> <span class="s">&quot;</span> <span class="p">...</span><span class="s">&quot;</span> <span class="k">else</span> <span class="s">&quot;&quot;</span><span class="si">}</span><span class="s">&quot;</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">toJson</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">BinanceApi</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">prefix</span> <span class="o">=</span> <span class="s">&quot;https://api.binance.com/api&quot;</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">pingUrl</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">$</span><span class="n">prefix</span><span class="s">/v1/ping&quot;</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">exchangeInfoUrl</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">$</span><span class="n">prefix</span><span class="s">/v1/exchangeInfo&quot;</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">depthUrl</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">$</span><span class="n">prefix</span><span class="s">/v1/depth&quot;</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">tradesUrl</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">$</span><span class="n">prefix</span><span class="s">/v1/trades&quot;</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">historyUrl</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">$</span><span class="n">prefix</span><span class="s">/v1/historicalTrades&quot;</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">klineUrl</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">$</span><span class="n">prefix</span><span class="s">/v1/klines&quot;</span>
+
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">myHttpClient</span> <span class="o">=</span> <span class="n">MyHttpClient</span><span class="p">()</span>
+
+    <span class="kd">fun</span> <span class="nf">ping</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">myHttpClient</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">pingUrl</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">fun</span> <span class="nf">exchangeInfo</span><span class="p">():</span> <span class="n">JsonObject</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">myHttpClient</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">exchangeInfoUrl</span><span class="p">).</span><span class="na">asJsonObject</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="kd">fun</span> <span class="nf">depth</span><span class="p">():</span> <span class="n">JsonObject</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">myHttpClient</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">depthUrl</span><span class="p">,</span> <span class="n">mapOf</span><span class="p">(</span><span class="s">&quot;symbol&quot;</span> <span class="n">to</span> <span class="s">&quot;BTCUSDT&quot;</span><span class="p">)).</span><span class="na">asJsonObject</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="kd">fun</span> <span class="nf">trades</span><span class="p">():</span> <span class="n">JsonArray</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">myHttpClient</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">tradesUrl</span><span class="p">,</span> <span class="n">mapOf</span><span class="p">(</span><span class="s">&quot;symbol&quot;</span> <span class="n">to</span> <span class="s">&quot;BTCUSDT&quot;</span><span class="p">)).</span><span class="na">asJsonArray</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="kd">fun</span> <span class="nf">history</span><span class="p">():</span> <span class="n">JsonArray</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">myHttpClient</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">historyUrl</span><span class="p">,</span> <span class="n">mapOf</span><span class="p">(</span><span class="s">&quot;symbol&quot;</span> <span class="n">to</span> <span class="s">&quot;BTCUSDT&quot;</span><span class="p">)).</span><span class="na">asJsonArray</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="kd">fun</span> <span class="nf">kline</span><span class="p">():</span> <span class="n">JsonArray</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">myHttpClient</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">klineUrl</span><span class="p">,</span> <span class="n">mapOf</span><span class="p">(</span><span class="s">&quot;symbol&quot;</span> <span class="n">to</span> <span class="s">&quot;BTCUSDT&quot;</span><span class="p">,</span> <span class="s">&quot;interval&quot;</span> <span class="n">to</span> <span class="s">&quot;1d&quot;</span><span class="p">)).</span><span class="na">asJsonArray</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="kd">class</span> <span class="nc">TmpApp</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">binanceApi</span> <span class="o">=</span> <span class="n">BinanceApi</span><span class="p">()</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">logger</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">javaClass</span><span class="p">)</span>
+
+    <span class="kd">private</span> <span class="kd">fun</span> <span class="nf">initLogging</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">(</span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="s">&quot;ROOT&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">Logger</span><span class="p">).</span><span class="na">apply</span> <span class="p">{</span>
+            <span class="n">level</span> <span class="o">=</span> <span class="n">Level</span><span class="p">.</span><span class="na">TRACE</span>
+            <span class="p">(</span><span class="n">getAppender</span><span class="p">(</span><span class="s">&quot;console&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ConsoleAppender</span><span class="p">).</span><span class="na">encoder</span> <span class="o">=</span> <span class="n">PatternLayoutEncoder</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                <span class="n">context</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getILoggerFactory</span><span class="p">()</span> <span class="k">as</span> <span class="n">Context</span>
+                <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;[%date] %highlight([%level]) [%logger{10} %file:%line] %msg%n&quot;</span>
+                <span class="n">start</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kd">fun</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">binanceApi</span><span class="p">.</span><span class="na">ping</span><span class="p">()</span>
+
+        <span class="kd">val</span> <span class="nv">exchangeInfo</span> <span class="o">=</span> <span class="n">binanceApi</span><span class="p">.</span><span class="na">exchangeInfo</span><span class="p">().</span><span class="na">asJsonObject</span><span class="p">()</span>
+        <span class="kd">val</span> <span class="nv">timezone</span> <span class="o">=</span> <span class="n">exchangeInfo</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;timezone&quot;</span><span class="p">)</span>
+        <span class="kd">val</span> <span class="nv">timestamp</span> <span class="o">=</span> <span class="n">exchangeInfo</span><span class="p">.</span><span class="na">getLong</span><span class="p">(</span><span class="s">&quot;serverTime&quot;</span><span class="p">)</span>
+        <span class="kd">val</span> <span class="nv">serverDateTime</span> <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+        <span class="kd">val</span> <span class="nv">localDateTime</span> <span class="o">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="na">now</span><span class="p">()</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Server timezone: </span><span class="si">$</span><span class="n">timezone</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Server time: </span><span class="si">$</span><span class="n">serverDateTime</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Local  time: </span><span class="si">$</span><span class="n">localDateTime</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Server time behind of local </span><span class="si">${</span><span class="n">Duration</span><span class="p">(</span><span class="n">serverDateTime</span><span class="p">,</span> <span class="n">localDateTime</span><span class="p">).</span><span class="na">millis</span><span class="si">}</span><span class="s"> milliseconds&quot;</span><span class="p">)</span>
+
+        <span class="n">binanceApi</span><span class="p">.</span><span class="na">depth</span><span class="p">()</span>
+
+        <span class="n">binanceApi</span><span class="p">.</span><span class="na">trades</span><span class="p">()</span>
+
+<span class="c1">//        binanceApi.history()</span>
+
+        <span class="n">binanceApi</span><span class="p">.</span><span class="na">kline</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="kd">fun</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">initLogging</span><span class="p">()</span>
+        <span class="n">test</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">TmpApp</span><span class="p">().</span><span class="na">run</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+<h2>控制台输出</h2>
+<div class="highlight"><pre><span></span>[2018-09-28 18:12:24,078] [INFO] [b.MyHttpClient TmpApp.kt:36] &gt;&gt;&gt; GET https://api.binance.com/api/v1/ping
+[2018-09-28 18:12:25,265] [INFO] [b.MyHttpClient TmpApp.kt:40] &lt;&lt;&lt; {}
+[2018-09-28 18:12:25,284] [INFO] [b.MyHttpClient TmpApp.kt:36] &gt;&gt;&gt; GET https://api.binance.com/api/v1/exchangeInfo
+[2018-09-28 18:12:25,582] [INFO] [b.MyHttpClient TmpApp.kt:40] &lt;&lt;&lt; {&quot;timezone&quot;:&quot;UTC&quot;,&quot;serverTime&quot;:1538129545325,&quot;rateLimits&quot;:[{&quot;rateLimitType&quot;:&quot;REQUEST_WEIGHT&quot;,&quot;interv ...
+[2018-09-28 18:12:25,650] [INFO] [bj.TmpApp TmpApp.kt:105] Server timezone: UTC
+[2018-09-28 18:12:25,663] [INFO] [bj.TmpApp TmpApp.kt:106] Server time: 2018-09-28T18:12:25.325+08:00
+[2018-09-28 18:12:25,663] [INFO] [bj.TmpApp TmpApp.kt:107] Local  time: 2018-09-28T18:12:25.650+08:00
+[2018-09-28 18:12:25,664] [INFO] [bj.TmpApp TmpApp.kt:108] Server time behind of local 325 milliseconds
+[2018-09-28 18:12:25,665] [INFO] [b.MyHttpClient TmpApp.kt:36] &gt;&gt;&gt; GET https://api.binance.com/api/v1/depth
+[2018-09-28 18:12:27,003] [INFO] [b.MyHttpClient TmpApp.kt:40] &lt;&lt;&lt; {&quot;lastUpdateId&quot;:255333286,&quot;bids&quot;:[[&quot;6643.69000000&quot;,&quot;0.22870000&quot;,[]],[&quot;6643.66000000&quot;,&quot;2.00000000&quot;,[] ...
+[2018-09-28 18:12:27,005] [INFO] [b.MyHttpClient TmpApp.kt:36] &gt;&gt;&gt; GET https://api.binance.com/api/v1/trades
+[2018-09-28 18:12:27,307] [INFO] [b.MyHttpClient TmpApp.kt:40] &lt;&lt;&lt; [{&quot;id&quot;:72581582,&quot;price&quot;:&quot;6646.65000000&quot;,&quot;qty&quot;:&quot;0.12818900&quot;,&quot;time&quot;:1538129374380,&quot;isBuyerMaker&quot;:false ...
+[2018-09-28 18:12:27,314] [INFO] [b.MyHttpClient TmpApp.kt:36] &gt;&gt;&gt; GET https://api.binance.com/api/v1/klines
+[2018-09-28 18:12:27,792] [INFO] [b.MyHttpClient TmpApp.kt:40] &lt;&lt;&lt; [[1502928000000,&quot;4261.48000000&quot;,&quot;4485.39000000&quot;,&quot;4200.74000000&quot;,&quot;4285.08000000&quot;,&quot;795.15037700&quot;,15030 ...
+</pre></div>
+<h2>POST示例</h2>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.ddweilai.microservice.kindergarten.system.provider.serviceimpl</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.JsonNode</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.ObjectMapper</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.vavr.control.Try</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">okhttp3.*</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.assertj.core.api.Assertions</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.function.Function</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 2018/12/20 下午4:16</span>
+<span class="cm"> */</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">class</span> <span class="nc">MyHttpClient</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">OkHttpClient</span> <span class="n">okHttpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OkHttpClient</span><span class="p">();</span>
+    <span class="kd">private</span> <span class="n">ObjectMapper</span> <span class="n">objectMapper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">();</span>
+
+    <span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&quot;ConstantConditions&quot;</span><span class="p">)</span>
+    <span class="n">JsonNode</span> <span class="nf">doGet</span><span class="p">(</span><span class="n">String</span> <span class="n">url</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">HttpUrl</span><span class="p">.</span><span class="na">Builder</span> <span class="n">httpUrlBuilder</span> <span class="o">=</span> <span class="n">HttpUrl</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="na">newBuilder</span><span class="p">();</span>
+        <span class="n">params</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">httpUrlBuilder</span><span class="p">::</span><span class="n">addQueryParameter</span><span class="p">);</span>
+        <span class="n">HttpUrl</span> <span class="n">httpUrl</span> <span class="o">=</span> <span class="n">httpUrlBuilder</span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+        <span class="n">Request</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Request</span><span class="p">.</span><span class="na">Builder</span><span class="p">().</span><span class="na">url</span><span class="p">(</span><span class="n">httpUrl</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&gt;&gt;&gt; [REQUEST] {}&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">);</span>
+        <span class="n">Response</span> <span class="n">response</span> <span class="o">=</span> <span class="n">Try</span><span class="p">.</span><span class="na">of</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">okHttpClient</span><span class="p">.</span><span class="na">newCall</span><span class="p">(</span><span class="n">request</span><span class="p">).</span><span class="na">execute</span><span class="p">()).</span><span class="na">getOrElseThrow</span><span class="p">((</span><span class="n">Function</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="p">,</span> <span class="n">RuntimeException</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">RuntimeException</span><span class="p">::</span><span class="k">new</span><span class="p">);</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&gt;&gt;&gt; [RESPONSE] {}&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
+        <span class="n">Assertions</span><span class="p">.</span><span class="na">assertThat</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">code</span><span class="p">()).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+        <span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">Try</span><span class="p">.</span><span class="na">of</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">response</span><span class="p">.</span><span class="na">body</span><span class="p">().</span><span class="na">string</span><span class="p">()).</span><span class="na">getOrElseThrow</span><span class="p">((</span><span class="n">Function</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="p">,</span> <span class="n">RuntimeException</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">RuntimeException</span><span class="p">::</span><span class="k">new</span><span class="p">);</span>
+        <span class="n">JsonNode</span> <span class="n">node</span> <span class="o">=</span> <span class="n">Try</span><span class="p">.</span><span class="na">of</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">objectMapper</span><span class="p">.</span><span class="na">readValue</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">JsonNode</span><span class="p">.</span><span class="na">class</span><span class="p">)).</span><span class="na">getOrElseThrow</span><span class="p">((</span><span class="n">Function</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="p">,</span> <span class="n">RuntimeException</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">RuntimeException</span><span class="p">::</span><span class="k">new</span><span class="p">);</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&lt;&lt;&lt; [RESPONSE] [JSON] {}&quot;</span><span class="p">,</span> <span class="n">node</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">node</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&quot;ConstantConditions&quot;</span><span class="p">)</span>
+    <span class="n">JsonNode</span> <span class="nf">doPost</span><span class="p">(</span><span class="n">String</span> <span class="n">url</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">FormBody</span><span class="p">.</span><span class="na">Builder</span> <span class="n">formBodyBuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FormBody</span><span class="p">.</span><span class="na">Builder</span><span class="p">();</span>
+        <span class="n">params</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">formBodyBuilder</span><span class="p">::</span><span class="n">add</span><span class="p">);</span>
+        <span class="n">FormBody</span> <span class="n">formBody</span> <span class="o">=</span> <span class="n">formBodyBuilder</span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+        <span class="n">Request</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Request</span><span class="p">.</span><span class="na">Builder</span><span class="p">().</span><span class="na">url</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="na">post</span><span class="p">(</span><span class="n">formBody</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&gt;&gt;&gt; [REQUEST] {}&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">);</span>
+        <span class="n">Response</span> <span class="n">response</span> <span class="o">=</span> <span class="n">Try</span><span class="p">.</span><span class="na">of</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">okHttpClient</span><span class="p">.</span><span class="na">newCall</span><span class="p">(</span><span class="n">request</span><span class="p">).</span><span class="na">execute</span><span class="p">()).</span><span class="na">getOrElseThrow</span><span class="p">((</span><span class="n">Function</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="p">,</span> <span class="n">RuntimeException</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">RuntimeException</span><span class="p">::</span><span class="k">new</span><span class="p">);</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&gt;&gt;&gt; [RESPONSE] {}&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
+        <span class="n">Assertions</span><span class="p">.</span><span class="na">assertThat</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">code</span><span class="p">()).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+        <span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">Try</span><span class="p">.</span><span class="na">of</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">response</span><span class="p">.</span><span class="na">body</span><span class="p">().</span><span class="na">string</span><span class="p">()).</span><span class="na">getOrElseThrow</span><span class="p">((</span><span class="n">Function</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="p">,</span> <span class="n">RuntimeException</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">RuntimeException</span><span class="p">::</span><span class="k">new</span><span class="p">);</span>
+        <span class="n">JsonNode</span> <span class="n">node</span> <span class="o">=</span> <span class="n">Try</span><span class="p">.</span><span class="na">of</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">objectMapper</span><span class="p">.</span><span class="na">readValue</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">JsonNode</span><span class="p">.</span><span class="na">class</span><span class="p">)).</span><span class="na">getOrElseThrow</span><span class="p">((</span><span class="n">Function</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="p">,</span> <span class="n">RuntimeException</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">RuntimeException</span><span class="p">::</span><span class="k">new</span><span class="p">);</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&lt;&lt;&lt; [RESPONSE] [JSON] {}&quot;</span><span class="p">,</span> <span class="n">node</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">node</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/12/10/okhttp/index.html";
+        this.page.identifier = "/2018/12/10/okhttp/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

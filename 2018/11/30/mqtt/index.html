@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>MQTT大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>MQTT大杂烩</h1>
+    <h2>MQTT是什么</h2>
+<p>MQTT是一个轻量级的消息总线协议，提供消息订阅与发布</p>
+<h2>MQTT的安装</h2>
+<p>MQTT是一套标准，常用的服务端有Eclipse的Mosquitto。MQTT是IBM出品，Eclipse也是IBM出品，所以Mosquitto算是官方实现吧。</p>
+<h3>Mosquitto在macOS下的安装</h3>
+<p>执行命令 <code>brew install mosquitto</code> 即可安装</p>
+<p>启动:</p>
+<ul>
+<li>理论上<code>brew services start mosquitto</code>可以启动，但是我这边启动不了，也找不到报错信息和相关日志。所以放弃</li>
+<li>手动启动: <code>/usr/local/opt/mosquitto/sbin/mosquitto -c /usr/local/etc/mosquitto/mosquitto.conf -v</code> 以Verbose模式阻塞式启动。也可以不使用<code>-c</code>选项，用默认配置启动Mosquitto</li>
+</ul>
+<p>Mosquitto启动日志:</p>
+<div class="highlight"><pre><span></span>1543540708: mosquitto version 1.5.4 starting
+1543540708: Config loaded from /usr/local/etc/mosquitto/mosquitto.conf.
+1543540708: Opening ipv6 listen socket on port 1883.
+1543540708: Opening ipv4 listen socket on port 1883.
+</pre></div>
+<p>可见Mosquitto默认监听1883端口</p>
+<h2>MQTT演示</h2>
+<p>MQTT是一套消息订阅与发布协议，这里我启动一个客户端订阅与监听<code>animal</code>主题，然后用另一个客户端向<code>animal</code>主题发送消息。控制台输出如下如下:</p>
+<h3>消息发布端</h3>
+<p><code>$ mosquitto_pub --topic animal --message &quot;ant&quot;</code></p>
+<p><code>$ mosquitto_pub --topic animal --message &quot;bee&quot;</code></p>
+<p>消息发布端没有控制台输出，发布消息后直接退出</p>
+<h3>消息订阅端</h3>
+<p><code>$ mosquitto_sub --topic animal</code></p>
+<div class="highlight"><pre><span></span>ant
+bee
+</pre></div>
+<h3>服务端</h3>
+<div class="highlight"><pre><span></span>1543542192: New connection from ::1 on port 1883.
+1543542192: New client connected from ::1 as mosqsub|73254-MacBook-A (c1, k60).
+1543542192: No will message specified.
+1543542192: Sending CONNACK to mosqsub|73254-MacBook-A (0, 0)
+1543542192: Received SUBSCRIBE from mosqsub|73254-MacBook-A
+1543542192:     animal (QoS 0)
+1543542192: mosqsub|73254-MacBook-A 0 animal
+1543542192: Sending SUBACK to mosqsub|73254-MacBook-A
+
+
+1543542215: New connection from ::1 on port 1883.
+1543542215: New client connected from ::1 as mosqpub|73257-MacBook-A (c1, k60).
+1543542215: No will message specified.
+1543542215: Sending CONNACK to mosqpub|73257-MacBook-A (0, 0)
+1543542215: Received PUBLISH from mosqpub|73257-MacBook-A (d0, q0, r0, m0, &#39;animal&#39;, ... (3 bytes))
+1543542215: Sending PUBLISH to mosqsub|73254-MacBook-A (d0, q0, r0, m0, &#39;animal&#39;, ... (3 bytes))
+1543542215: Received DISCONNECT from mosqpub|73257-MacBook-A
+1543542215: Client mosqpub|73257-MacBook-A disconnected.
+
+
+1543542233: New connection from ::1 on port 1883.
+1543542233: New client connected from ::1 as mosqpub|73267-MacBook-A (c1, k60).
+1543542233: No will message specified.
+1543542233: Sending CONNACK to mosqpub|73267-MacBook-A (0, 0)
+1543542233: Received PUBLISH from mosqpub|73267-MacBook-A (d0, q0, r0, m0, &#39;animal&#39;, ... (3 bytes))
+1543542233: Sending PUBLISH to mosqsub|73254-MacBook-A (d0, q0, r0, m0, &#39;animal&#39;, ... (3 bytes))
+1543542233: Received DISCONNECT from mosqpub|73267-MacBook-A
+1543542233: Client mosqpub|73267-MacBook-A disconnected.
+</pre></div>
+<h3>MQTT启用密码验证</h3>
+<p>配置文件</p>
+<div class="highlight"><pre><span></span>password_file thepwdfile
+allow_anonymous false
+</pre></div>
+<p>要点:</p>
+<ul>
+<li><code>allow_annoymous</code> 和 <code>password_file</code> 必须同时设置</li>
+<li><code>password_file</code> 若使用相对路径，相对的是工作目录</li>
+<li><code>password_file</code> 必须绝对一定不能为空，否则不报错，而且不用密码也可登录!!!</li>
+</ul>
+<h2>MQTT的Java客户端的使用</h2>
+<h3>依赖</h3>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.eclipse.paho<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>org.eclipse.paho.client.mqttv3<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.2.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<h3>Java示例代码</h3>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.eclipse.paho.client.mqttv3.*</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 2018/11/30 上午10:08</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MqttTest</span> <span class="p">{</span>
+
+    <span class="c1">// MQTT协议URL格式 tcp://&lt;host&gt;[:port] 默认端口1883</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">mqttUrl</span> <span class="o">=</span> <span class="s">&quot;tcp://localhost&quot;</span><span class="p">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">trump</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">MqttException</span> <span class="p">{</span>
+        <span class="n">MqttClient</span> <span class="n">mqttClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MqttClient</span><span class="p">(</span><span class="n">mqttUrl</span><span class="p">,</span> <span class="s">&quot;america/usa/trump&quot;</span><span class="p">);</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">connect</span><span class="p">();</span>
+        <span class="c1">// 向Eiffel问好</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">publish</span><span class="p">(</span><span class="s">&quot;europe/france/eiffel&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">MqttMessage</span><span class="p">(</span><span class="s">&quot;Eiffel, I am trump&quot;</span><span class="p">.</span><span class="na">getBytes</span><span class="p">()));</span>
+        <span class="c1">// 向Thatcher问好</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">publish</span><span class="p">(</span><span class="s">&quot;europe/uk/thatcher&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">MqttMessage</span><span class="p">(</span><span class="s">&quot;Thatcher, I am trump&quot;</span><span class="p">.</span><span class="na">getBytes</span><span class="p">()));</span>
+        <span class="c1">// 向G20问好(g20主题已经被多客户端订阅，所以可以算是广播消息)</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">publish</span><span class="p">(</span><span class="s">&quot;g20&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">MqttMessage</span><span class="p">(</span><span class="s">&quot;G20, I am trump&quot;</span><span class="p">.</span><span class="na">getBytes</span><span class="p">()));</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 订阅端1</span>
+<span class="cm">     *</span>
+<span class="cm">     * @throws MqttException        .</span>
+<span class="cm">     * @throws InterruptedException .</span>
+<span class="cm">     */</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">eiffel</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">MqttException</span><span class="p">,</span> <span class="n">InterruptedException</span> <span class="p">{</span>
+        <span class="n">MqttClient</span> <span class="n">mqttClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MqttClient</span><span class="p">(</span><span class="n">mqttUrl</span><span class="p">,</span> <span class="s">&quot;europe/france/eiffel&quot;</span><span class="p">);</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">connect</span><span class="p">();</span>
+        <span class="c1">// 订阅自己，这样才能收到发给自己的消息</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">subscribe</span><span class="p">(</span><span class="s">&quot;europe/france/eiffel&quot;</span><span class="p">);</span>
+        <span class="c1">// 订阅G20，这样才能收到对应群组的消息</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">subscribe</span><span class="p">(</span><span class="s">&quot;g20&quot;</span><span class="p">);</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">setCallback</span><span class="p">(</span><span class="k">new</span> <span class="n">MqttCallback</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">connectionLost</span><span class="p">(</span><span class="n">Throwable</span> <span class="n">cause</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="p">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">messageArrived</span><span class="p">(</span><span class="n">String</span> <span class="n">topic</span><span class="p">,</span> <span class="n">MqttMessage</span> <span class="n">message</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[Eiffel] received: &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">String</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getPayload</span><span class="p">()));</span>
+            <span class="p">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deliveryComplete</span><span class="p">(</span><span class="n">IMqttDeliveryToken</span> <span class="n">token</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="p">}</span>
+        <span class="p">});</span>
+        <span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">join</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 订阅端2</span>
+<span class="cm">     *</span>
+<span class="cm">     * @throws MqttException        .</span>
+<span class="cm">     * @throws InterruptedException .</span>
+<span class="cm">     */</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">thatcher</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">MqttException</span><span class="p">,</span> <span class="n">InterruptedException</span> <span class="p">{</span>
+        <span class="n">MqttClient</span> <span class="n">mqttClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MqttClient</span><span class="p">(</span><span class="n">mqttUrl</span><span class="p">,</span> <span class="s">&quot;europe/uk/thatcher&quot;</span><span class="p">);</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">connect</span><span class="p">();</span>
+        <span class="c1">// 订阅自己，这样才能收到发给自己的消息</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">subscribe</span><span class="p">(</span><span class="s">&quot;europe/uk/thatcher&quot;</span><span class="p">);</span>
+        <span class="c1">// 订阅G20，这样才能收到对应群组的消息</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">subscribe</span><span class="p">(</span><span class="s">&quot;g20&quot;</span><span class="p">);</span>
+        <span class="n">mqttClient</span><span class="p">.</span><span class="na">setCallback</span><span class="p">(</span><span class="k">new</span> <span class="n">MqttCallback</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">connectionLost</span><span class="p">(</span><span class="n">Throwable</span> <span class="n">cause</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="p">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">messageArrived</span><span class="p">(</span><span class="n">String</span> <span class="n">topic</span><span class="p">,</span> <span class="n">MqttMessage</span> <span class="n">message</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[Thatcher] received: &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">String</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getPayload</span><span class="p">()));</span>
+            <span class="p">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deliveryComplete</span><span class="p">(</span><span class="n">IMqttDeliveryToken</span> <span class="n">token</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="p">}</span>
+        <span class="p">});</span>
+        <span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">join</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>要点</h3>
+<ul>
+<li>只有订阅代表自己的主题，才能收到发给自己的消息</li>
+<li>在MQTT中没有群组或个人的概念，如果主题被多人订阅，发送的消息就可以算是群发消息</li>
+<li>发布消息只能发送到确定的单个主题</li>
+<li>订阅消息可以以通配符的形式订阅多个主题 <code>+</code>匹配单级主题，<code>#</code>匹配多级主题</li>
+<li>先启动订阅端，再启动发布端，否则发布的消息就丢了</li>
+</ul>
+<h3>控制台输出</h3>
+<ol>
+<li>Eiffel</li>
+</ol>
+<div class="highlight"><pre><span></span>[Eiffel] received: Eiffel, I am trump
+[Eiffel] received: G20, I am trump
+</pre></div>
+<ol start="2">
+<li>Thatcher</li>
+</ol>
+<div class="highlight"><pre><span></span>[Thatcher] received: Thatcher, I am trump
+[Thatcher] received: G20, I am trump
+</pre></div>
+<ol start="3">
+<li>Trump</li>
+</ol>
+<p>无输出</p>
+<h3>MQTT服务端日志</h3>
+<div class="highlight"><pre><span></span>1545014641: mosquitto version 1.5.4 starting
+1545014641: Config loaded from /usr/local/etc/mosquitto/mosquitto.conf.
+1545014641: Opening ipv6 listen socket on port 1883.
+1545014641: Opening ipv4 listen socket on port 1883.
+
+1545014652: New connection from 127.0.0.1 on port 1883.
+1545014652: New client connected from 127.0.0.1 as europe/france/eiffel (c1, k60).
+1545014652: No will message specified.
+1545014652: Sending CONNACK to europe/france/eiffel (0, 0)
+1545014652: Received SUBSCRIBE from europe/france/eiffel
+1545014652: 	europe/france/eiffel (QoS 1)
+1545014652: europe/france/eiffel 1 europe/france/eiffel
+1545014652: Sending SUBACK to europe/france/eiffel
+1545014652: Received SUBSCRIBE from europe/france/eiffel
+1545014652: 	g20 (QoS 1)
+1545014652: europe/france/eiffel 1 g20
+1545014652: Sending SUBACK to europe/france/eiffel
+
+1545014660: New connection from 127.0.0.1 on port 1883.
+1545014660: New client connected from 127.0.0.1 as europe/uk/thatcher (c1, k60).
+1545014660: No will message specified.
+1545014660: Sending CONNACK to europe/uk/thatcher (0, 0)
+1545014660: Received SUBSCRIBE from europe/uk/thatcher
+1545014660: 	europe/uk/thatcher (QoS 1)
+1545014660: europe/uk/thatcher 1 europe/uk/thatcher
+1545014660: Sending SUBACK to europe/uk/thatcher
+1545014660: Received SUBSCRIBE from europe/uk/thatcher
+1545014660: 	g20 (QoS 1)
+1545014660: europe/uk/thatcher 1 g20
+1545014660: Sending SUBACK to europe/uk/thatcher
+
+1545014669: New connection from 127.0.0.1 on port 1883.
+1545014669: New client connected from 127.0.0.1 as america/usa/trump (c1, k60).
+1545014669: No will message specified.
+1545014669: Sending CONNACK to america/usa/trump (0, 0)
+1545014669: Received PUBLISH from america/usa/trump (d0, q1, r0, m1, &#39;europe/france/eiffel&#39;, ... (18 bytes))
+1545014669: Sending PUBACK to america/usa/trump (Mid: 1)
+1545014669: Sending PUBLISH to europe/france/eiffel (d0, q1, r0, m1, &#39;europe/france/eiffel&#39;, ... (18 bytes))
+1545014669: Received PUBLISH from america/usa/trump (d0, q1, r0, m2, &#39;europe/uk/thatcher&#39;, ... (20 bytes))
+1545014669: Sending PUBACK to america/usa/trump (Mid: 2)
+1545014669: Sending PUBLISH to europe/uk/thatcher (d0, q1, r0, m1, &#39;europe/uk/thatcher&#39;, ... (20 bytes))
+1545014669: Received PUBACK from europe/france/eiffel (Mid: 1)
+1545014669: Received PUBACK from europe/uk/thatcher (Mid: 1)
+1545014669: Received PUBLISH from america/usa/trump (d0, q1, r0, m3, &#39;g20&#39;, ... (15 bytes))
+1545014669: Sending PUBACK to america/usa/trump (Mid: 3)
+1545014669: Sending PUBLISH to europe/france/eiffel (d0, q1, r0, m2, &#39;g20&#39;, ... (15 bytes))
+1545014669: Sending PUBLISH to europe/uk/thatcher (d0, q1, r0, m2, &#39;g20&#39;, ... (15 bytes))
+1545014669: Received PUBACK from europe/france/eiffel (Mid: 2)
+1545014669: Received PUBACK from europe/uk/thatcher (Mid: 2)
+1545014670: Socket error on client america/usa/trump, disconnecting.
+</pre></div>
+<h2>MQTT在Web端的使用</h2>
+<p>MQTT可以在Web端通过WebSocket连接使用</p>
+<h3>Mosquitto设置</h3>
+<p>修改配置文件<code>/usr/local/etc/mosquitto/mosquitto.conf</code>，添加以下三行</p>
+<div class="highlight"><pre><span></span><span class="na">port</span> <span class="s">1883</span>
+<span class="na">listener</span> <span class="s">1888</span>
+<span class="na">protocol</span> <span class="s">websockets</span>
+</pre></div>
+<p>注意:</p>
+<ul>
+<li>port 1883 表示在1883端口开启MQTT服务(如果listener有配置，必须显式配置port，否则MQTT协议的服务不启动)</li>
+<li>listener 1888 表示Websocket监听1888端口</li>
+<li>protocol websockets 表示启用Websocket</li>
+</ul>
+<h3>JS库下载</h3>
+<p><a href="https://raw.githubusercontent.com/eclipse/paho.mqtt.javascript/master/src/paho-mqtt.js">https://raw.githubusercontent.com/eclipse/paho.mqtt.javascript/master/src/paho-mqtt.js</a></p>
+<h3>示例代码</h3>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 100%; height: 100%;&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;paho-mqtt.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--&lt;script src=&quot;https://raw.githubusercontent.com/eclipse/paho.mqtt.javascript/master/src/paho-mqtt.js&quot;&gt;&lt;/script&gt;--&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 100%; height: 100%; background: #eeeeee; display: flex; flex-direction: column; justify-content: center; align-items: center&quot;</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;log&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;border: 5px solid #bbbbbb; padding: 10px; font-size: 18pt;&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">old</span> <span class="o">=</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">logger</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="s2">&quot;&lt;div &gt;&quot;</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="ow">in</span> <span class="nx">arguments</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">logger</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nx">logger</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/div&gt;&quot;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">})();</span>
+    <span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">Paho</span><span class="p">.</span><span class="nx">MQTT</span><span class="p">.</span><span class="nx">Client</span><span class="p">(</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mf">1888</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">);</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">({</span>
+        <span class="nx">onSuccess</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;[Conn] Connected&quot;</span><span class="p">);</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;[Topic] Subscribing food ...&quot;</span><span class="p">);</span>
+            <span class="nx">client</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s2">&quot;food&quot;</span><span class="p">);</span>
+
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; [food] Sending apple ...&quot;</span><span class="p">);</span>
+            <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;food&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">);</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; [food] Sending banana ...&quot;</span><span class="p">);</span>
+            <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;food&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">);</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; [food] Sending cat ...&quot;</span><span class="p">);</span>
+            <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;food&quot;</span><span class="p">,</span> <span class="s2">&quot;cat&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">onConnectionLost</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;[Conn] Disconnected&quot;</span><span class="p">)</span>
+    <span class="p">};</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">onMessageArrived</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;&lt;&lt;&lt; Message received: &quot;</span><span class="p">,</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="nx">message</span><span class="p">.</span><span class="nx">topic</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="nx">message</span><span class="p">.</span><span class="nx">payloadString</span><span class="p">)</span>
+    <span class="p">};</span>
+
+
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<h3>JS控制台输出</h3>
+<div class="highlight"><pre><span></span>[Conn] Connected
+[Topic] Subscribing food ...
+&gt;&gt;&gt; [food] Sending apple ...
+&gt;&gt;&gt; [food] Sending banana ...
+&gt;&gt;&gt; [food] Sending cat ...
+&lt;&lt;&lt; Message received: [food] apple
+&lt;&lt;&lt; Message received: [food] banana
+&lt;&lt;&lt; Message received: [food] cat
+</pre></div>
+<h2>Web端单聊群聊示例</h2>
+<h3>HTML</h3>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bj-match-parent&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;font-size: 1.2em&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>MQTT Demo<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;paho-mqtt.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--&lt;script src=&quot;https://raw.githubusercontent.com/eclipse/paho.mqtt.javascript/master/src/paho-mqtt.js&quot;&gt;&lt;/script&gt;--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+        <span class="p">.</span><span class="nc">animal</span> <span class="p">{</span>
+            <span class="k">width</span><span class="p">:</span> <span class="mf">33.33</span><span class="kt">%</span><span class="p">;</span>
+            <span class="k">background</span><span class="p">:</span> <span class="mh">#bbbbbb</span><span class="p">;</span>
+            <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
+            <span class="k">min-height</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">.</span><span class="nc">animal</span> <span class="o">&gt;</span> <span class="p">.</span><span class="nc">content</span><span class="o">,</span> <span class="p">#</span><span class="nn">animals</span> <span class="o">&gt;</span> <span class="p">.</span><span class="nc">content</span> <span class="p">{</span>
+            <span class="k">max-height</span><span class="p">:</span> <span class="mi">250</span><span class="kt">px</span><span class="p">;</span>
+            <span class="k">overflow</span><span class="p">:</span> <span class="kc">scroll</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">.</span><span class="nc">animal</span><span class="p">:</span><span class="nd">nth-child</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span> <span class="p">{</span>
+            <span class="k">border-left</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span> <span class="kc">dashed</span> <span class="mh">#aaaaaa</span><span class="p">;</span>
+            <span class="k">border-right</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span> <span class="kc">dashed</span> <span class="mh">#aaaaaa</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">.</span><span class="nc">animal</span> <span class="o">&gt;</span> <span class="p">:</span><span class="nd">first-child</span><span class="o">,</span> <span class="p">#</span><span class="nn">animals</span> <span class="o">&gt;</span> <span class="p">:</span><span class="nd">first-child</span><span class="o">,</span> <span class="p">#</span><span class="nn">logs</span> <span class="o">&gt;</span> <span class="p">:</span><span class="nd">first-child</span><span class="o">,</span> <span class="p">#</span><span class="nn">actions</span> <span class="o">&gt;</span> <span class="p">:</span><span class="nd">first-child</span> <span class="p">{</span>
+            <span class="k">background</span><span class="p">:</span> <span class="mh">#999999</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">.</span><span class="nc">bj-linear-layout</span> <span class="p">{</span>
+            <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+            <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+            <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">.</span><span class="nc">bj-match-parent</span> <span class="p">{</span>
+            <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+            <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">.</span><span class="nc">bj-gravity-center</span> <span class="p">{</span>
+            <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+            <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+        <span class="p">}</span>
+
+    <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bj-linear-layout bj-match-parent bj-gravity-center&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;flex-direction: column&quot;</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bj-linear-layout&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;flex-direction: column; ;background: #eeeeee; min-width: 80%; min-height: 80%&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bj-linear-layout&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;background: #cccccc; flex-grow: 1&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;ant&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;animal bj-linear-layout&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;flex-direction: column&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Ant<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;content&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;flex-grow: 1&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Ready.<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;message&quot;</span> <span class="na">data-name</span><span class="o">=</span><span class="s">&quot;ant&quot;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Please input.&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;bee&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;animal bj-linear-layout&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;flex-direction: column&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Bee<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;content&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;flex-grow: 1&quot;</span><span class="p">&gt;</span>Ready.<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;message&quot;</span> <span class="na">data-name</span><span class="o">=</span><span class="s">&quot;bee&quot;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Please input.&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;cat&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;animal bj-linear-layout&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;flex-direction: column&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Cat<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;content&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;flex-grow: 1&quot;</span><span class="p">&gt;</span>Ready.<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;message&quot;</span> <span class="na">data-name</span><span class="o">=</span><span class="s">&quot;cat&quot;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Please input.&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;animals&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bj-linear-layout&quot;</span>
+         <span class="na">style</span><span class="o">=</span><span class="s">&quot;background: #bbbbbb;flex-direction: column; flex-grow: 1; min-height: 200px; max-height: 300px;&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Animals<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;content&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;flex-grow: 1&quot;</span><span class="p">&gt;</span>Ready.<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;group-message&quot;</span> <span class="na">data-name</span><span class="o">=</span><span class="s">&quot;cat&quot;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Please input.&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;actions&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bj-linear-layout&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;background: #bbbbbb; flex-direction: column; flex-grow: 0&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Actions<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;content&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;display: flex; justify-content: space-around; padding: 7px&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;login&quot;</span> <span class="na">data-name</span><span class="o">=</span><span class="s">&quot;ant&quot;</span><span class="p">&gt;</span>Login(Ant)<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;login&quot;</span> <span class="na">data-name</span><span class="o">=</span><span class="s">&quot;bee&quot;</span><span class="p">&gt;</span>Login(Bee)<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;login&quot;</span> <span class="na">data-name</span><span class="o">=</span><span class="s">&quot;cat&quot;</span><span class="p">&gt;</span>Login(Cat)<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;logs&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bj-linear-layout&quot;</span>
+         <span class="na">style</span><span class="o">=</span><span class="s">&quot;background: #bbbbbb; flex-direction: column; flex-grow: 1&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Logs<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;logs-content&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;height: 100px; overflow: scroll; font-size: 0.5rem&quot;</span><span class="p">&gt;</span>Ready.<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">myName</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">old</span> <span class="o">=</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;logs-content&#39;</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">logger</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="s2">&quot;&lt;div&gt;&quot;</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">old</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+                <span class="nx">logger</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nx">logger</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/div&gt;&quot;</span><span class="p">;</span>
+            <span class="nx">logger</span><span class="p">.</span><span class="nx">scrollTop</span> <span class="o">=</span> <span class="nx">logger</span><span class="p">.</span><span class="nx">scrollHeight</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">})();</span>
+
+    <span class="p">[].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&quot;login&quot;</span><span class="p">)).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">button</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;data-name&quot;</span><span class="p">);</span>
+            <span class="nx">doLogin</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+
+    <span class="p">[].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">)).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">input</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;keyup&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">!==</span> <span class="mf">13</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;data-name&quot;</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+            <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+            <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;user/&quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;/inbox/&quot;</span> <span class="o">+</span> <span class="nx">myName</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">element</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">name</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)[</span><span class="mf">0</span><span class="p">];</span>
+            <span class="nx">element</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="s2">&quot;&lt;div style=&#39;text-align: right; color: forestgreen;&#39;&gt;&quot;</span> <span class="o">+</span> <span class="nx">myName</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">message</span> <span class="o">+</span> <span class="s2">&quot;&lt;/div&gt;&quot;</span><span class="p">;</span>
+            <span class="nx">element</span><span class="p">.</span><span class="nx">scrollTop</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">scrollHeight</span><span class="p">;</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt;&quot;</span><span class="p">,</span> <span class="nx">myName</span><span class="p">,</span> <span class="s2">&quot;=&gt;&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+        <span class="p">})</span>
+    <span class="p">});</span>
+
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;group-message&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;keyup&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">!==</span> <span class="mf">13</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">group</span> <span class="o">=</span> <span class="s2">&quot;animals&quot;</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;group/&quot;</span> <span class="o">+</span> <span class="nx">group</span> <span class="o">+</span> <span class="s2">&quot;/inbox/&quot;</span> <span class="o">+</span> <span class="nx">myName</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">element</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">group</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)[</span><span class="mf">0</span><span class="p">];</span>
+        <span class="nx">element</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="s2">&quot;&lt;div style=&#39;text-align: right; color: green;&#39;&gt;&quot;</span> <span class="o">+</span> <span class="nx">myName</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">message</span> <span class="o">+</span> <span class="s2">&quot;&lt;/div&gt;&quot;</span><span class="p">;</span>
+        <span class="nx">element</span><span class="p">.</span><span class="nx">scrollTop</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">scrollHeight</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt;&quot;</span><span class="p">,</span> <span class="nx">myName</span><span class="p">,</span> <span class="s2">&quot;=&gt;&quot;</span><span class="p">,</span> <span class="nx">group</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="kd">function</span> <span class="nx">doLogin</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">client</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">client</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="nx">myName</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Login...&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+        <span class="nx">client</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">Paho</span><span class="p">.</span><span class="nx">MQTT</span><span class="p">.</span><span class="nx">Client</span><span class="p">(</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mf">1888</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">({</span>
+            <span class="nx">onSuccess</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;[Conn] Connected&quot;</span><span class="p">);</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;[Topic] Subscribing ...&quot;</span><span class="p">);</span>
+                <span class="nx">client</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s2">&quot;user/&quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;/inbox/+&quot;</span><span class="p">);</span>
+                <span class="nx">client</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s2">&quot;group/animals/inbox/+&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">onConnectionLost</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;[Conn] Disconnected&quot;</span><span class="p">)</span>
+        <span class="p">};</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">onMessageArrived</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">topic</span> <span class="o">=</span> <span class="nx">message</span><span class="p">.</span><span class="nx">topic</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">message</span><span class="p">.</span><span class="nx">payloadString</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">fromName</span> <span class="o">=</span> <span class="nx">topic</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">topic</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">isGroupMessage</span> <span class="o">=</span> <span class="nx">topic</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span> <span class="nx">topic</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">))</span> <span class="o">===</span> <span class="s2">&quot;group&quot;</span><span class="p">;</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;&lt;&lt;&lt; Message received: &quot;</span><span class="p">,</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="nx">topic</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="nx">fromName</span><span class="p">,</span> <span class="nx">payload</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">element</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">isGroupMessage</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">fromName</span> <span class="o">===</span> <span class="nx">myName</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;my message .&quot;</span><span class="p">)</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nx">element</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;animals&quot;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)[</span><span class="mf">0</span><span class="p">];</span>
+                    <span class="nx">element</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="s2">&quot;&lt;div style=&#39;color: dodgerblue;&#39;&gt;&quot;</span> <span class="o">+</span> <span class="nx">fromName</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">payload</span> <span class="o">+</span> <span class="s2">&quot;&lt;/divs&gt;&quot;</span><span class="p">;</span>
+                    <span class="nx">element</span><span class="p">.</span><span class="nx">scrollTop</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">scrollHeight</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">element</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">fromName</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)[</span><span class="mf">0</span><span class="p">];</span>
+                <span class="nx">element</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="s2">&quot;&lt;div style=&#39;color: cornflowerblue;&#39;&gt;&quot;</span> <span class="o">+</span> <span class="nx">fromName</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">payload</span> <span class="o">+</span> <span class="s2">&quot;&lt;/div&gt;&quot;</span><span class="p">;</span>
+                <span class="nx">element</span><span class="p">.</span><span class="nx">scrollTop</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">scrollHeight</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<h3>JS控制台输出</h3>
+<div class="highlight"><pre><span></span>Ready.
+Login... cat
+[Conn] Connected
+[Topic] Subscribing ...
+&lt;&lt;&lt; Message received: [group/animals/inbox/ant] ant a
+&lt;&lt;&lt; Message received: [group/animals/inbox/ant] ant a
+&lt;&lt;&lt; Message received: [group/animals/inbox/ant] ant a
+&lt;&lt;&lt; Message received: [group/animals/inbox/bee] bee b
+&lt;&lt;&lt; Message received: [group/animals/inbox/bee] bee b
+&lt;&lt;&lt; Message received: [group/animals/inbox/bee] bee b
+&gt;&gt;&gt; cat =&gt; animals : c
+&lt;&lt;&lt; Message received: [group/animals/inbox/cat] cat c
+my message .
+&gt;&gt;&gt; cat =&gt; animals : c
+&lt;&lt;&lt; Message received: [group/animals/inbox/cat] cat c
+my message .
+&gt;&gt;&gt; cat =&gt; animals : c
+&lt;&lt;&lt; Message received: [group/animals/inbox/cat] cat c
+my message .
+</pre></div>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/11/30/mqtt/index.html";
+        this.page.identifier = "/2018/11/30/mqtt/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

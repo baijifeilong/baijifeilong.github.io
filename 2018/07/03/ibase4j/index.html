@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>警惕挂着开源的招牌到处坑蒙拐骗的垃圾项目，比如iBase4J - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>警惕挂着开源的招牌到处坑蒙拐骗的垃圾项目，比如iBase4J</h1>
+    <p>开源界，本是技术爱好者百花齐放、各显其能的地方。但是，不管什么好东西，到了这块奇葩的土地都能变了味。现在的开源界，真的是鱼龙混杂，有些开源软件，不知道是噱头喊得高，还是star刷得好，竟能凭借一身垃圾代码招摇撞骗，误人子弟。垃圾不扫，这世界只能越来越臭。以iBase4J为例，我来给大家分析一下，让大家提高警惕，尤其是编程新手，不要上了贼船，免得抱撼终身。</p>
+<h2>1. iBase4J是什么东西</h2>
+<p>iBase4J，作者自称是一个<code>JAVA</code>(原文如此)分布式快速开发平台。项目的Github地址是<a href="https://github.com/iBase4J/iBase4J">https://github.com/iBase4J/iBase4J</a>。截至本文的撰写时间(2018年7月3日，自由日前夕)，该项目已有943个Star。在码云<a href="https://gitee.com/iBase4J/iBase4J">https://gitee.com/iBase4J/iBase4J</a>上，该项目甚至有6422个Star，而且竟然是GVP(码云最有价值开源项目)，这就是所谓鸡犬升天？</p>
+<p>项目的官方介绍：</p>
+<blockquote>
+<p>JAVA分布式快速开发平台：Spring，SpringBoot 2.0，SpringMVC，Mybatis，mybatis-plus，motan/dubbo分布式，Redis缓存，Shiro权限管理，Spring-Session单点登录，Quartz分布式集群调度，Restful服务，QQ/微信登录，App token登录，微信/支付宝支付；日期转换、数据类型转换、序列化、汉字转拼音、身份证号码验证、数字转人民币、发送短信、发送邮件、加密解密、图片处理、excel导入导出、FTP/SFTP/fastDFS上传下载、二维码、XML读写、高精度计算、系统配置工具类等等。SpringBoot版本：https://github.com/iBase4J/iBase4J-SpringBoot http://gitee.com/signup?inviter=iBase2J</p>
+</blockquote>
+<h2>2. 我与iBase4J的渊源</h2>
+<p>话说，我本不是什么路见不平，拔刀相助的侠客，而是鲁迅笔下的一个小小的看客。对于这种垃圾项目，敬而远之对我来说本是最佳选择。但是，自称iBase4J原作者的&quot;万明&quot;欠了我五千多的工资不发(<a href="https://baijifeilong.github.io/2018/06/19/bashu/">如此如此</a>，<a href="https://www.cnblogs.com/baijifeilong/p/9198434.html">这般</a><a href="https://blog.csdn.net/baijifeilong/article/details/80734388">这般</a>)，就跟我结下了梁子。</p>
+<p>iBase4J的作者叫“沈华杰”，河南人，万明(南充巴蜀文化传媒)的小弟。万明曾向我得意地说他才是iBase4J的原作者。我在这家公司负责前后端接口调试，后端是沈华杰用他的iBase4J写的。我被克扣工资愤而离职后，万明借口我什么都没做，交接工作没做好(我写了1万字以上的交接文档，能讲的都讲了，万明说新同事看了我的文档完全看不懂，接手不了，我调试过的接口全部都重写了(服，接口不都是你家沈华杰写的？我只是来调试和维护的))，不发工资，而且是一毛不发。</p>
+<p>狼狈为奸者，一路货色也。当初维护iBase4J写的项目，搞得我焦头烂额。现在正好记录一下，让大家共赏。</p>
+<h2>3. 从项目主页看起</h2>
+<p>首先，<code>JAVA</code> 四个字母用的是全大写。众所周知，Java 名字的由来是印尼的爪哇岛，是地名，不是词组的简写。作为一个合格的 Java 程序员，对于给了咱饭碗的 Java 语言，至少要尊重人家的名字吧。全大写的 <code>JAVA</code>，由一个 Java 程序员拼写出来，完全是不伦不类。</p>
+<p>然后，看 README 中的这句话</p>
+<blockquote>
+<p>持久层：mybatis持久化，使用MyBatis-Plus优化，减少sql开发量；aop切换数据库实现读写分离。Transtraction注解事务。</p>
+</blockquote>
+<p>文法内容先略过不表。单说<code>Transtraction</code>，英文中完全没有这个词汇。事务，作为数据库的核心概念之一，相信程序员们对于这个词都熟悉得很。我当然也不例外，当初打开这个项目主页，一眼就瞅到这个不三不四的单词，二话没说Fork下来改正拼写，然后提交<code>Pull request</code>。我好心好意帮你修正这低级错误，为了不伤你自尊，提交信息我还是用的纯英文的<code>Update readme.md</code>。结果，到现在都没改过来。没有任何反馈，就在二十多天后悄悄把这个<code>Pull request</code>给关了。</p>
+<p>首页的其他地方也有槽点，不过我不是来找碴的，先架起项目再说。</p>
+<h2>4. 搭建环境与运行项目</h2>
+<p>iBase4J有SpringBoot版，是在另一个git仓库（<a href="https://github.com/iBase4J/iBase4J-SpringBoot">https://github.com/iBase4J/iBase4J-SpringBoot</a>）。既然有SpringBoot版，就优先使用SpringBoot版吧。</p>
+<p>先查查文档怎么介绍的。结果只能在 README 里头找到这两句有点用的：</p>
+<blockquote>
+<p>启动方法：
+   	SysServiceApplication.java
+    	SysWebApplication.java</p>
+</blockquote>
+<p>具体的文档还需要加QQ群才能下载：</p>
+<blockquote>
+<p>加入QQ群538240548
+交流技术问题，下载项目文档和一键启动依赖服务工具。</p>
+</blockquote>
+<p>既然没有文档，就直接导入IDE执行吧。</p>
+<p>先把项目源码克隆到本地，再用 <code>Jetbrains IDEA</code> 打开。IDEA 会在后台自动下载 Maven 依赖。</p>
+<p>依赖下载完成后，先启动 <code>SysServiceApplication.java</code> ，控制台一屏的报错。</p>
+<p>先不说这报错，先看看日志的打印。SpringBoot默认情况下，打印的是彩色的日志，报错信息红色显示，十分醒目。但这个 <code>ibase4J</code> 放着 <code>SpringBoot</code> 精心设计好的日志格式不用，非要在 <code>resources</code> 目录创建一个 <code>log4j2.xml</code> ，打印了满屏的黑色。还有一堆乱码日志 <code>[main] DEBUG [DefaultVFS:102] - Reader entry: ����4?</code> 不知道是怎么搞出来的。</p>
+<p>接下来看具体的报错。</p>
+<p>报的第一个错是</p>
+<div class="highlight"><pre><span></span>main ERROR Unable to create file /output/logs/iBase4J-SYS-Service-dev/iBase4J-SYS-Service.log java.io.IOException: Could not create directory /output/logs/iBase4J-SYS-Service-dev
+    at org.apache.logging.log4j.core.util.FileUtils.mkdir(FileUtils.java:127)
+    at org.apache.logging.log4j.core.util.FileUtils.makeParentDirs(FileUtils.java:144)
+    at org.apache.logging.log4j.core.appender.rolling.RollingFileManager$RollingFileManagerFactory.createManager(RollingFileManager.java:627)
+</pre></div>
+<p>显然，是 <code>log4j</code> 创建日志文件失败，日志的根目录竟然是 <code>/output</code>。你日志文件默认不写到工作目录，非要在系统根目录创建一个文件夹 <code>output</code> ？在类UNIX系统上，普通用户必然没有权限在系统根目录创建文件夹。好吧，那就先把这个日志文件夹创出来。执行命令 <code>sudo mkdir /output &amp;&amp; sudo chmod 777 /output</code>，创建文件夹 <code>/output</code> 并把权限开到最大，不然普通用户也没有这个 <code>/output</code> 目录的写权限。</p>
+<p>目录建好后，再次运行，第二个报错是：</p>
+<div class="highlight"><pre><span></span>[main] ERROR [DruidDataSource:870] - init datasource error, url: jdbc:mysql://127.0.0.1:3306/ibase4j?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=CONVERT_TO_NULL&amp;allowMultiQueries=true&amp;serverTimezone=PRC&amp;useSSL=false
+java.sql.SQLException: Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: YES)
+    at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:127) ~[mysql-connector-java-8.0.11.jar:8.0.11]`
+</pre></div>
+<p>数据库连接失败，访问被拒绝。无可厚非，毕竟我还没配数据库呢。理论上，数据库应该配在 Spring Boot 的标准配置文件 <code>application.yml</code> 里头。但是里头没有。找着一个 <code>resources/config/dev/jdbc.properties</code> ，看名字数据库应该就在这里配置了。</p>
+<p>在这里配置也算不错了，<code>ibase4J</code> 之前的数据库可是配置在 <code>pom.xml</code> 中的。2018年5月18日，我离职6天后，沈华杰锅没地方甩了，估计也被自己这奇葩的配置方式绕晕了，老老实实把数据库配置放到了 <code>properties</code> 文件里。</p>
+<p>数据库连接的默认配置如下：</p>
+<div class="highlight"><pre><span></span><span class="na">druid.reader.url</span><span class="o">=</span><span class="s">jdbc:mysql://127.0.0.1:3306/ibase4j\u003fuseUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=CONVERT_TO_NULL&amp;allowMultiQueries=true&amp;serverTimezone=PRC&amp;useSSL=false</span>
+<span class="na">druid.reader.username</span><span class="o">=</span><span class="s">root</span>
+<span class="na">druid.reader.password</span><span class="o">=</span><span class="s">68NKG7n1mN8rErEfbag2qM==</span>
+<span class="na">druid.writer.url</span><span class="o">=</span><span class="s">jdbc:mysql://127.0.0.1:3306/ibase4j\u003fuseUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=CONVERT_TO_NULL&amp;allowMultiQueries=true&amp;serverTimezone=PRC&amp;useSSL=false</span>
+<span class="na">druid.writer.username</span><span class="o">=</span><span class="s">root</span>
+<span class="na">druid.writer.password</span><span class="o">=</span><span class="s">68NKG7n1mN8rErEfbag2qM==</span>
+</pre></div>
+<p>竟然把半角问号（?）用 <code>UNICODE</code> 码（\u003f）表示，这个逼装的，我给打99分，不打100分是怕你骄傲。</p>
+<p>数据库配置好后，再启动应用。这下报的错是：</p>
+<div class="highlight"><pre><span></span>[main] ERROR [SpringApplication:842] - Application run failed
+java.lang.RuntimeException: 解密错误，错误信息：
+    at top.ibase4j.core.util.SecurityUtil.decryptDes(SecurityUtil.java:134) ~[ibase4j-common-3.4.4.jar:?]
+    at top.ibase4j.core.config.Configs.postProcessEnvironment(Configs.java:53) ~[ibase4j-common-3.4.4.jar:?]
+    at org.springframework.boot.context.config.ConfigFileApplicationListener.onApplicationEnvironmentPreparedEvent(ConfigFileApplicationListener.java:183) ~[spring-boot-2.0.1.RELEASE.jar:2.0.1.RELEASE]
+</pre></div>
+<p>好吧，数据库密码竟然要加密处理。找到解密逻辑，代码如下：</p>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="s">&quot;druid.password,druid.writer.password,druid.reader.password&quot;</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="n">keyStr</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">String</span> <span class="n">dkey</span> <span class="o">=</span> <span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;druid.key&quot;</span><span class="p">);</span>
+    <span class="n">dkey</span> <span class="o">=</span> <span class="n">DataUtil</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">(</span><span class="n">dkey</span><span class="p">)</span> <span class="o">?</span> <span class="n">Constants</span><span class="p">.</span><span class="na">DB_KEY</span> <span class="p">:</span> <span class="n">dkey</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">SecurityUtil</span><span class="p">.</span><span class="na">decryptDes</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="na">toString</span><span class="p">(),</span> <span class="n">dkey</span><span class="p">.</span><span class="na">getBytes</span><span class="p">());</span>
+    <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>由于默认情况下 <code>druid.key</code> 是空值，加密的密钥取了默认值 <code>90139119</code> ，这又是什么鬼？</p>
+<p>调用<code>top.ibase4j.core.util.SecurityUtil#encryptDes(java.lang.String, byte[])</code>算出加密后的本机数据库密码后，更新数据库配置，再次启动应用。这次报的错是</p>
+<div class="highlight"><pre><span></span>[main] ERROR [JobStoreSupport$ClusterManager:3926] - ClusterManager: Error managing cluster: Failure obtaining db row lock: Table &#39;foo.qrtz_locks&#39; doesn&#39;t exist
+org.quartz.impl.jdbcjobstore.LockException: Failure obtaining db row lock: Table &#39;foo.qrtz_locks&#39; doesn&#39;t exist
+    at org.quartz.impl.jdbcjobstore.StdRowLockSemaphore.executeSQL(StdRowLockSemaphore.java:157) ~[quartz-2.3.0.jar:?]
+    at org.quartz.impl.jdbcjobstore.DBSemaphore.obtainLock(DBSemaphore.java:113) ~[quartz-2.3.0.jar:?]
+</pre></div>
+<p>显然，缺少 <code>Quartz</code> 相关的数据表。导入sqls/3.quartz.mysql.sql后，再次启动应用。这次报错是：</p>
+<div class="highlight"><pre><span></span>2018-07-04 11:03:30.287 [main] DEBUG [RetryLoop:171] - Retry-able exception received
+org.apache.zookeeper.KeeperException$ConnectionLossException: KeeperErrorCode = ConnectionLoss for /dubbo/org.ibase4j.service.SchedulerService/providers
+    at org.apache.zookeeper.KeeperException.create(KeeperException.java:102) ~[zookeeper-3.4.12.jar:3.4.12--1]
+</pre></div>
+<p>显然，<code>Zookeeper</code>没启动。启动Zookeeper，在启动应用，接下来的报错是：</p>
+<div class="highlight"><pre><span></span>[main] ERROR [SpringApplication:842] - Application run failed
+org.springframework.jdbc.BadSqlGrammarException:
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Table &#39;foo.sys_user&#39; doesn&#39;t exist
+</pre></div>
+<p>显然，缺用户表。导入 <code>sqls/1.iBase4J.sql</code>，报错<code>ERROR 1044 (42000) at line 16: Access denied for user 'foo'@'%' to database 'ibase4j'</code>。iBase4J 竟然把数据库名写死在 SQL 里。</p>
+<p>去掉数据库选择的 SQL , 再次导入，这次报错 <code>ERROR 1273 (HY000) at line 232: Unknown collation: 'utf8'</code> 。不懂，应该是我机器上没有叫<code>utf8</code>的字符集吧，可能新版本MySQL把这个字符集改名了。</p>
+<p>去掉字符集设置，这次终于导入成功。启动应用，这次终于算是启动完成吧：</p>
+<div class="highlight"><pre><span></span>[main] INFO [ApplicationReadyListener:35] - =================================
+[main] INFO [ApplicationReadyListener:38] - 系统[SysServiceApplication]启动完成!!!
+[main] INFO [ApplicationReadyListener:39] - =================================
+</pre></div>
+<p>由于这个应用 &quot;SysServiceApplication&quot; 启动的是 Java RPC 服务，因此得启动一个 RPC 的客户端才能验证能否正常工作。</p>
+<p>启动 <code>org.ibase4j.SysWebApplication</code>，一次启动完成。这个应用提供的是系统管理的 HTTP 接口。接下来测试一下。</p>
+<p>访问 <code>http://localhost:8088</code>，返回一个302，跳转到 <code>/index.html</code> ，这个 <code>/index.html</code> 又302跳转到 <code>/unauthorized</code>，返回如下的 JSON：</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;401&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;msg&quot;</span><span class="p">:</span> <span class="s2">&quot;您还没有登录&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;1530675700497&quot;</span>
+<span class="p">}</span>
+</pre></div>
+<p>一个接口的首页，竟然用跳转，还跳了两次，也是没谁了。。。</p>
+<p>访问 <code>http://localhost:8088/swagger-ui.html</code>，Swagger能进去。那就先看看这个接口的设计吧。</p>
+<p>|HTTP方法	|URI			|Swagger描述	|我的备注	|
+|---------------|-----------------------|---------------|---------------|
+|PUT		|/user/read/list	|查询用户	|查询所有用户	|
+|PUT		|/user/read/detail	|用户详细信息	|查询单个用户	|
+|POST		|/user			|修改用户信息	|新增及更新用户	|
+|DELETE		|/user			|删除用户	|删除用户	|</p>
+<p>显然，这接口的设计跟 <code>REST</code> 规范相去甚远，但是用 &quot;PUT&quot; 来进行查询操作也太匪夷所思了吧。新增与修改共用一个接口，这 iBase4J 不仅开源还会节流呢</p>
+<p>找到登录接口 <code>POST /login</code>，空参先调用一下，接口报错：</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;500&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;msg&quot;</span><span class="p">:</span> <span class="s2">&quot;系统走神了,请稍候再试.&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;1530698198011&quot;</span>
+<span class="p">}</span>
+</pre></div>
+<p>所有的系统错误，全部返回“系统走神了,请稍候再试.”。。。</p>
+<p>控制台报错：</p>
+<div class="highlight"><pre><span></span>[http-nio-8088-exec-19] ERROR [WebUtil:142] - java.lang.IllegalStateException: getInputStream() has already been called for this request
+    at org.apache.catalina.connector.Request.getReader(Request.java:1232)
+    at org.apache.catalina.connector.RequestFacade.getReader(RequestFacade.java:504)
+    at javax.servlet.ServletRequestWrapper.getReader(ServletRequestWrapper.java:225)
+    at top.ibase4j.core.util.WebUtil.getRequestBody(WebUtil.java:135)
+    at top.ibase4j.core.util.WebUtil.getParameter(WebUtil.java:164)
+    at top.ibase4j.core.interceptor.EventInterceptor.afterCompletion(EventInterceptor.java:82)
+</pre></div>
+<p>意思是输入流已经打开过了，不能再次打开。做Java竟然不知道流只能打开一回。。。</p>
+<p>这个bug之所以顽固到现在，是因为只要请求体不为空，就不复现。</p>
+<p>登录的具体逻辑在 <code>org.ibase4j.core.shiro.AuthorizeRealm</code> 中，代码如下：</p>
+<div class="highlight"><pre><span></span><span class="c1">// 登录验证</span>
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="n">AuthenticationInfo</span> <span class="nf">doGetAuthenticationInfo</span><span class="p">(</span><span class="n">AuthenticationToken</span> <span class="n">authcToken</span><span class="p">)</span>
+        <span class="kd">throws</span> <span class="n">AuthenticationException</span> <span class="p">{</span>
+    <span class="n">UsernamePasswordToken</span> <span class="n">token</span> <span class="o">=</span> <span class="p">(</span><span class="n">UsernamePasswordToken</span><span class="p">)</span><span class="n">authcToken</span><span class="p">;</span>
+    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">params</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">params</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;enable&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">params</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;account&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">.</span><span class="na">getUsername</span><span class="p">());</span>
+    <span class="n">List</span><span class="o">&lt;?&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">sysUserService</span><span class="p">.</span><span class="na">queryList</span><span class="p">(</span><span class="n">params</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="na">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SysUser</span> <span class="n">user</span> <span class="o">=</span> <span class="p">(</span><span class="n">SysUser</span><span class="p">)</span><span class="n">list</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">token</span><span class="p">.</span><span class="na">getPassword</span><span class="p">().</span><span class="na">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">sb</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">token</span><span class="p">.</span><span class="na">getPassword</span><span class="p">()</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getPassword</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">SecurityUtil</span><span class="p">.</span><span class="na">encryptPassword</span><span class="p">(</span><span class="n">sb</span><span class="p">.</span><span class="na">toString</span><span class="p">())))</span> <span class="p">{</span>
+            <span class="n">ShiroUtil</span><span class="p">.</span><span class="na">saveCurrentUser</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getId</span><span class="p">());</span>
+            <span class="n">saveSession</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getAccount</span><span class="p">(),</span> <span class="n">token</span><span class="p">.</span><span class="na">getHost</span><span class="p">());</span>
+            <span class="n">AuthenticationInfo</span> <span class="n">authcInfo</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleAuthenticationInfo</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getAccount</span><span class="p">(),</span> <span class="n">sb</span><span class="p">.</span><span class="na">toString</span><span class="p">(),</span>
+                <span class="n">user</span><span class="p">.</span><span class="na">getUserName</span><span class="p">());</span>
+            <span class="k">return</span> <span class="n">authcInfo</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;USER [{}] PASSWORD IS WRONG: {}&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">.</span><span class="na">getUsername</span><span class="p">(),</span> <span class="n">sb</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;No user: {}&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">.</span><span class="na">getUsername</span><span class="p">());</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>其中 <code>sysUserService</code> 是一个 RPC 服务。现在这种调用比以前可强太多了，以前我在职的时候，全部RPC调用都走的是同一个接口，
+代码如下：</p>
+<div class="highlight"><pre><span></span><span class="c1">// 权限</span>
+<span class="kd">protected</span> <span class="n">AuthorizationInfo</span> <span class="nf">doGetAuthorizationInfo</span><span class="p">(</span><span class="n">PrincipalCollection</span> <span class="n">principals</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">SimpleAuthorizationInfo</span> <span class="n">info</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleAuthorizationInfo</span><span class="p">();</span>
+    <span class="n">Long</span> <span class="n">userId</span> <span class="o">=</span> <span class="p">(</span><span class="n">Long</span><span class="p">)</span><span class="n">ShiroUtil</span><span class="p">.</span><span class="na">getCurrentUser</span><span class="p">();</span>
+    <span class="n">Parameter</span> <span class="n">parameter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Parameter</span><span class="p">(</span><span class="s">&quot;sysAuthorizeService&quot;</span><span class="p">,</span> <span class="s">&quot;queryPermissionByUserId&quot;</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;{} execute queryPermissionByUserId start...&quot;</span><span class="p">,</span> <span class="n">parameter</span><span class="p">.</span><span class="na">getNo</span><span class="p">());</span>
+    <span class="n">List</span><span class="o">&lt;?&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">sysProvider</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">parameter</span><span class="p">).</span><span class="na">getResultList</span><span class="p">();</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;{} execute queryPermissionByUserId end.&quot;</span><span class="p">,</span> <span class="n">parameter</span><span class="p">.</span><span class="na">getNo</span><span class="p">());</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">Object</span> <span class="n">permission</span> <span class="p">:</span> <span class="n">list</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">StringUtils</span><span class="p">.</span><span class="na">isNotBlank</span><span class="p">((</span><span class="n">String</span><span class="p">)</span><span class="n">permission</span><span class="p">))</span> <span class="p">{</span>
+            <span class="c1">// 添加基于Permission的权限信息</span>
+            <span class="n">info</span><span class="p">.</span><span class="na">addStringPermission</span><span class="p">((</span><span class="n">String</span><span class="p">)</span><span class="n">permission</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// 添加用户权限</span>
+    <span class="n">info</span><span class="p">.</span><span class="na">addStringPermission</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">info</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>看这一行<code>Parameter parameter = new Parameter(&quot;sysAuthorizeService&quot;, &quot;queryPermissionByUserId&quot;, userId);</code>，调用的服务、
+调用的方法全部通过字符串来传递，返回的结果再从<code>Object</code>向下强转。广义上说，应该算是自定义了一套协议了吧。
+通过字符串调用服务，PHP和Ruby都不这么干吧？牛！</p>
+<p>具体的调用逻辑：</p>
+<div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="n">Parameter</span> <span class="nf">execute</span><span class="p">(</span><span class="n">Parameter</span> <span class="n">parameter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">String</span> <span class="n">no</span> <span class="o">=</span> <span class="n">parameter</span><span class="p">.</span><span class="na">getNo</span><span class="p">();</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;{} request：{}&quot;</span><span class="p">,</span> <span class="n">no</span><span class="p">,</span> <span class="n">JSON</span><span class="p">.</span><span class="na">toJSONString</span><span class="p">(</span><span class="n">parameter</span><span class="p">));</span>
+    <span class="n">Object</span> <span class="n">service</span> <span class="o">=</span> <span class="n">applicationContext</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">parameter</span><span class="p">.</span><span class="na">getService</span><span class="p">());</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="n">String</span> <span class="n">method</span> <span class="o">=</span> <span class="n">parameter</span><span class="p">.</span><span class="na">getMethod</span><span class="p">();</span>
+        <span class="n">Object</span><span class="o">[]</span> <span class="n">param</span> <span class="o">=</span> <span class="n">parameter</span><span class="p">.</span><span class="na">getParam</span><span class="p">();</span>
+        <span class="n">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="n">InstanceUtil</span><span class="p">.</span><span class="na">invokeMethod</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">param</span><span class="p">);</span>
+        <span class="n">Parameter</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;{} response：{}&quot;</span><span class="p">,</span> <span class="n">no</span><span class="p">,</span> <span class="n">JSON</span><span class="p">.</span><span class="na">toJSONString</span><span class="p">(</span><span class="n">response</span><span class="p">));</span>
+        <span class="k">return</span> <span class="n">response</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="n">no</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">Constants</span><span class="p">.</span><span class="na">Exception_Head</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+        <span class="k">throw</span> <span class="n">e</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>这个方法参数用<code>Parameter</code>，返回类型还用<code>Parameter</code>，这就是传说中的惜码如金吧？</p>
+<p>rpc调用通过<code>top.ibase4j.core.base.provider.IBaseProvider#execute(top.ibase4j.core.base.provider.Parameter)</code>方法，方法的参数和返回值均是一个Parameter对象。做参数时，调用构造函数<code>Parameter(beanName, methodName, argList)</code>。做返回结果时，getResult取对象，getResultList取列表，getResultPage取分页，getResultLong取整数</p>
+<p>具体的查询数据库代码如下</p>
+<div class="highlight"><pre><span></span><span class="nd">@Override</span> <span class="cm">/** 根据参数查询 */</span>
+<span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">queryList</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">params</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">DataUtil</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;orderBy&quot;</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">params</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;orderBy&quot;</span><span class="p">,</span> <span class="s">&quot;id_&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">DataUtil</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;sortAsc&quot;</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">params</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;sortAsc&quot;</span><span class="p">,</span> <span class="s">&quot;desc&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">mapper</span><span class="p">.</span><span class="na">selectIdPage</span><span class="p">(</span><span class="n">params</span><span class="p">);</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">queryList</span><span class="p">(</span><span class="n">ids</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">list</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>作为一套框架，字符串不传参数，不传枚举，不传常量，也不写文档，硬生生地就写在 Map 里。
+至于<code>sortAsc</code>，<code>selectIdPage</code>之类的命名风格，还需要细细品味。</p>
+<p>由于时间有限，我就不慢慢深入了。在此再列出几条突出的槽点，供大家品鉴：</p>
+<h3>1. 项目的配置文件到处都是</h3>
+<p>修改配置的时候，寻找配置项所在的位置极其痛苦。甚至部分配置扔在jar包里，部署后想要修改这些配置，还得解包jar，再重新打包。自定义的配置是通过<code>org.springframework.core.io.support.PathMatchingResourcePatternResolver#getResources(&quot;classpath\*:config/\*.properties&quot;)</code>方法获取。此方法依次从当前项目、依赖模块、依赖jar的config目录读取properties文件，不搞懂优先规则，配置好的东西就被莫名其妙地覆盖掉了。</p>
+<h3>2. 数据库查询的queryById的代码匪夷所思</h3>
+<div class="highlight"><pre><span></span><span class="kd">private</span> <span class="n">T</span> <span class="nf">queryById</span><span class="p">(</span><span class="n">Long</span> <span class="n">id</span><span class="p">,</span> <span class="kt">int</span> <span class="n">times</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CacheKey</span> <span class="n">key</span> <span class="o">=</span> <span class="n">CacheKey</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="n">getClass</span><span class="p">());</span>
+    <span class="n">T</span> <span class="n">record</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="n">CacheUtil</span><span class="p">.</span><span class="na">getCache</span><span class="p">().</span><span class="na">get</span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="na">getValue</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span> <span class="o">+</span> <span class="n">id</span><span class="p">,</span> <span class="n">key</span><span class="p">.</span><span class="na">getTimeToLive</span><span class="p">());</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">logger</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="n">Constants</span><span class="p">.</span><span class="na">Exception_Head</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">record</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">String</span> <span class="n">lockKey</span> <span class="o">=</span> <span class="n">getLockKey</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+        <span class="n">String</span> <span class="n">requestId</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">.</span><span class="na">next</span><span class="p">().</span><span class="na">toString</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">CacheUtil</span><span class="p">.</span><span class="na">getLock</span><span class="p">(</span><span class="n">lockKey</span><span class="p">,</span> <span class="s">&quot;根据ID查询数据&quot;</span><span class="p">,</span> <span class="n">requestId</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="n">record</span> <span class="o">=</span> <span class="n">mapper</span><span class="p">.</span><span class="na">selectById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+                <span class="n">saveCache</span><span class="p">(</span><span class="n">record</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+                <span class="n">CacheUtil</span><span class="p">.</span><span class="na">unLock</span><span class="p">(</span><span class="n">lockKey</span><span class="p">,</span> <span class="n">requestId</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">times</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">record</span> <span class="o">=</span> <span class="n">mapper</span><span class="p">.</span><span class="na">selectById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+                <span class="n">saveCache</span><span class="p">(</span><span class="n">record</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">logger</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="n">getClass</span><span class="p">().</span><span class="na">getSimpleName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">&quot; retry getById.&quot;</span><span class="p">);</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+                <span class="k">return</span> <span class="n">queryById</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">times</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">record</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>递归调用、睡眠100毫秒、计次。。。</p>
+<p>queryById 先读缓存，如果缓存有效，直接返回。 
+否则，获取锁(60秒超时)并调用com.baomidou.mybatisplus.mapper.BaseMapper#selectById。
+没获取到锁，则继续获取两次，如果还没获取到锁，则直接#selectById。
+查询到的数据继续加入缓存。</p>
+<p>最基本的用ID查询数据，你们能看懂吗?</p>
+<h3>3. 用户的Token由客户端生成</h3>
+<p>用户的Token不在服务端生成，反而要客户端生成，还没有格式限制，你不嫌头大？</p>
+<h3>4. 一个用户一个密钥</h3>
+<p>正常情况下，只要私钥保存在服务器，一对密钥就足够安全了。可是这iBase4J的密钥要客户端调接口去申请，
+服务端生成密钥对保存在Redis里。一个用户一个密钥，哥们，你真有苦！</p>
+<h3>5. 签名算法把FBI都弄哭了</h3>
+<p>iBase4J的签名算法是：请求参数按key顺序排序，组成URL查询串，取前100各字符，MD5哈希成Base64格式，后缀一个&quot;\r\n&quot;，最后用私钥签名。
+哥们，你这九曲回肠的签名方法，把FBI都弄哭了！</p>
+<h3>6. Git日志几乎清一色的“优化”</h3>
+<p>以下是截取的最近的几条Git提交日志（<code>git log --oneline | cat</code>）</p>
+<div class="highlight"><pre><span></span>e110a6da 优化
+654db900 优化
+1daba720 优化
+20834312 优化缓存管理
+f595b17f 优化
+f4d9683d 修改bug
+73593c9b 优化
+ab0d465e 优化读取request.body
+fb5f300c 优化
+5e3d5e4d SQL
+bf8a44d9 庆祝国人加入JCP
+ad3b0047 庆祝国人加入JCP
+603fb11f 庆祝国人加入JCP
+ae7e968f 优化-庆祝国人加入JCP
+c44d888c 优化
+5228bce1 优化
+4cd3257d 优化
+7973d0b9 优化配置
+6fb59931 优化配置
+6393156c 优化配置
+17de6d23 优化FDFS
+c6bb4e70 优化
+b5ea3662 JSTL
+c619c366 省-市-区县
+443a6b60 优化邮件模块
+101c0f0c 优化发送邮件
+0c87fd5c 优化
+929d7a07 发送邮件
+93c66a68 优化配置
+</pre></div>
+<p>不知道这位“Git优化大师”是在解释什么，还是在掩饰什么。。。</p>
+<p>这iBase4J的槽点太多，我实在吐不过来了，JavaScript代码还没提到。软件写成这样，自己用就得了，还出来招摇撞骗、误人子弟就太过分了。</p>
+<p>捐赠要钱、文档要钱、加群交流要钱、后台UI也要钱，能要钱的地方你一个都拉不下，哥们你想钱想疯了，还有心思写代码吗？？？</p>
+<p>希望大家多多转载，多多评价，还开源界一片净土！</p>
+<p>文章首发：<a href="https://baijifeilong.github.io/2018/07/03/ibase4j">https://baijifeilong.github.io/2018/07/03/ibase4j</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/07/03/ibase4j/index.html";
+        this.page.identifier = "/2018/07/03/ibase4j/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>个人简历 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>个人简历</h1>
+    <h2>个人简介</h2>
+<ul>
+<li>性别：男</li>
+<li>年龄：25</li>
+<li>籍贯：山西吕梁</li>
+<li>肄业院校：山东理工大学</li>
+<li>工作经验：5年</li>
+<li>主要技能：Java/Kotlin、Python、PHP、C/C++</li>
+<li>特长: 工作(技能百里挑一，编码风生水起)</li>
+<li>特短: 面试(你会的我不会，我会的你不会)</li>
+<li>个人主页：<a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></li>
+<li>Stackoverflow(Reputation=555)：<a href="https://stackoverflow.com/users/5254103/baijifeilong">https://stackoverflow.com/users/5254103/baijifeilong</a></li>
+<li>Github(Star=7)：<a href="https://github.com/baijifeilong">https://github.com/baijifeilong</a></li>
+</ul>
+<h2>求职意向</h2>
+<p>Java/Kotlin开发。可接受全栈开发。薪资税后20K+。</p>
+<p>如果薪资到位，可接受任何语言，可接受架构师岗</p>
+<h2>技能评价</h2>
+<ul>
+<li>Java 熟悉SpringBoot、SpringCloud</li>
+<li>Android 熟悉Retrofit、Glide、GreenDAO</li>
+<li>Python 熟悉Tornado、Flask</li>
+<li>PHP 熟悉Laravel、ThinkPHP</li>
+<li>Web 熟悉React、Vue</li>
+<li>Linux 熟悉Bash、Systemd</li>
+<li>杂项 擅长PC组装、电脑维修、手机救转、科学上网、资源检索</li>
+</ul>
+<p>对MySQL分库分表的见解: <a href="https://baijifeilong.github.io/2018/11/27/mysql-sharding/">https://baijifeilong.github.io/2018/11/27/mysql-sharding/</a></p>
+<h2>自我描述</h2>
+<ul>
+<li>客观主义者，有信仰，有追求，有激情</li>
+<li>工作负责，有主见，敢于删繁就简，领异标新</li>
+<li>热爱编程，自学能力强，善于利于新技术提高开发效率，码品好，不将就</li>
+<li>熟悉多种常见编程语言：C、C++、C#、Java、Kotlin、Perl、Python、PHP</li>
+<li>熟悉多种常用开发框架：Spring、Rails、Tornado、Laravel、Qt</li>
+<li>熟悉Web开发、Windows桌面开发与Android开发</li>
+<li>有丰富的数据库迁移、代码重构与服务器维护经验</li>
+<li>熟悉Windows、macOS和Linux，熟练使用Chocolatey、Homebrew与Pacman</li>
+<li>略懂Android逆向、Windows逆向、Win32汇编、渗透测试、OpenGL、Web爬虫</li>
+<li>擅长现学现卖，可迅速在新的开发领域后来居上，也可根据项目需要深入底层探索</li>
+<li>兴趣广泛，精力充沛，爱好骑行，曾经8天骑行京沪，31天骑行京藏，且均为当天行者月度全国第一</li>
+</ul>
+<h2>StackOverflow主页</h2>
+<p><img src="https://raw.githubusercontent.com/baijifeilong/resources/master/resume/stackoverflow.png" alt="Stackoverflow" /></p>
+<h2>个人作品</h2>
+<h3>1. 安提自由聊(Android非ROOT加密聊天外挂)</h3>
+<p>利用Android提供的辅助功能，实现微信、短信、QQ等消息的密文传输，方便快捷，确保除通讯双方外，没有第三方可以获取明文信息，保障用户隐私。</p>
+<p>链接：<a href="https://baijifeilong.github.io/2017/09/23/antea-free-chat/">https://baijifeilong.github.io/2017/09/23/antea-free-chat/</a></p>
+<p><img src="https://raw.githubusercontent.com/baijifeilong/resources/master/resume/antea.png" alt="Antea" /></p>
+<h3>2. Yber(可以灵活切换参数的HTTP接口测试工具)</h3>
+<p>测试Web接口时，有时需要切换请求方法，或者各个参数的格式。如果使用命令行的话，不太方便。因此，我开发了 Yber Interface Tester 这个接口测试工具，可以灵活调整参数。返回的数据格式化后高亮显示。</p>
+<p>App基于TornadoFX(基于Kotlin的JavaFX的MVC开发框架)开发，通过WebView与JavaScript来高亮请求结果。</p>
+<p>链接：<a href="https://baijifeilong.github.io/2017/09/24/yber/">https://baijifeilong.github.io/2017/09/24/yber/</a></p>
+<p><img src="https://raw.githubusercontent.com/baijifeilong/resources/master/resume/yber.png" alt="Yber" /></p>
+<h3>3. RawsteelMusicPlayer(跨平台的桌面端单机音乐播放器)</h3>
+<p>由于Linux平台上没有我满意的音乐播放器，因此自行开发了一个。</p>
+<p>播放器使用Qt5开发，支持LRC歌词同步滚动显示。</p>
+<p>使用HashMap存储播放历史，在随机播放模式下，上一首和下一首都优先从播放历史中找。</p>
+<p>播放列表和其他配置通过JSON格式存储在配置文件中。</p>
+<p>数千个音乐文件可以在几秒内加入播放列表。</p>
+<p>实现了点击歌词跳到相应位置播放。</p>
+<p>链接：<a href="https://baijifeilong.github.io/2019/02/25/rawsteel/">https://baijifeilong.github.io/2019/02/25/rawsteel/</a></p>
+<p><img src="https://raw.githubusercontent.com/baijifeilong/resources/master/resume/rawsteel.png" alt="RawsteelMusicPlayer" /></p>
+<h3>4. JustPingIt(网络延迟检测工具)</h3>
+<p>通过向固定的服务器不断发送Ping请求，将响应时间绘制成折线图，检测网络延迟</p>
+<p>链接：<a href="https://baijifeilong.github.io/2019/02/25/justpingit/">https://baijifeilong.github.io/2019/02/25/justpingit/</a></p>
+<p><img src="https://raw.githubusercontent.com/baijifeilong/resources/master/resume/justpingit.png" alt="JustPingIt" /></p>
+<h3>5. IceSpring(冰泉音乐播放器)</h3>
+<p>使用Electron实现的单机音乐播放器，支持歌词同步，支持灵活布局</p>
+<p>链接: <a href="https://baijifeilong.github.io/2019/02/22/ice-spring/">https://baijifeilong.github.io/2019/02/22/ice-spring/</a></p>
+<h3>6. 麦多文档转换器</h3>
+<p>跨平台常用文档转换工具，支持多种常见文档格式</p>
+<p>链接: <a href="https://baijifeilong.github.io/2019/02/22/my-doctor/">https://baijifeilong.github.io/2019/02/22/my-doctor/</a></p>
+<h3>7. 谷国搜索</h3>
+<p>中英文谷歌分栏搜索，用于同时查看权威的英文搜索结果与简明的中文搜索结果</p>
+<p>链接(2019年2月，谷歌封闭相关功能，工具已失效): <a href="http://baijifeilong.github.io/nav.html">http://baijifeilong.github.io/nav.html</a></p>
+<h3>8. LandLive 安卓电视直播</h3>
+<p>安卓电视直播app，支持中央电视台与各大省级卫视</p>
+<p>链接: <a href="https://github.com/baijifeilong/LandLive">https://github.com/baijifeilong/LandLive</a></p>
+<h3>9. MySQL透视器</h3>
+<p>大型MySQL数据库透视工具。用于快速上手复杂项目</p>
+<p>链接: <a href="https://baijifeilong.github.io/2019/02/22/mysql-inspector/">https://baijifeilong.github.io/2019/02/22/mysql-inspector/</a></p>
+<h2>工作经历</h2>
+<h3>1. 北京点点未来教育科技有限公司</h3>
+<p>主要工作内容:</p>
+<ul>
+<li>幼儿智能手环对接业务系统</li>
+<li>智能摄像头对接业务系统</li>
+<li>基于MQTT的聊天系统架构与设计</li>
+</ul>
+<h3>2. 北京璞谷塘网络科技有限公司</h3>
+<h4>2.1 璞谷塘生鲜商城</h4>
+<p>在璞谷塘商城的后台接口项目中，我主要负责系统的扩展维护和新功能的开发。商城
+接口采用Spring Cloud微服务架构，用Zuul做负载均衡，Apollo做配置中心。</p>
+<p>针对当前项目Bug定位困难的问题，我添加了自定义的Servlet过滤器，在指定的日志
+级别下详细记录请求与响应。自定义了Feign的日志处理器，将Feign的请求与响应也
+详细记录在日志中，方便排查错误。</p>
+<p>针对业务逻辑繁琐，过度处理异常的问题，我去掉永真或永假的无用判断，可空参数
+使用@Nullable注解，删除不可能跳入的分支，对于非法状态直接抛出异常，减少了
+代码的嵌套，使代码结构更简洁，逻辑更清晰，Bug更容易追踪。</p>
+<p>针对数据库缺乏约束导致畸形数据储存在数据库的问题，我适当添加了部分数据库约
+束，提前暴露部分逻辑错误。</p>
+<p>针对营销活动改版的需求，我仔细梳理了营销活动需求，将常见的营销活动进行抽象
+和归类，设计出相对灵活而又便于检索的数据库结构，规范化算价逻辑。在算价算法中，
+充分利用Lambda表达式的优势，写出简短清晰、不易出错而又便于维护的代码。</p>
+<h3>3 北京音悦荚网络科技有限公司</h3>
+<h4>3.1 《爱玩音乐》互动音乐教学系统</h4>
+<p>《爱玩音乐》是一款可以通过乐音识别进行互动音乐教学的手机App。教师可以通过此系统制作与发布课程，学生可以购买与学习课程。</p>
+<p>我主要负责后台接口与管理系统的开发、维护。后台接口开发采用python的tornado开发，数据存储采用mongo，管理系统采用React.js。</p>
+<p>工作重点是课程结构与管理系统的设计。由于是互动课程，需要与课件、和弦、示范弹奏等多种素材进行关联交互。数据库采用mongo，以方便结构拓展。管理系统采用React开发，便于前后台解耦与组件复用。</p>
+<h3>4 北京国翼恒达导航科技有限公司</h3>
+<h4>4.1 北斗物联网平台</h4>
+<p>北斗物联网平台是整合了北斗技术的物联网平台，基本单位是传感器。主要用于物联网应用的开发、接入、服务与统计分析。</p>
+<p>项目用到的功能与技术：</p>
+<ol>
+<li>服务端使用Scala与Java语言，搭配Play Framework，利用Scala的优势提高并行处理能力</li>
+<li>整合并汉化了Kaa开源物联网平台，用于底层数据服务和后期分布式扩展</li>
+<li>Kaa平台搭建在Docker之上，方便部署与拓展</li>
+<li>前端使用Highcharts显示与分析数据</li>
+<li>使用Websocket技术实时更新前台数据和消息推送</li>
+</ol>
+<h4>4.2 油田北斗卫星巡检系统</h4>
+<p>本项目借助北斗卫星通讯在野外作业的优势，辅助油田勘探开发。我主要负责Web端与Android端的后期开发与维护，修复旧bug，添加新功能。</p>
+<p>项目使用的功能与技术：</p>
+<ol>
+<li>管理系统用Java开发，主要用到了Struts、Spring和MyBatis开发框架，服务器使用Tomcat。</li>
+<li>地图平台使用现成php框架，整合国内地图并进行纠偏。</li>
+<li>Android端用Java开发，整合OpenStreetMap，集成地形图、离线卫星图等多种地图。</li>
+<li>服务端和Android端都使用串口技术与北斗芯片通讯</li>
+<li>使用GIS地理信息技术，辅助石油开采与管控</li>
+</ol>
+<h3>5 淄博来马网络科技有限公司</h3>
+<h4>5.1 虚拟币交易系统</h4>
+<p>公司原有的交易系统使用ThinkPHP开发，由于代码质量问题，出现多次充值交易错误。因此我使用Laravel重构了整个系统，包括重新设计更合理的数据库、迁移数据库，合并交易数据、重新设计交易逻辑，同时将网站修改为响应式布局，适应移动端使用。整合网站前后台系统，减少不必要的耦合，加快部署速度。</p>
+<p>项目用到的功能与技术：</p>
+<ol>
+<li>Web框架从ThinkPHP重构到Laravel</li>
+<li>数据库使用MySQL</li>
+<li>服务器从Apache httpd转移到Nginx</li>
+<li>网站前端主要使用Bootstrap和jQuery</li>
+<li>K线图使用Highstocks绘制，并实时更新行情</li>
+<li>统计图使用Highcharts绘制</li>
+<li>集成汇潮、快银、支付宝的支付接口</li>
+<li>集成短信验证接口</li>
+</ol>
+<h2>联系方式</h2>
+<ul>
+<li>Email: <a href="baijifeilong@163.com">baijifeilong@163.com</a></li>
+<li>电话: 见招聘网站</li>
+<li>微信: baijifeilong</li>
+</ul>
+<h2>其他</h2>
+<ul>
+<li>Talk is cheap, show me the code. 我的部分开源代码见个人主页与Github仓库，</li>
+</ul>
+<p>希望也能鉴赏到贵公司的开源项目，互相学习提高。</p>
+<h2>如果让我出面试题</h2>
+<ol>
+<li>使用一行代码读取一个本地文件的内容到一个字符串，不得使用第三方库</li>
+<li>碰到一个不想try也不想throws的受检异常，怎么处理</li>
+<li>使用一行代码获取一个Stream的最后一个元素</li>
+<li>JOOQ与QueryDSL各有什么优缺点</li>
+<li>在虚拟终端下，如何快速使用文件浏览器打开当前目录，Windows、Linux与macOS各有什么方案</li>
+<li>LocalDateTime最大的坑在哪里</li>
+<li>如何优雅地安装与切换多个JDK版本</li>
+<li>翻译HTML、CSS、ISO、ANSI、TCP、UDP、IP、HTTP</li>
+<li>对于SpringBoot项目配置文件中自定义的配置，如何让IntelliJ IDEA提供代码提示</li>
+<li>如何随机生成一个一周内的时间点(Date)</li>
+<li>如何优雅地进行数据库迁移与数据库播种</li>
+<li>对于同一个用户对象，不同的接口需要对用户自己、用户的好友、系统游客呈现不同的字段，如何优雅地设计接口</li>
+<li>给定一个URL，如何用正则表达式提取其域名</li>
+<li>如何优雅地设计API接口的成功响应格式、失败响应格式和分页格式</li>
+<li>MySQL枚举类型有哪些优点与缺点，枚举类型在MySQL中怎么存储最合理</li>
+<li>怎么看待RESTful的接口设计</li>
+<li>接口设计中，分页的索引应该从0开始还是从1开始</li>
+<li>用户的密码在数据库中如何存储最合理</li>
+<li>在MySQL中，如何命名用户表中的这些字段: 用户名、密码、昵称、邮箱、手机号、真实姓名、禁止登录状态、实名认证状态、上次登录IP、上次登录时间、注册时间、注册IP</li>
+<li>编码时如何尽可能规避空指针异常</li>
+<li>如何看待Java中的断言</li>
+<li>不使用XML，将Logback的默认日志级别修改为debug</li>
+<li>如何让命令行程序的网络连接走指定的代理服务器</li>
+<li>使用一行代码，阻塞当前线程</li>
+<li>如何在控制台中打印彩色字符与彩色背景</li>
+</ol>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2019/02/25/resume/index.html";
+        this.page.identifier = "/2019/02/25/resume/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

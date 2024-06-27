@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>物联网平台 Kaa 的技术架构（翻译） - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>物联网平台 Kaa 的技术架构（翻译）</h1>
+    <p>Kaa物联网平台的核心功能包括设备连接、集成与数据处理。本文将带您浏览Kaa的方方面面，让您对Kaa的功能与性能有更深刻的理解。</p>
+<h2>1. 硬件</h2>
+<p>kaa平台是硬件透明的。您可以集成大量、任意设备，从全功能的操作系统，到可用内存小于10KB的资源受限设备。很多硬件平台已经被Kaa集成与检验，但是如果某个设备没有出现在这个清单上，这正是个好机会，使用Kaa高度便携的SDK可以很容易将其集成。Kaa的SDK现在支持Java、C++和C，您可以根据情况选择其中一个。</p>
+<h2>2. 数据模型</h2>
+<p>Kaa可以处理结构化数据，也可以处理非结构化数据，但是倾向于结构化。结构良好的数据可以为任何操作与分析提供优秀的原材料。</p>
+<p>这种数据模型也可以帮助把底层实现和您的硬件中任何不重要的细节抽象出来。Kaa甚至确保使用完全不同技术的东西也可以被统一管理与操作，只要他们共享同样的数据模式。这就是为什么Kaa的每个功能都利用同样的数据模式来管理语义和自动生成标准代码。这些数据模式兼容Apache Avro，因此非常强大。Apache Avro也使得数据序列化非常高效。</p>
+<p>一旦您开始使用Kaa工作，您将会马上发现您的大脑也处在一个数据模式状态。这是件好事。</p>
+<p>小结：</p>
+<ul>
+<li>处理结构化与非结构化数据</li>
+<li>兼容Apache Avro</li>
+<li>有数据模式图形界面</li>
+</ul>
+<h2>3. SDK</h2>
+<p>Kaa终端SDK支持Java、C++和C，来嵌入您的客户端程序或固件。他们处理客户端与服务端的连接、认证、整理、加密、持久化和平台提供的其他功能。
+生成的每个SDK只适用于特定的服务端实例。生成的SDK包含服务端指定的数据模式，并被转换为对象绑定，供您的物联网程序使用。SDK也包含用到的传输层协议实现，比如怎样与生成此SDK的服务端实例创建连接。</p>
+<p>小结：</p>
+<ul>
+<li>自动生成代码和数据绑定</li>
+<li>抽象了传输协议、数据一致性和其他复杂性</li>
+<li>容易移植到任意硬件与系统</li>
+</ul>
+<h2>4. 连接</h2>
+<p>Kaa是传输透明的。他允许创建跨任意类型网络运行的程序，无论持久连接还是断续连接。您可以选择一个已经存在的Kaa内置的传输协议，也可以自定义协议并嵌入您的系统中。Kaa将自动将连接参数通知终端，而且会自动平衡服务器集群的负载。</p>
+<p>高级用户可能会发现Kaa灵活调整服务端传输实现的特性是如此方便。例如，通知可以通过UDP或短信推送给用户，而配置数据可以使用基于TCP的AES加密的二进制协议进行同步。</p>
+<p>小结：</p>
+<ul>
+<li>传输透明</li>
+<li>可自定协议</li>
+<li>支持多通道</li>
+</ul>
+<h2>5. Iot网桥和路由器</h2>
+<p>Kaa可以为网桥和路由器开启高级物联网特性。通过内置Kaa功能，这些设备可以用作连接终端与IoT云端的桥梁，不仅价格便宜，而且功能丰富。
+Kaa网桥和路由器可以大大简化数据收集，包括传感器数据和基于PAN协议的设备，例如蓝牙、ZigBee、Z-Wave。他们也可以通过将设备数据格式转换成服务器通用格式，使得添加新设备到IoT集群的过程更合理。</p>
+<p>对于海量实时数据和大规模布署，Kaa允许在IoT网关中实现边缘分析。这是IoT网桥将数据发给云端前的预处理与预整理。通过这种方式，网络负载可以减少十倍甚至更多，大大减小了服务器的开销。</p>
+<h2>6. Kaa服务器</h2>
+<p>Kaa服务器是您定制后台系统的基石。他提供了大量的机制用于内部定制与外部集成。REST接口用于集成具体业务，日志处理器用于集成数据分析、管理与可视化系统，还有传输协议与其他模块可供定制。</p>
+<p>Kaa服务器通常部署为节点集群，如果有更高的性能需求，可以很容易进行扩展。通过开启高可用模式，Kaa服务器还能免除宕机风险，杜绝单点故障。Kaa集群使用Apache Zookeeper来协调服务器、选取主节点和缓解失败。由于Kaa完全开源免费，他可以很容易部署在服务器、云端或混合模式。</p>
+<p>Kaa服务器可以轻松处理上百万的设备连接。</p>
+<p>小结：</p>
+<ul>
+<li>易定制、易扩展</li>
+<li>集群负载平衡，杜绝单点故障</li>
+<li>多种部署选择：服务器、云端或混合模式</li>
+</ul>
+<h2>7. 数据处理</h2>
+<p>收集与分析用户数据，是最常见的IoT用例之一。Kaa的使命就是使这些任务简单直接，甚至是对海量数据。基于您为您的应用设计的日志模式，Kaa服务器可以构造对象绑定和API来定制SDK。您可以使用这些API发送日志记录到后台进行处理或储存。Kaa终端会缓存日志记录，一旦上传事件被触发，就会发往服务器。缓存器与触发器都支持插件与自由定制。</p>
+<p>在服务端，Kaa是数据注入的瑞士军刀。通过日志处理器，您可以将日志数据载入您选择的数据库，发往流处理，或通过REST、Flume等发往定制的数据处理模块。通过Kaa，您可以用您最喜欢的工具进行数据处理与分析，这相当容易，因为Kaa保证了端到端的结构化数据流。</p>
+<p>小结：</p>
+<ul>
+<li>集成了常用的数据处理系统，比如Couchbase、CDAP、Oracle、Hadoop、MongoDB、Spark、Cassandra、Flume</li>
+<li>可通过数据可视化工具进行方便的扩展</li>
+<li>可伸缩处理海量数据</li>
+</ul>
+<h2>8. 终端解决方案</h2>
+<p>Kaa平台被设计为流线型，保证了IoT应用开发的安全性。他自动化了复杂的数据管理，提供了完全不受限制的伸缩性，让您可以专注于最关键的地方：产品的业务逻辑。</p>
+<p>更多：</p>
+<ul>
+<li>您可以在Kaa之上构建任意应用。在目标编程语言、设备类型和数据模型上，您有最大的选择自由。</li>
+<li>您可以插入您自己的模块、分析系统、可视化工具，也可以根据需要定制完美的解决方案。</li>
+<li>您可以利用大量示例程序、教程和我们友好的社区来学习提高。</li>
+</ul>
+<p><em><a href="mailto:baijifeilong@gmail.com">白季飞龙</a> 2016-04-27 译自 <a href="http://www.kaaproject.org/platform/">官方网站</a></em></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2016/04/26/kaa-platform-structure/index.html";
+        this.page.identifier = "/2016/04/26/kaa-platform-structure/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

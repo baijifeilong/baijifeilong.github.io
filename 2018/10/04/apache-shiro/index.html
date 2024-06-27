@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>Shiro大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>Shiro大杂烩</h1>
+    <h2>1. 添加依赖</h2>
+<div class="highlight"><pre><span></span><span class="n">compile</span> <span class="s1">&#39;org.apache.shiro:shiro-spring-boot-starter:1.4.0&#39;</span>
+</pre></div>
+<h2>2. 实现一个 Realm</h2>
+<p>Realm 是 Shiro 的核心。所以，至少要实现一个 Realm。注意：此处要用认证 Realm （<code>org.apache.shiro.realm.AuthenticatingRealm</code>），不是授权 Realm （<code>org.apache.shiro.realm.AuthorizingRealm</code>）</p>
+<h2>3. 设置 SecurityManager</h2>
+<p>ShiroSpringBoot 会自动注入一个默认的 SecurityManager。通过 <code>org.apache.shiro.SecurityUtils#setSecurityManager</code> 静态方法设置好此 SecurityManager 即可</p>
+<h2>4. 登录与退出</h2>
+<p>通过 <code>org.apache.shiro.SecurityUtils#getSubject</code> 静态方法获取当前用户，再调用 <code>login</code> 进行登录，调用 <code>logout</code> 进行退出</p>
+<h2>5. 登录退出实例</h2>
+<p><strong>App.kt</strong></p>
+<div class="highlight"><pre><span></span><span class="k">package</span> <span class="nn">bj</span>
+
+<span class="k">import</span> <span class="nn">org.apache.shiro.SecurityUtils</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authc.*</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.mgt.SecurityManager</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.realm.AuthenticatingRealm</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.SpringApplication</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.context.event.ApplicationReadyEvent</span>
+<span class="k">import</span> <span class="nn">org.springframework.context.ApplicationListener</span>
+<span class="k">import</span> <span class="nn">org.springframework.stereotype.Component</span>
+<span class="k">import</span> <span class="nn">javax.annotation.Resource</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="kd">class</span> <span class="nc">App</span> <span class="p">:</span> <span class="n">ApplicationListener</span><span class="o">&lt;</span><span class="n">ApplicationReadyEvent</span><span class="o">&gt;</span> <span class="p">{</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="kd">lateinit</span> <span class="kd">var</span> <span class="nv">securityManager</span><span class="p">:</span> <span class="n">SecurityManager</span>
+
+
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">onApplicationEvent</span><span class="p">(</span><span class="n">event</span><span class="p">:</span> <span class="n">ApplicationReadyEvent?)</span> <span class="p">{</span>
+        <span class="n">SecurityUtils</span><span class="p">.</span><span class="na">setSecurityManager</span><span class="p">(</span><span class="n">securityManager</span><span class="p">)</span>
+
+        <span class="kd">val</span> <span class="nv">subject</span> <span class="o">=</span> <span class="n">SecurityUtils</span><span class="p">.</span><span class="na">getSubject</span><span class="p">()</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;isOnline: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">isAuthenticated</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;===== Login by not:exist&quot;</span><span class="p">)</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">subject</span><span class="p">.</span><span class="na">login</span><span class="p">(</span><span class="n">UsernamePasswordToken</span><span class="p">(</span><span class="s">&quot;not&quot;</span><span class="p">,</span> <span class="s">&quot;exist&quot;</span><span class="p">))</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">UnknownAccountException</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Login failed: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">localizedMessage</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;isOnline: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">isAuthenticated</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;===== Login by hello:world&quot;</span><span class="p">)</span>
+        <span class="n">subject</span><span class="p">.</span><span class="na">login</span><span class="p">(</span><span class="n">UsernamePasswordToken</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;world&quot;</span><span class="p">))</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;isOnline: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">isAuthenticated</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;===== Logout&quot;</span><span class="p">)</span>
+        <span class="n">subject</span><span class="p">.</span><span class="na">logout</span><span class="p">()</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;isOnline: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">isAuthenticated</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">companion</span> <span class="kd">object</span> <span class="err">{</span>
+        <span class="nd">@JvmStatic</span>
+        <span class="kd">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nd">@Component</span>
+<span class="kd">class</span> <span class="nc">MyRealm</span> <span class="p">:</span> <span class="n">AuthenticatingRealm</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">doGetAuthenticationInfo</span><span class="p">(</span><span class="n">token</span><span class="p">:</span> <span class="n">AuthenticationToken?)</span><span class="p">:</span> <span class="n">AuthenticationInfo? </span><span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">token</span> <span class="k">is</span> <span class="n">UsernamePasswordToken</span> <span class="o">&amp;&amp;</span> <span class="n">token</span><span class="p">.</span><span class="na">username</span> <span class="o">==</span> <span class="s">&quot;hello&quot;</span> <span class="o">&amp;&amp;</span> <span class="kt">String</span><span class="p">(</span><span class="n">token</span><span class="p">.</span><span class="na">password</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;world&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">SimpleAuthenticationInfo</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;world&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">null</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h2>6. 角色与权限实例</h2>
+<p><strong>App.kt</strong></p>
+<div class="highlight"><pre><span></span><span class="k">package</span> <span class="nn">bj</span>
+
+<span class="k">import</span> <span class="nn">org.apache.shiro.SecurityUtils</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authc.AuthenticationInfo</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authc.AuthenticationToken</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authc.SimpleAuthenticationInfo</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authc.UsernamePasswordToken</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authz.AuthorizationException</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authz.AuthorizationInfo</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authz.SimpleAuthorizationInfo</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authz.annotation.RequiresPermissions</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authz.annotation.RequiresRoles</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authz.permission.DomainPermission</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authz.permission.PermissionResolver</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.authz.permission.RolePermissionResolver</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.mgt.SecurityManager</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.realm.AuthorizingRealm</span>
+<span class="k">import</span> <span class="nn">org.apache.shiro.subject.PrincipalCollection</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.SpringApplication</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.SpringBootConfiguration</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span>
+<span class="k">import</span> <span class="nn">org.springframework.boot.context.event.ApplicationReadyEvent</span>
+<span class="k">import</span> <span class="nn">org.springframework.context.ApplicationListener</span>
+<span class="k">import</span> <span class="nn">org.springframework.stereotype.Component</span>
+<span class="k">import</span> <span class="nn">javax.annotation.Resource</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="kd">class</span> <span class="nc">App</span> <span class="p">:</span> <span class="n">ApplicationListener</span><span class="o">&lt;</span><span class="n">ApplicationReadyEvent</span><span class="o">&gt;</span> <span class="p">{</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="kd">lateinit</span> <span class="kd">var</span> <span class="nv">securityManager</span><span class="p">:</span> <span class="n">SecurityManager</span>
+
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="kd">lateinit</span> <span class="kd">var</span> <span class="nv">operators</span><span class="p">:</span> <span class="n">Operators</span>
+
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">onApplicationEvent</span><span class="p">(</span><span class="n">event</span><span class="p">:</span> <span class="n">ApplicationReadyEvent?)</span> <span class="p">{</span>
+        <span class="n">SecurityUtils</span><span class="p">.</span><span class="na">setSecurityManager</span><span class="p">(</span><span class="n">securityManager</span><span class="p">)</span>
+
+        <span class="kd">val</span> <span class="nv">subject</span> <span class="o">=</span> <span class="n">SecurityUtils</span><span class="p">.</span><span class="na">getSubject</span><span class="p">()</span>
+
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;===== Login with employee/pass&quot;</span><span class="p">)</span>
+        <span class="n">subject</span><span class="p">.</span><span class="na">login</span><span class="p">(</span><span class="n">UsernamePasswordToken</span><span class="p">(</span><span class="s">&quot;employee&quot;</span><span class="p">,</span> <span class="s">&quot;pass&quot;</span><span class="p">))</span>
+
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Has read permission: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">isPermitted</span><span class="p">(</span><span class="s">&quot;</span><span class="n">read</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Has write permission: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">isPermitted</span><span class="p">(</span><span class="s">&quot;</span><span class="n">write</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Has admin role: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;</span><span class="n">admin</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Has user role: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;</span><span class="n">user</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+
+        <span class="n">operators</span><span class="p">.</span><span class="na">doRead</span><span class="p">()</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">operators</span><span class="p">.</span><span class="na">doWrite</span><span class="p">()</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">AuthorizationException</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;No write permission: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">localizedMessage</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">operators</span><span class="p">.</span><span class="na">imBoss</span><span class="p">()</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">AuthorizationException</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not boss: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">localizedMessage</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;===== Login with boss/pass&quot;</span><span class="p">)</span>
+        <span class="n">subject</span><span class="p">.</span><span class="na">logout</span><span class="p">()</span>
+        <span class="n">subject</span><span class="p">.</span><span class="na">login</span><span class="p">(</span><span class="n">UsernamePasswordToken</span><span class="p">(</span><span class="s">&quot;boss&quot;</span><span class="p">,</span> <span class="s">&quot;pass&quot;</span><span class="p">))</span>
+
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Has read permission: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">isPermitted</span><span class="p">(</span><span class="s">&quot;</span><span class="n">read</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Has write permission: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">isPermitted</span><span class="p">(</span><span class="s">&quot;</span><span class="n">write</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Has admin role: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;</span><span class="n">admin</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Has user role: </span><span class="si">${</span><span class="n">subject</span><span class="p">.</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;</span><span class="n">user</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">companion</span> <span class="kd">object</span> <span class="err">{</span>
+        <span class="nd">@JvmStatic</span>
+        <span class="kd">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * 此 Component 必须起名为 authorizer 否则抛异常：</span>
+<span class="cm"> * Parameter 0 of method authorizationAttributeSourceAdvisor in</span>
+<span class="cm"> * org.apache.shiro.spring.boot.autoconfigure.ShiroAnnotationProcessorAutoConfiguration</span>
+<span class="cm"> * required a bean named &#39;authorizer&#39; that could not be found.</span>
+<span class="cm"> */</span>
+<span class="nd">@Component</span><span class="p">(</span><span class="s">&quot;authorizer&quot;</span><span class="p">)</span>
+<span class="kd">class</span> <span class="nc">MyRealm</span><span class="p">()</span> <span class="p">:</span> <span class="n">AuthorizingRealm</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">init</span> <span class="p">{</span>
+        <span class="c1">// 字符串权限映射到权限类 字符串权限=&gt;权限类</span>
+        <span class="n">permissionResolver</span> <span class="o">=</span> <span class="n">PermissionResolver</span> <span class="p">{</span> <span class="n">DomainPermission</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span> <span class="p">}</span>
+        <span class="c1">// 角色映射到权限集合 角色=&gt;权限集合</span>
+        <span class="n">rolePermissionResolver</span> <span class="o">=</span> <span class="n">RolePermissionResolver</span> <span class="p">{</span>
+            <span class="k">when</span> <span class="p">(</span><span class="nb">it</span><span class="p">)</span> <span class="p">{</span>
+                <span class="s">&quot;admin&quot;</span> <span class="o">-&gt;</span> <span class="n">setOf</span><span class="p">(</span><span class="s">&quot;read&quot;</span><span class="p">,</span> <span class="s">&quot;write&quot;</span><span class="p">)</span>
+                <span class="s">&quot;user&quot;</span> <span class="o">-&gt;</span> <span class="n">setOf</span><span class="p">(</span><span class="s">&quot;read&quot;</span><span class="p">)</span>
+                <span class="k">else</span> <span class="o">-&gt;</span> <span class="n">setOf</span><span class="p">()</span>
+            <span class="p">}.</span><span class="na">map</span> <span class="p">{</span> <span class="n">DomainPermission</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 授权 登录用户=&gt;角色集合</span>
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">doGetAuthorizationInfo</span><span class="p">(</span><span class="n">principals</span><span class="p">:</span> <span class="n">PrincipalCollection?)</span><span class="p">:</span> <span class="n">AuthorizationInfo</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">SimpleAuthorizationInfo</span><span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="n">principals</span><span class="o">?.</span><span class="na">primaryPrincipal</span> <span class="o">==</span> <span class="s">&quot;boss&quot;</span><span class="p">)</span> <span class="n">setOf</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">setOf</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">))</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 认证 用户=&gt;登录用户</span>
+    <span class="kd">override</span> <span class="kd">fun</span> <span class="nf">doGetAuthenticationInfo</span><span class="p">(</span><span class="n">token</span><span class="p">:</span> <span class="n">AuthenticationToken?)</span><span class="p">:</span> <span class="n">AuthenticationInfo? </span><span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">token</span> <span class="k">is</span> <span class="n">UsernamePasswordToken</span> <span class="o">&amp;&amp;</span> <span class="n">token</span><span class="p">.</span><span class="na">username</span> <span class="k">in</span> <span class="n">listOf</span><span class="p">(</span><span class="s">&quot;boss&quot;</span><span class="p">,</span> <span class="s">&quot;employee&quot;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="kt">String</span><span class="p">(</span><span class="n">token</span><span class="p">.</span><span class="na">password</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;pass&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">SimpleAuthenticationInfo</span><span class="p">(</span><span class="n">token</span><span class="p">.</span><span class="na">username</span><span class="p">,</span> <span class="kt">String</span><span class="p">(</span><span class="n">token</span><span class="p">.</span><span class="na">password</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">null</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * 必须注解 @SpringBootConfiguration, 否则报错：</span>
+<span class="cm"> * The bean &#39;operators&#39; could not be injected as a &#39;bj.Operators&#39; because it is a JDK dynamic proxy that implements</span>
+<span class="cm"> */</span>
+<span class="nd">@Component</span>
+<span class="nd">@SpringBootConfiguration</span>
+<span class="kd">class</span> <span class="nc">Operators</span> <span class="p">{</span>
+    <span class="nd">@RequiresPermissions</span><span class="p">(</span><span class="s">&quot;read&quot;</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">doRead</span><span class="p">()</span> <span class="o">=</span> <span class="n">println</span><span class="p">(</span><span class="s">&quot;Reading...&quot;</span><span class="p">)</span>
+
+    <span class="nd">@RequiresPermissions</span><span class="p">(</span><span class="s">&quot;write&quot;</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">doWrite</span><span class="p">()</span> <span class="o">=</span> <span class="n">println</span><span class="p">(</span><span class="s">&quot;Writing...&quot;</span><span class="p">)</span>
+
+    <span class="nd">@RequiresRoles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
+    <span class="kd">fun</span> <span class="nf">imBoss</span><span class="p">()</span> <span class="o">=</span> <span class="n">println</span><span class="p">(</span><span class="s">&quot;I am boss...&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/10/04/apache-shiro/index.html";
+        this.page.identifier = "/2018/10/04/apache-shiro/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>

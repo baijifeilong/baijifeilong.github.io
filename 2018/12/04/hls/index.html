@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>HLS大杂烩 - 白季飞龙的个人主页</title>
+    <style>
+        pre {
+            padding: 0.5em;
+            overflow: auto;
+            font-weight: bold !important;
+            font-family: consolas, Menlo, monospace !important;
+        }
+
+        ul#menu {
+            display: inline-block;
+            list-style: none;
+            margin: 0 0 0 0.25em;
+            padding: 0;
+        }
+
+        ul#menu > li {
+            display: inline-block;
+        }
+
+        ul#menu > li > a {
+            text-decoration: none;
+            color: inherit;
+            margin: 0 0.25em;
+        }
+
+        ul#menu > li > a:hover {
+            color: #d33682;
+        }
+
+        ul#articles {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#articles > li {
+            margin: 0.5rem 0;
+        }
+
+        ul#articles > li > a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul#articles > li > a:hover {
+            color: #d33682;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+                article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        nav,
+        section,
+        summary {
+          display: block;
+        }
+        audio,
+        canvas,
+        video {
+          display: inline-block;
+        }
+        audio:not([controls]) {
+          display: none;
+          height: 0;
+        }
+        [hidden] {
+          display: none;
+        }
+        html {
+          font-family: sans-serif;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+        }
+        body {
+          margin: 0;
+        }
+        a:focus {
+          outline: thin dotted;
+        }
+        a:active,
+        a:hover {
+          outline: 0;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        abbr[title] {
+          border-bottom: 1px dotted;
+        }
+        b,
+        strong {
+          font-weight: bold;
+        }
+        dfn {
+          font-style: italic;
+        }
+        mark {
+          background: #ff0;
+          color: #000;
+        }
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family: monospace, serif;
+          font-size: 1rem;
+        }
+        pre {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        q {
+          quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+        small {
+          font-size: 80%;
+        }
+        sub,
+        sup {
+          font-size: 75%;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+        }
+        sup {
+          top: -0.5rem;
+        }
+        sub {
+          bottom: -0.25rem;
+        }
+        img {
+          border: 0;
+        }
+        svg:not(:root) {
+          overflow: hidden;
+        }
+        figure {
+          margin: 0;
+        }
+        fieldset {
+          border: 1px solid #c0c0c0;
+          margin: 0 2px;
+          padding: 0.35em 0.625em 0.75rem;
+        }
+        legend {
+          border: 0;
+          padding: 0;
+        }
+        button,
+        input,
+        select,
+        textarea {
+          font-family: inherit;
+          font-size: 100%;
+          margin: 0;
+        }
+        button,
+        input {
+          line-height: normal;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+          -webkit-appearance: button;
+          cursor: pointer;
+        }
+        button[disabled],
+        input[disabled] {
+          cursor: default;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+          box-sizing: border-box;
+          padding: 0;
+        }
+        input[type="search"] {
+          -webkit-appearance: textfield;
+          -moz-box-sizing: content-box;
+          -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+          border: 0;
+          padding: 0;
+        }
+        textarea {
+          overflow: auto;
+          vertical-align: top;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        @import url(//fonts.googleapis.com/css?family=PT+Sans);
+        @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+        html {
+          font-family: 'PT Sans', sans-serif;
+        }
+        pre,
+        code {
+          font-family: monospace, sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-weight: 700;
+        }
+        html {
+          background-color: #fdf6e3;
+          color: #657b83;
+          margin: 1rem;
+        }
+        code {
+          background-color: #eee8d5;
+          padding: 2px;
+        }
+        a {
+          color: #b58900;
+        }
+        a:visited {
+          color: #cb4b16;
+        }
+        a:hover {
+          color: #cb4b16;
+        }
+        h1 {
+          color: #d33682;
+        }
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          color: #859900;
+        }
+        pre {
+          background-color: #fdf6e3;
+          color: #657b83;
+          border: 1pt solid #93a1a1;
+          padding: 1rem;
+          box-shadow: 5pt 5pt 8pt #eee8d5;
+        }
+        pre code {
+          background-color: #fdf6e3;
+        }
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.8rem;
+        }
+        h4 {
+          font-size: 1.4rem;
+        }
+        h5 {
+          font-size: 1.3rem;
+        }
+        h6 {
+          font-size: 1.15rem;
+        }
+        .tag {
+          background-color: #eee8d5;
+          color: #d33682;
+          padding: 0 0.2rem;
+        }
+        .todo,
+        .next,
+        .done {
+          color: #fdf6e3;
+          background-color: #dc322f;
+          padding: 0 0.2rem;
+        }
+        .tag {
+          -webkit-border-radius: 0.35rem;
+          -moz-border-radius: 0.35rem;
+          border-radius: 0.35rem;
+        }
+        .TODO {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #2aa198;
+        }
+        .NEXT {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .ACTIVE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #268bd2;
+        }
+        .DONE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          background-color: #859900;
+        }
+        .WAITING {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #cb4b16;
+        }
+        .HOLD {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .NOTE {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #d33682;
+        }
+        .CANCELLED {
+          -webkit-border-radius: 0.2rem;
+          -moz-border-radius: 0.2rem;
+          border-radius: 0.2rem;
+          foreground-color: #859900;
+        }
+        pre { line-height: 125%; }
+        td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+        td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+        .highlight .hll { background-color: #ffffcc }
+        .highlight { background: #f0f3f3; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+    </style>
+</head>
+<body style="margin: 0">
+<div style="text-align: center">
+    <div style="font-size: 2rem; display: inline-block; margin-top: 0.25rem">
+        <a href="./index.html" style="text-decoration: none; color: inherit">白季飞龙的个人主页</a>
+    </div>
+    <ul id="menu">
+        <li>
+            <a href="./tags/index.html">[标签]</a>
+            <a href="./categories/index.html">[分类]</a>
+        </li>
+    </ul>
+</div>
+<hr>
+<div style="margin: 0 auto; max-width: 1024px; font-size: 1.25em">
+    <h1>HLS大杂烩</h1>
+    <h2>HLS是什么</h2>
+<p>HLS(HTTP Live Streaming)是苹果公司主导的基于HTTP的流媒体协议。它将视频切分为数秒一个的TS文件，客户端需要轮询视频文件的索引地址，将一小段一小段的视频组装起来</p>
+<h2>HLS索引文件示例</h2>
+<p>HLS地址: <code>http://hls.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.hd.m3u8</code></p>
+<p>某一时段的响应:</p>
+<div class="highlight"><pre><span></span>#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-ALLOW-CACHE:NO
+#EXT-X-TARGETDURATION:4
+#EXT-X-MEDIA-SEQUENCE:15
+#EXT-TS-OFFSET-BEGIN:45
+#EXTINF:3.997,
+http://hzhls01.ys7.com:7888/openlivedata/203751922_1_1/8883db61d09440008b06f7062cdadb31-15.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a
+#EXT-TS-OFFSET-BEGIN:48
+#EXTINF:3.997,
+http://hzhls01.ys7.com:7888/openlivedata/203751922_1_1/8883db61d09440008b06f7062cdadb31-16.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a
+#EXT-TS-OFFSET-BEGIN:51
+#EXTINF:3.998,
+http://hzhls01.ys7.com:7888/openlivedata/203751922_1_1/8883db61d09440008b06f7062cdadb31-17.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a
+</pre></div>
+<p>部分字段解释:</p>
+<ul>
+<li><code>#EXT-X-TARGETDURATION:4</code> 视频片段最长为4秒</li>
+<li><code>#EXT-TS-OFFSET-BEGIN:45</code> 当前视频的时间戳是45秒(相对首次播放时间)</li>
+<li><code>#EXTINF:3.997</code> 当前视频长度4秒</li>
+<li><code>http://...</code> 当前视频片段的下载地址</li>
+</ul>
+<p>注意，萤石云的HLS协议不够规范，比如视频时长用浮点数，两个视频片段的索引间隔跟单个视频时长不一致，不知是何用意。真实时长以下载到视频文件的时长为准。</p>
+<h2>用Java解析HLS</h2>
+<p>Java的HLS解析库主要有以下两个:</p>
+<ol>
+<li><a href="https://github.com/Comcast/hlsparserj">hlsparserj</a></li>
+<li><a href="https://github.com/iheartradio/open-m3u8">open-m3u8</a></li>
+</ol>
+<p>然而，这两个库兼容性太差，也可能是因为这个HLS报文不够标准吧，总之两个库没有一个库能解析出来。所以只能手动解析了。</p>
+<p><strong>示例代码</strong></p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">bj</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.Level</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.Logger</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.classic.encoder.PatternLayoutEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.core.ConsoleAppender</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">ch.qos.logback.core.Context</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.vavr.control.Try</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.commons.io.FileUtils</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.commons.lang3.tuple.Triple</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.client.RestTemplate</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.File</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.regex.Matcher</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.regex.Pattern</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by BaiJiFeiLong@gmail.com at 2018/12/1 上午10:17</span>
+<span class="cm"> */</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HlsTest</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="n">RestTemplate</span> <span class="n">restTemplate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestTemplate</span><span class="p">();</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 从HLS链接下载一个20秒的视频片段</span>
+<span class="cm">     *</span>
+<span class="cm">     * @throws IOException .</span>
+<span class="cm">     */</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAlpha</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+        <span class="c1">// Logback配置日志级别为INFO</span>
+        <span class="p">((</span><span class="n">Logger</span><span class="p">)</span> <span class="p">(</span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">.</span><span class="na">ROOT_LOGGER_NAME</span><span class="p">))).</span><span class="na">setLevel</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">INFO</span><span class="p">);</span>
+        <span class="c1">// 自定义控制台日志格式</span>
+        <span class="c1">// noinspection unchecked</span>
+        <span class="p">((</span><span class="n">ConsoleAppender</span><span class="p">)</span> <span class="p">((</span><span class="n">Logger</span><span class="p">)</span> <span class="p">(</span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">Logger</span><span class="p">.</span><span class="na">ROOT_LOGGER_NAME</span><span class="p">))).</span><span class="na">getAppender</span><span class="p">(</span><span class="s">&quot;console&quot;</span><span class="p">)).</span><span class="na">setEncoder</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternLayoutEncoder</span><span class="p">()</span> <span class="p">{</span>
+            <span class="p">{</span>
+                <span class="n">setContext</span><span class="p">((</span><span class="n">Context</span><span class="p">)</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getILoggerFactory</span><span class="p">());</span>
+                <span class="n">setPattern</span><span class="p">(</span><span class="s">&quot;[%date] %highlight([%level]) [%logger{10} %file:%line] [%thread] %msg%n&quot;</span><span class="p">);</span>
+                <span class="n">start</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+
+        <span class="c1">// 视频分片列表</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Triple</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;&gt;</span> <span class="n">videos</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="c1">// HLS索引URL</span>
+        <span class="n">String</span> <span class="n">playlistUrl</span> <span class="o">=</span> <span class="s">&quot;http://hls.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.hd.m3u8&quot;</span><span class="p">;</span>
+
+        <span class="c1">// 当前下载的秒数</span>
+        <span class="kt">int</span> <span class="n">seconds</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// 总共下载的秒数</span>
+        <span class="kt">int</span> <span class="n">needSeconds</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+
+        <span class="nl">loop</span><span class="p">:</span>
+        <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Requesting playlist: {}&quot;</span><span class="p">,</span> <span class="n">playlistUrl</span><span class="p">);</span>
+            <span class="c1">// 下载索引文件</span>
+            <span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">restTemplate</span><span class="p">.</span><span class="na">getForObject</span><span class="p">(</span><span class="n">playlistUrl</span><span class="p">,</span> <span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+            <span class="k">assert</span> <span class="n">text</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">;</span>
+
+            <span class="c1">/// 获取视频片段时长</span>
+            <span class="n">Matcher</span> <span class="n">targetDurationMatcher</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;#EXT-X-TARGETDURATION:(\\d+)&quot;</span><span class="p">,</span> <span class="n">Pattern</span><span class="p">.</span><span class="na">DOTALL</span><span class="p">).</span><span class="na">matcher</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
+            <span class="k">assert</span> <span class="n">targetDurationMatcher</span><span class="p">.</span><span class="na">find</span><span class="p">();</span>
+            <span class="kt">int</span> <span class="n">targetDuration</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">targetDurationMatcher</span><span class="p">.</span><span class="na">group</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+
+            <span class="c1">/// 获取视频片段</span>
+            <span class="n">Pattern</span> <span class="n">pattern</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;#EXT-TS-OFFSET-BEGIN:(?&lt;offset&gt;\\d+)[\r\n]+#EXTINF:(?&lt;duration&gt;[\\d.]+).+?(?&lt;url&gt;http://\\S+)&quot;</span><span class="p">,</span> <span class="n">Pattern</span><span class="p">.</span><span class="na">DOTALL</span><span class="p">);</span>
+            <span class="n">Matcher</span> <span class="n">matcher</span> <span class="o">=</span> <span class="n">pattern</span><span class="p">.</span><span class="na">matcher</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
+
+            <span class="k">while</span> <span class="p">(</span><span class="n">matcher</span><span class="p">.</span><span class="na">find</span><span class="p">())</span> <span class="p">{</span>
+                <span class="c1">// 视频片段Offset</span>
+                <span class="kt">int</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">matcher</span><span class="p">.</span><span class="na">group</span><span class="p">(</span><span class="s">&quot;offset&quot;</span><span class="p">));</span>
+                <span class="c1">// 视频片段Duration</span>
+                <span class="kt">int</span> <span class="n">duration</span> <span class="o">=</span> <span class="n">Math</span><span class="p">.</span><span class="na">round</span><span class="p">(</span><span class="n">Float</span><span class="p">.</span><span class="na">parseFloat</span><span class="p">(</span><span class="n">matcher</span><span class="p">.</span><span class="na">group</span><span class="p">(</span><span class="s">&quot;duration&quot;</span><span class="p">)));</span>
+                <span class="c1">// 视频片段URL</span>
+                <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">matcher</span><span class="p">.</span><span class="na">group</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">);</span>
+
+                <span class="n">Triple</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">triple</span> <span class="o">=</span> <span class="n">Triple</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">url</span><span class="p">);</span>
+
+                <span class="c1">// 不下载重复文件</span>
+                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">videos</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="n">triple</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Downloading: {}&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">);</span>
+
+                    <span class="c1">// 下载视频片段</span>
+                    <span class="n">FileUtils</span><span class="p">.</span><span class="na">copyURLToFile</span><span class="p">(</span><span class="k">new</span> <span class="n">URL</span><span class="p">(</span><span class="n">url</span><span class="p">),</span> <span class="k">new</span> <span class="n">File</span><span class="p">((</span><span class="n">seconds</span> <span class="o">/</span> <span class="n">targetDuration</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;.ts&quot;</span><span class="p">));</span>
+
+                    <span class="n">videos</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">triple</span><span class="p">);</span>
+
+                    <span class="c1">// 更新下载进度</span>
+                    <span class="n">seconds</span> <span class="o">+=</span> <span class="n">targetDuration</span><span class="p">;</span>
+
+                    <span class="c1">// 下载完毕，退出循环</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">seconds</span> <span class="o">&gt;=</span> <span class="n">needSeconds</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="k">break</span> <span class="n">loop</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Ignored: {}&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 等待一个视频片段的时长，等待索引文件更新</span>
+            <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Sleeping...&quot;</span><span class="p">);</span>
+            <span class="n">Try</span><span class="p">.</span><span class="na">run</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">targetDuration</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)).</span><span class="na">get</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">videos</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><strong>控制台输出</strong></p>
+<div class="highlight"><pre><span></span>[2018-12-04 16:56:48,894] [INFO] [bj.HlsTest HlsTest.java:58] [main] Requesting playlist: http://hls.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.hd.m3u8
+[2018-12-04 16:56:49,387] [INFO] [bj.HlsTest HlsTest.java:84] [main] Downloading: http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1953.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a
+[2018-12-04 16:56:49,821] [INFO] [bj.HlsTest HlsTest.java:84] [main] Downloading: http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1954.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a
+[2018-12-04 16:56:50,249] [INFO] [bj.HlsTest HlsTest.java:84] [main] Downloading: http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1955.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a
+[2018-12-04 16:56:50,451] [INFO] [bj.HlsTest HlsTest.java:104] [main] Sleeping...
+[2018-12-04 16:56:54,524] [INFO] [bj.HlsTest HlsTest.java:58] [main] Requesting playlist: http://hls.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b.hd.m3u8
+[2018-12-04 16:56:54,631] [INFO] [bj.HlsTest HlsTest.java:99] [main] Ignored: http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1955.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a
+[2018-12-04 16:56:54,632] [INFO] [bj.HlsTest HlsTest.java:84] [main] Downloading: http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1956.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a
+[2018-12-04 16:56:54,978] [INFO] [bj.HlsTest HlsTest.java:84] [main] Downloading: http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1957.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a
+(5859,4,http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1953.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a)
+(5862,4,http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1954.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a)
+(5865,4,http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1955.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a)
+(5868,4,http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1956.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a)
+(5871,4,http://hzhls05.ys7.com:7894/openlivedata/203751922_1_1/dc6267715c6243d4a224da0903be9408-1957.ts?Usr=c1cbc1d4e86d49a0981f54beea95280a)
+</pre></div>
+<p>文章首发: <a href="https://baijifeilong.github.io">https://baijifeilong.github.io</a></p>
+
+</div>
+<div id="disqus_thread"></div>
+<hr>
+<div style='text-align: right; font-size: 1.25em; padding: 0 0.5em 0.5em 0; font-style: italic'>
+    漫漫路，莫论逍遥；潜心修，只为悟道
+</div>
+<div style="display: none">
+    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1264503276'%3E%3C/span%3E%3Cscript src='https://s19.cnzz.com/z_stat.php%3Fid%3D1264503276%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</body>
+</html>
+
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://baijifeilong.github.io/2018/12/04/hls/index.html";
+        this.page.identifier = "/2018/12/04/hls/index.html";
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://baijifeilong.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
